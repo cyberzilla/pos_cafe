@@ -169,6 +169,9 @@ $(function () {
                         root.find(".original-content").hide();
                         root.find(".no-access").hide();
                         root.find(".preload-content").fadeIn(500).find("#pettycashStartCash").focus();
+                        root.find("#pettycashCashierId").val(result.pettycashCashierId);
+                        root.find("#cashierUsersId").val(result.cashierUsersId);
+                        root.find("#usersFullName").val(result.cashierName);
                     }
                 },'json');
             }else{
@@ -188,6 +191,9 @@ $(function () {
                         root.find(".original-content").hide();
                         root.find(".no-access").hide();
                         root.find(".preload-content").fadeIn(500).find("#pettycashStartCash").focus();
+                        root.find("#pettycashCashierId").val(result.pettycashCashierId);
+                        root.find("#cashierUsersId").val(result.cashierUsersId);
+                        root.find("#usersFullName").val(result.cashierName);
                     }
                 },'json');
             }
@@ -209,6 +215,9 @@ $(function () {
                         root.find(".original-content").hide();
                         root.find(".no-access").hide();
                         root.find(".preload-content").fadeIn(500).find("#pettycashStartCash").focus();
+                        root.find("#pettycashCashierId").val(result.pettycashCashierId);
+                        root.find("#cashierUsersId").val(result.cashierUsersId);
+                        root.find("#usersFullName").val(result.cashierName);
                     }
                 }else{
                     root.find(".no-access").fadeIn(500);
@@ -558,6 +567,7 @@ $(function () {
                 root.find(".pricePaymentButton").prop("disabled",true);
                 root.find("#orderStatus").val("success");
                 root.find("#orderPricePayment").val("");
+                root.find("input[name=orderPricePayment]").val("");
                 break;
 
             case "card":
@@ -571,6 +581,7 @@ $(function () {
                 root.find(".pricePaymentButton").prop("disabled",true);
                 root.find("#orderStatus").val("success");
                 root.find("#orderPricePayment").autoNumeric("set",totalPrice);
+                root.find("input[name=orderPricePayment]").val(totalPrice);
                 paymentKeypress(totalPrice,totalPrice);
                 break;
 
@@ -586,6 +597,7 @@ $(function () {
                 root.find(".pricePaymentButton").prop("disabled",false);
                 root.find("#orderStatus").val("process");
                 root.find("#orderPricePayment").val("");
+                root.find("input[name=orderPricePayment]").val("");
                 break;
 
             default:
@@ -600,6 +612,7 @@ $(function () {
                 root.find(".pricePaymentButton").prop("disabled",true);
                 root.find("#orderStatus").val("success");
                 root.find("#orderPricePayment").val("");
+                root.find("input[name=orderPricePayment]").val("");
                 break;
         }
     });
