@@ -1,0 +1,313 @@
+<div class="initModule"
+     data-param='{"slug":"appStoreCashier","functionList":["submitForm","resetForm","disableContextMenu","nativeTable","typeahead","autoNumeric","nativeSelect"],"preloadLib":["fakereceipt","digital7","hotkeys","domtoimage"]}'></div>
+<div class="no-access text-center" style="display: none;">
+    <h3 class="animate__animated animate__headShake"><i class="ace-icon fa fa-warning orange"></i> <strong class="orange">403</strong> Forbidden</h3><div class="grey">User belum memiliki akses ke dalam menu kasir, silahkan hubungi administrator</div>
+</div>
+<div class="preload-content">
+    <div class="col-lg-12">
+        <div class="icms-widget widget-box widget-color-blue2" style="width:20%;margin-right: auto;margin-left: auto;min-width: 300px;">
+            <div class="widget-header widget-header-small">
+                <h5 class="widget-title"><i class="fa fa-user-circle"></i> {{openCashier|Buka Kasir}}</h5>
+                <div class="widget-toolbar">
+                    <a href="#" data-action="collapse">
+                        <i class="ace-icon fa fa-chevron-up"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="widget-body">
+                <div class="widget-main">
+                    <form class="icms-form"
+                          name="iform-pettycash"
+                          id="iform-pettycash"
+                          data-param='{"method":"actionPage","slug":"appStoreCashier","app":"app","appslug":"pos_cafe","act":"create_pettycash"}'>
+                        <input class="dont-touch" type="hidden" id="pettycashType" name="pettycashType" value="open">
+                        <div class="form-group has-info">
+                            <div class="row no-margin">
+                                <label for="usersFullName"> {{usersFullName|Nama Kasir}}:</label>
+                                <input type="text" id="usersFullName" name="usersFullName" value="{{s_cashierName}}" class="form-control input-sm dont-touch" readonly>
+                                <input class="dont-touch" type="hidden" id="pettycashCashierId" name="pettycashCashierId" value="{{s_cashierId}}">
+                                <input class="dont-touch" type="hidden" id="cashierUsersId" name="cashierUsersId" value="{{s_cashierUsersId}}">
+                            </div>
+                        </div>
+                        <div class="form-group has-info">
+                            <div class="row no-margin">
+                                <label for="pettycashStartCash"> {{pettycashCash|Kas Awal}}:</label>
+                                <input id="pettycashStartCash" name="pettycashStartCashX" type="text"
+                                       class="form-control input-sm autoNumeric" data-msg="Masukkan kas awal" data-v-max="99999999" data-v-min="0" data-a-sign="Rp. " data-a-sep="."  data-a-dec=" "
+                                       data-placement="top-r" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="reset" class="btn btn-danger btn-sm"><i class="ace-icon fa fa-refresh"></i>
+                                {{btnReset|Reset}}
+                            </button>
+                            <button type="submit" data-caption='{{btnSave|Buka Kasir}}|{{btnUpdate|Update}}'
+                                    data-icon='<i class="ace-icon fa fa-save"></i>'
+                                    data-spinner='<i class="ace-icon fa fa-spinner fa-spin"></i>'
+                                    class="btn btn-primary btn-sm pull-right" data-prevent="true" data-message="Apakah data kasir telah sesuai?" data-title="Buka Kasir" data-okbutton="Buka" data-cancelbutton="Batal">{{btnSave|Buka Kasir}}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row no-margin original-content" style="display: none;">
+    <div class="col-lg-8">
+        <div class="row no-margin">
+            <div class="shortcutMenuContainer" style="padding-top: 8px;display: none;">
+                <button class="btn btn-app btn-light btn-xs tooltip-success" data-rel="tooltip" data-placement="bottom" title data-original-title="Americano"><strong>1</strong><br>AMR</button>
+                <button class="btn btn-app btn-light btn-xs tooltip-success" data-rel="tooltip" data-placement="bottom" title data-original-title="Americano"><strong>1</strong><br>AMR</button>
+                <button class="btn btn-app btn-light btn-xs tooltip-success" data-rel="tooltip" data-placement="bottom" title data-original-title="Americano"><strong>1</strong><br>AMR</button>
+                <button class="btn btn-app btn-light btn-xs tooltip-success" data-rel="tooltip" data-placement="bottom" title data-original-title="Americano"><strong>1</strong><br>AMR</button>
+                <button class="btn btn-app btn-light btn-xs tooltip-success" data-rel="tooltip" data-placement="bottom" title data-original-title="Americano"><strong>1</strong><br>AMR</button>
+                <button class="btn btn-app btn-light btn-xs tooltip-success" data-rel="tooltip" data-placement="bottom" title data-original-title="Americano"><strong>1</strong><br>AMR</button>
+                <button class="btn btn-app btn-light btn-xs tooltip-success" data-rel="tooltip" data-placement="bottom" title data-original-title="Americano"><strong>1</strong><br>AMR</button>
+                <button class="btn btn-app btn-light btn-xs tooltip-success" data-rel="tooltip" data-placement="bottom" title data-original-title="Americano"><strong>1</strong><br>AMR</button>
+            </div>
+        </div>
+        <div class="row no-margin"><div class="icms-widget widget-box widget-color-blue2">
+            <div class="widget-header widget-header-small">
+                <h5 class="widget-title"><i class="fa fa-cubes"></i> {{appStoreCashierTable|Tambah Menu}}</h5>
+                <div class="widget-toolbar">
+                    <a data-action="settings">
+                        <i class="ace-icon fa fa-trash bigger-13"></i> Bersihkan Pesanan
+                    </a>
+                    <a data-action="reload">
+                        <i class="ace-icon fa fa-refresh"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="widget-body">
+                <div class="widget-main">
+                    <div class="table-responsive icms-scroll" style="margin-bottom: 0">
+                        <table style="width: 100%" class="nativeTable table table-striped table-hover table-bordered"
+                               id="icms-table-appStoreCashier"
+                               data-current=1
+                               data-perpage=10
+                               data-remote="Services"
+                               data-label="Menampilkan {from} » {to} dari {total} data"
+                               data-rowspan="10"
+                               data-sblank="true"
+                               data-param='{"method":"actionPage","slug":"appStoreCashier","act":"load_appStoreCashier"}'>
+                            <thead>
+                            <tr>
+                                <td colspan="10">
+                                    <form class="cashier-form"
+                                          name="iform-appStoreCashierCartInput"
+                                          id="iform-appStoreCashierCartInput"
+                                          data-param='{"method":"actionPage","slug":"appStoreCashier","act":"create_appStoreCashier","app":"app","appslug":"pos_cafe"}'>
+                                        <div class="row no-margin">
+                                            <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
+                                                    <span class="block input-icon">
+                                                        <input type="number" id="cartQuantity" name="cartQuantity" class="form-control input-sm width-100" value="1" min="1" placeholder="Qty [CTRL+Q]">
+                                                        <i class="ace-icon fa fa-cart-plus" style="top: -1px;"></i>
+                                                    </span>
+                                            </div>
+                                            <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9">
+                                                    <span class="block input-icon input-icon-right">
+                                                        <input class="typeahead form-control input-sm width-100" type="text" id="productName" data-param='{"source":"remote","remote":{"target":"#cartProductId,#cartRefCode,#customerName","targetdata":"id,cartRefCode,customerName","display":["productCodeName","stockQuantity"],"empty":"Menu %query% tidak ditemukan","url":"Services","send":{"method":"actionPage","slug":"appStoreCashier","act":"loadProduct","app":"app","appslug":"pos_cafe"}}}' placeholder="Cari Nama Menu/Barcode [CTRL+A]" data-placement="top-r" autocomplete="off">
+                                                         <i class="ace-icon fa fa-search" style="top: -1px;"></i>
+                                                        <input type="hidden" id="cartProductId" name="cartProductId">
+                                                        <input type="hidden" id="cartRefCode" name="cartRefCode">
+                                                        <input type="hidden" id="customerName" name="customerName">
+                                                    </span>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </td>
+                            </tr>
+                            <tr class="header">
+                                <th data-column="number" data-class="text-center" style="width: 30px"
+                                    class="text-center">No
+                                </th>
+                                <th data-column="productCode" data-class="text-left" style="width: 100px"
+                                    class="text-left">{{productCode|Kode/Barcode}}
+                                </th>
+                                <th data-column="productName">{{productName|Nama Menu}}</th>
+                                <th data-column="cartQuantity" data-class="text-center" style="width: 80px"
+                                    class="text-center">{{cartQuantity|Qty}}
+                                </th>
+                                <th data-column="discountByPercent" data-class="text-center" style="width: 70px" data-psign=" %"
+                                    class="text-center">{{discountByPercent|Diskon(%)}}
+                                </th>
+                                <th data-column="priceSellingPrice" data-class="text-right" style="width: 100px" data-price-format='{"locales":"id","currency":"IDR","decimal":false}'
+                                    class="text-center">{{priceSellingPrice|@Harga}}
+                                </th>
+                                <th data-column="subSellingPrice" data-class="text-right" style="width: 100px" data-price-format='{"locales":"id","currency":"IDR","decimal":false}'
+                                    class="text-center">{{subSellingPrice|Sub Total}}
+                                </th>
+                                <th data-column="action" data-action="delete" data-class="text-center"
+                                    style="width: 60px" class="text-center"><i class="fa fa-cogs"></i></th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                            <tfoot></tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div></div>
+    </div>
+    <div class="col-lg-4">
+        <div class="icms-widget widget-box widget-color-blue2">
+            <div class="widget-header widget-header-small">
+                <h5 class="widget-title"><i class="fa fa-file-text-o"></i> Pembayaran</h5>
+                <div class="widget-toolbar">
+                    <a data-action="close_cashier">
+                        <i class="ace-icon fa fa-sign-out"></i>Tutup Kasir
+                    </a>
+                </div>
+            </div>
+            <div class="widget-body">
+                <div class="widget-main" style="background: #b9d3f3">
+                    <div class="form-group has-info no-margin">
+                        <div class="row no-margin">
+                            <input id="totalPrice" name="totalPriceX" type="text"
+                                   class="form-control input-lg autoNumeric text-right totalPrice" data-v-max="99999999" data-v-min="0" data-a-sign="" data-a-sep="."  data-a-dec=" " value="0" readonly>
+                        </div>
+                    </div>
+                    <div class="icms-receipt" style="display: none;margin-top: 10px;height: 380px;">
+                        <div class="receipt-container">
+                            <div class="receipt-view" id="receipt-view">
+                                <div class="receipt-header">
+                                    <div class="receipt-store-name text-center receiptStoreName"></div>
+                                    <div class="receipt-store-detail text-center receiptStoreAddress"></div>
+                                    <div class="receipt-store-detail text-center receiptStorePhone"></div>
+                                    <div class="receipt-store-detail text-center" style="margin-bottom: 5px;"><span class="cashierDate"></span>&nbsp;<span class="cashierTime">JAM:00:00:00</span></div>
+                                    <table class="receipt-table width-100">
+                                        <tr><td class="text-left valign-top cashierName"></td></tr>
+                                        <tr><td class="text-left valign-top receiptStoreInvoiceCode"></td></tr>
+                                    </table>
+                                </div>
+                                <div class="receipt-body">
+                                    <table class="receipt-table width-100">
+                                        <thead>
+                                        <tr class="border-dashed"><td colspan="4">&nbsp;</td></tr>
+                                        <tr>
+                                            <td class="text-left" style="width: 23px;">NO</td><td class="text-left">NAMA MENU</td><td class="text-left" style="width: 80px;">@HARGA</td><td class="text-right" style="width: 80px;">TOTAL</td>
+                                        </tr>
+                                        <tr class="border-dashed"><td colspan="4">&nbsp;</td></tr>
+                                        </thead>
+                                        <tbody class="cartContent"></tbody>
+                                        <tfoot>
+                                        <tr class="border-dashed"><td colspan="4">&nbsp;</td></tr>
+                                        <tr>
+                                            <td colspan="2" class="text-left tableQty">QTY: </td>
+                                            <td class="text-right">DISKON: </td><td class="text-right tableDiscount">0</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3" class="text-right">VOUCER: </td><td class="text-right tableVoucher" data-price=0>0</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3" class="text-right">PPN(10%): </td><td class="text-right tableTax" data-price=0>0</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" class="tableStatusPO"></td>
+                                            <td class="text-right text-bold">TOTAL: </td><td class="text-right text-bold tableTotalPrice" data-price=0>0</td>
+                                        </tr>
+<!--                                        <tr style="display: none">-->
+<!--                                            <td colspan="3" class="text-right text-bold">PANJAR: </td><td class="text-right text-bold tableDP" data-price=0>0</td>-->
+<!--                                        </tr>-->
+<!--                                        <tr style="display: none">-->
+<!--                                            <td colspan="2" class="tableStatus"></td>-->
+<!--                                            <td class="text-right text-bold">SISA: </td><td class="text-right text-bold tableSisa" data-price=0>0</td>-->
+<!--                                        </tr>-->
+                                        <tr>
+                                            <td colspan="3" class="text-right text-bold">BAYAR: </td><td class="text-right text-bold tableBayar" data-price=0>0</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2" class="tableStatus">LUNAS</td>
+                                            <td class="text-right text-bold">KEMBALI: </td><td class="text-right text-bold tableKembali" data-price=0>0</td>
+                                        </tr>
+                                        <tr class="border-dashed"><td colspan="4">&nbsp;</td></tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                                <div class="receipt-footer">
+                                    <div class="receipt-store-detail text-center receiptStoreFoot1"></div>
+                                    <div class="receipt-store-detail text-center receiptStoreFoot2"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <form class="icms-form"
+                          name="iform-appStoreCashier"
+                          id="iform-appStoreCashier"
+                          data-reload-widget="false"
+                          data-param='{"method":"actionPage","slug":"appStoreCashier","act":"create_appStoreCashierOrder","app":"app","appslug":"pos_cafe"}' style="display: none;">
+                        <input type="hidden" name="orderInvoice" id="orderInvoice" value="">
+                        <input type="hidden" name="orderCashierId" id="orderCashierId" value="">
+                        <input type="hidden" name="orderPrice" id="orderPrice" value="">
+                        <input type="hidden" name="orderTotalPrice" id="orderTotalPrice" value="">
+                        <input type="hidden" name="orderTaxValue" id="orderTaxValue" value="">
+                        <input type="hidden" name="orderTotalDiscountValue" id="orderTotalDiscountValue" value="">
+                        <input type="hidden" name="orderVoucherValue" id="orderVoucherValue" value="">
+                        <input type="hidden" name="orderStatus" id="orderStatus" value="success">
+
+                        <div class="form-group has-info">
+                            <div class="row no-margin">
+                                <div class="col-lg-6">
+                                    <label for="orderType"> {{orderType|Tipe Pembayaran}}:</label>
+                                    <select name="orderType" id="orderType" data-default="cash"
+                                            data-opts='[{"text":"Tunai","id":"cash"},{"text":"Non-Tunai","id":"card"},{"text":"Pre-Order","id":"preorder"}]'
+                                            data-placeholder="Pilih tipe..." class="nativeSelect form-control input-sm"
+                                            data-msg="Silahkan pilih tipe pembayaran" data-placement="top-r"
+                                            required></select>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label for="orderAdditionalInfo"> {{orderAdditionalInfo|Meja}}:</label>
+                                    <select name="orderAdditionalInfo" id="orderAdditionalInfo" data-default="meja-1"
+                                            data-remote='{"param":{"method":"actionPage","slug":"appStoreCashier","act":"load_meja"}}'
+                                            data-placeholder="Pilih Meja..." class="nativeSelect form-control input-sm"
+                                            data-msg="Silahkan pilih meja" data-placement="top-r" required></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group has-info po-disabled">
+                            <div class="row no-margin">
+                                <div class="col-lg-6">
+                                    <label for="orderVoucherCode"> {{voucherCode|Kode Voucer}}:</label>
+                                    <div class="input-group">
+                                        <input name="orderVoucherCode" id="orderVoucherCode" class="form-control input-sm" type="text" placeholder="Kode Voucer" data-msg="Silahkan masukkan kode voucer" data-placement="top-r">
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-flat btn-sm btn-inverse btn-white checkVoucherCode" data-send="#orderVoucherCode"><i class="fa fa-search"></i></button>
+                                            <button type="button" class="btn btn-flat btn-sm btn-inverse btn-white clearVoucherCode"><i class="fa fa-trash-o"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label for="orderPricePayment"> {{orderPricePayment|Bayar}}:</label>
+                                    <input id="orderPricePayment" name="orderPricePaymentX" type="text"
+                                           class="form-control input-sm autoNumeric" data-msg="Masukkan nilai pembayaran" data-v-max="99999999" data-v-min="0" data-a-sign="Rp. " data-a-sep="."  data-a-dec=" "
+                                           data-placement="top-r" placeholder="Bayar [CTRL+Z]" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group has-info" style="margin-bottom: 0;">
+                            <div class="row no-margin">
+                                <div class="col-lg-6 text-right">
+                                    <label for="directPrint"> {{directPrint|Cetak ke Dapur}}:</label>
+                                    <div>
+                                        <input name="directPrint" id="directPrint" class="ace ace-switch ace-switch-3" type="checkbox" checked>
+                                        <span class="lbl igreen" data-lbl="YES&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NO"></span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 text-right">
+                                    <button type="submit" data-caption='Simpan|Simpan'
+                                            data-icon='<i class="ace-icon fa fa-save"></i>'
+                                            data-spinner='<i class="ace-icon fa fa-spinner fa-spin"></i>'
+                                            class="btn btn-primary btn-sm pull-right pricePaymentButton" data-prevent="true" data-message="Apakah anda yakin akan menyimpan data?" data-title="Pembayaran" data-okbutton="Simpan" data-cancelbutton="Batal" data-nativetable-reload="false" data-reset="false" disabled>Simpan
+                                    </button>
+                                    <label class="text-danger"><i><small>{{buttonSimpan|Cek pesanan sebelum menyimpan data!}}</small></i></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group"><div class="row no-margin"></div></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

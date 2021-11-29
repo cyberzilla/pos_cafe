@@ -1,0 +1,26 @@
+#appHome .inline.open .btn-transparent,
+#appHome .btn-transparent.dropdown-toggle,
+#appHome .btn-transparent,
+#appHome .btn-transparent:hover,
+#appHome .btn-transparent:active{
+    background: transparent none !important;
+    border-width: 0 !important;
+}
+
+#appHome .c3-axis-y-label{
+    font-family: "Open Sans", serif;
+    font-size: 12px;
+}
+
+@media (min-width: 1200px) {
+    #appHome #product-populer{
+        margin-top: 0;
+    }
+}
+
+@media (max-width: 1199px) {
+    #appHome #product-populer{
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+}

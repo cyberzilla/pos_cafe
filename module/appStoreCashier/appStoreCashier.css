@@ -1,0 +1,65 @@
+#appStoreCashier .receipt-container{
+    /*width: 80%;*/
+    width: 320px;
+    box-shadow: rgba(0, 0, 0, 0.4) 0 0 14px;
+    display: table;
+    margin: 10px auto;
+    background: rgb(255, 255, 255);
+}
+
+#appStoreCashier .receipt-view {
+    font-family: 'Fake Receipt', serif;
+    padding:15px;
+}
+
+#appStoreCashier .receipt-store-name{
+    font-size: 15px;
+}
+
+#appStoreCashier .receipt-store-detail,
+#appStoreCashier .receipt-table{
+    font-size: 11px;
+}
+
+#appStoreCashier hr {
+    border-top:1px dashed #000;
+    margin:1px 1px;
+}
+
+#appStoreCashier .border-dashed{
+    border-top:1px dashed #000;
+    border-bottom: 1px dashed #000;
+    line-height: 1px;
+}
+
+#appStoreCashier .valign-middle{
+    vertical-align: middle;
+}
+#appStoreCashier .valign-top{
+    vertical-align: top;
+}
+#appStoreCashier .valign-bottom{
+    vertical-align: bottom;
+}
+#appStoreCashier .text-bold{
+    font-weight: bold;
+}
+#appStoreCashier .totalPrice{
+    font-family: "Digital-7 Italic", serif;
+    font-size: 47px;
+}
+#appStoreCashier .clearCart:hover{
+    color: #00b83f;
+}
+
+#appStoreCashier [data-action=close_cashier]{
+    color: #D3E4ED;
+}
+#appStoreCashier .preload-content{
+    margin-top: 100px;
+}
+
+#appStoreCashier .help-block{
+    margin-top: 0;
+    margin-bottom: 0;
+}

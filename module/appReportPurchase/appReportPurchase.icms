@@ -1,0 +1,137 @@
+<div class="initModule"
+     data-param='{"slug":"appReportPurchase","functionList":["submitForm","resetForm","disableContextMenu","nativeSelect","nativeTable"],"preloadLib":["datepicker","icmsaddon"]}'></div>
+<div class="row no-margin">
+    <div class="col-lg-3">
+        <div class="icms-widget widget-box widget-color-blue2">
+            <div class="widget-header widget-header-small">
+                <h5 class="widget-title"><i class="fa fa-eye"></i> Pengeluaran</h5>
+                <div class="widget-toolbar">
+                    <a href="#" data-action="collapse">
+                        <i class="ace-icon fa fa-chevron-up"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="widget-body">
+                <div class="widget-main">
+                    <form class="icms-form prevent-post"
+                          name="iform-appReportPurchase"
+                          id="iform-appReportPurchase"
+                          data-param='{"method":"actionPage","slug":"appReportPurchase","act":"load_appReportPurchase","app":"app","appslug":"pos_cafe"}'>
+                        <input type="hidden" class="dont-touch" name="page" value=1>
+                        <input type="hidden" class="dont-touch" name="perpage" value=10>
+                        <div class="form-group has-info">
+                            <div class="row no-margin">
+                                <label for="purchaseDateTimeStart"> {{purchaseDateTimeStart|Rentang Tanggal}}:</label>
+                                <div class="input-daterange input-group">
+                                    <input type="text" class="input-sm form-control" id="purchaseDateTimeStart" name="purchaseDateTimeStart" data-msg="Tanggal Mulai" placeholder="Tanggal Mulai" data-placement="top-l" required>
+                                    <span class="input-group-addon"><i class="fa fa-exchange"></i></span>
+                                    <input type="text" class="input-sm form-control" id="purchaseDateTimeEnd" name="purchaseDateTimeEnd" data-msg="Tanggal Selesai" placeholder="Tanggal Selesai" data-placement="top-r" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group has-info">
+                            <div class="row no-margin">
+                                <label for="purchaseType"> {{purchaseType|Tipe Pengeluaran}}:</label>
+                                <select name="purchaseType" id="purchaseType"
+                                        data-opts='[{"text":"Semua","id":"all"},{"text":"Bahan Baku","id":"raw"},{"text":"Transportasi","id":"transport"},{"text":"Lain-lain","id":"others"}]'
+                                        data-placeholder="Pilih tipe..." class="nativeSelect form-control input-sm"
+                                        data-msg="Silahkan pilih tipe pengeluaran" data-placement="top-r"
+                                        required></select>
+                            </div>
+                        </div>
+                        <div class="form-group has-info">
+                            <div class="row no-margin">
+                                <label for="purchaseStatus"> {{purchaseStatus|Status}}:</label>
+                                <select name="purchaseStatus" id="purchaseStatus"
+                                        data-opts='[{"text":"Semua","id":"all"},{"text":"Lunas","id":"paid"},{"text":"Hutang","id":"unpaid"}]'
+                                        data-placeholder="Pilih Status..." class="nativeSelect form-control input-sm"
+                                        data-msg="Silahkan pilih status" data-placement="top-r"
+                                        required></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="reset" class="btn btn-danger btn-sm"><i class="ace-icon fa fa-refresh"></i>
+                                Reset
+                            </button>
+                            <button type="submit" data-caption='Show|Show'
+                                    data-icon='<i class="ace-icon fa fa-eye"></i>'
+                                    data-spinner='<i class="ace-icon fa fa-spinner fa-spin"></i>'
+                                    class="btn btn-primary btn-sm pull-right">Show
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-9">
+        <div class="icms-widget widget-box widget-color-blue2">
+            <div class="widget-header widget-header-small">
+                <h5 class="widget-title"><i class="fa fa-list"></i> {{appReportPurchaseTable|Daftar Pengeluaran}}</h5>
+                <div class="widget-toolbar">
+                    <a data-action="reload">
+                        <i class="ace-icon fa fa-refresh"></i>
+                    </a>
+                    <a data-action="collapse">
+                        <i class="ace-icon fa fa-chevron-up"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="widget-body">
+                <div class="widget-main">
+                    <div class="table-responsive icms-scroll" style="margin-bottom: 0">
+                        <table style="width: 100%" class="nativeTable table table-striped table-hover table-bordered"
+                               id="icms-table-appReportPurchase"
+                               data-current=1
+                               data-perpage=10
+                               data-remote="Services"
+                               data-label="Menampilkan {from} » {to} dari {total} data"
+                               data-param='{"method":"actionPage","slug":"appReportPurchase","act":"load_appReportPurchase","app":"app","appslug":"pos_cafe"}'
+                               data-extra-param="">
+                            <thead>
+                            <tr>
+                                <td colspan="6">
+                                    <div class="row no-margin">
+                                        <span class="pull-left">
+                                            <button class="report-download btn btn-xs btn-success btn-rounded" style="display: none;"><i class="ace-icon fa fa-file-excel-o bigger-115"></i> Download</button>
+                                        </span>
+                                        <span class="input-icon input-icon-right pull-right">
+                                            <input type="text" class="form-control input-sm search"
+                                                   placeholder="Cari Pembelian...">
+                                            <i class="ace-icon fa fa-search text-muted" style="top: -1px;"></i>
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="header">
+                                <th data-column="number" data-class="text-center" style="width: 30px"
+                                    class="text-center">No
+                                </th>
+                                <th data-column="purchaseRealDate" data-class="text-center text-ellipsis" data-date-format='{"locales":"id","year":"numeric","month":"short","day":"numeric"}'
+                                    data-width="100" style="width: 100px" class="text-center">
+                                    {{purchaseRealDate|Tanggal}}
+                                </th>
+                                <th data-column="purchaseName">{{purchaseName|Pengeluaran}}</th>
+                                <th data-column="purchaseType" data-class="text-center text-ellipsis"
+                                    data-width="100" style="width: 70px" class="text-center">
+                                    {{purchaseType|Tipe}}
+                                </th>
+                                <th data-column="purchasePrice" data-class="text-center text-ellipsis" data-price-format='{"locales":"id","currency":"IDR","decimal":false}'
+                                    data-width="120" style="width: 120px" class="text-center">
+                                    {{purchasePrice|Total Harga}}
+                                </th>
+                                <th data-column="purchaseStatus" data-class="text-center text-ellipsis"
+                                    data-width="60" style="width: 60px" class="text-center">
+                                    {{purchaseStatus|Status}}
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                            <tfoot></tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

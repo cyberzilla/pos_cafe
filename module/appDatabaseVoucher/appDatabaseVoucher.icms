@@ -1,0 +1,181 @@
+<div class="initModule"
+     data-param='{"slug":"appDatabaseVoucher","functionList":["submitForm","resetForm","disableContextMenu","nativeSelect","nativeTable","datePicker","autoNumeric","textAreaAutoSize"]}'></div>
+<div class="row no-margin">
+    <div class="col-lg-3">
+        <div class="icms-widget widget-box widget-color-blue2">
+            <div class="widget-header widget-header-small">
+                <h5 class="widget-title"><i class="fa fa-plus-circle"></i> Voucer</h5>
+                <div class="widget-toolbar">
+                    <a href="#" data-action="collapse">
+                        <i class="ace-icon fa fa-chevron-up"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="widget-body">
+                <div class="widget-main">
+                    <form class="icms-form"
+                          name="iform-appDatabaseVoucher"
+                          id="iform-appDatabaseVoucher"
+                          data-param='{"method":"actionPage","slug":"appDatabaseVoucher","act":"create_appDatabaseVoucher","app":"app","appslug":"pos_cafe"}'>
+                        <input type="hidden" name="mainId" value="">
+                        <div class="form-group has-info">
+                            <div class="row no-margin">
+                                <label for="voucherName"> {{voucherName|Nama Voucer}}:</label>
+                                <input id="voucherName" name="voucherName" type="text"
+                                       class="form-control input-sm" data-msg="Masukkan nama voucer" placeholder="Nama Voucer"
+                                       data-placement="top-r" required>
+                            </div>
+                        </div>
+                        <div class="form-group has-info">
+                            <div class="row no-margin">
+                                <label for="voucherCode"> {{voucherCode|Kode Voucer}}:</label>
+                                <div class="input-group">
+                                    <input name="voucherCode" id="voucherCode" class="form-control input-sm" type="text" placeholder="Kode Voucer" data-msg="Silahkan masukkan kode voucer" data-placement="top-r" pattern="[A-Za-z0-9\w]{3,30}" data-rule-remote="Services" data-extra-param='{"method":"actionPage","slug":"appDatabaseVoucher","appslug":"pos_cafe","act":"checkVoucherCode","app":"{{p_app}}"}' data-msg-remote="voucher code are exist" data-msg-pattern="Only Alphanumeric Min:3 Max:30" disable-onupdate required>
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-flat btn-sm btn-inverse btn-white randomGenerator" data-target="#voucherCode"><i class="fa fa-cog fa-spin"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group has-info">
+                            <div class="row no-margin">
+                                <label for="voucherExpiredType"> {{voucherExpiredType|Tipe Kadaluarsa}}:</label>
+                                <select trigger-onchange name="voucherExpiredType" id="voucherExpiredType"
+                                        data-opts='[{"text":"by Date","id":"byDate"},{"text":"by Limit","id":"byLimit"}]'
+                                        data-placeholder="Pilih Tipe..." class="nativeSelect form-control input-sm"
+                                        data-msg="Silahkan pilih tipe kadaluarsa" data-placement="top-r"
+                                        required></select>
+                            </div>
+                        </div>
+                        <div class="form-group has-info">
+                            <div class="row no-margin voucherLimitContainer reset-hide" style="display: none;">
+                                <label for="voucherLimit"> {{voucherLimit|Batas Penggunaan}}:</label>
+                                <input id="voucherLimit" name="voucherLimit" type="number" min="0" max="9999"
+                                       class="form-control input-sm" data-msg="Masukkan jumlah batasan" placeholder="Batas Penggunaan voucer"
+                                       data-placement="top-r" required>
+                            </div>
+                        </div>
+                        <div class="form-group has-info">
+                            <div class="row no-margin voucherExpiredContainer reset-hide" style="display: none;">
+                                <label for="voucherExpired"> {{voucherExpired|Tanggal Kadaluarsa}}:</label>
+                                <div class="input-group">
+                                    <input name="voucherExpired" id="voucherExpired" class="form-control input-sm datePicker" type="text" data-date-format="yyyy-mm-dd" data-date-language="id" placeholder="Tanggal Kadaluarsa" data-msg="Silahkan masukkan tanggal kadaluarsa" data-placement="top-r" required>
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-flat btn-sm btn-inverse btn-white"><i class="fa fa-calendar"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group has-info">
+                            <div class="row no-margin">
+                                <label for="voucherValue"> {{voucherValue|Nilai Voucer}}:</label>
+                                <input id="voucherValue" name="voucherValueX" type="text"
+                                       class="form-control input-sm autoNumeric" data-v-max="99999999" data-v-min="0" data-a-sign="Rp. " data-a-sep="."  data-a-dec=" " placeholder="Nilai Voucer" data-msg="Masukkan nilai voucer" data-placement="top-r" required>
+                            </div>
+                        </div>
+                        <div class="form-group has-info">
+                            <div class="row no-margin">
+                                <label for="voucherDescription"> {{voucherDescription|Deskripsi}}:</label>
+                                <textarea id="voucherDescription" name="voucherDescription" class="autosize-transition form-control input-sm" placeholder="Deskripsi Voucer" data-msg="Masukkan deskripsi voucer" data-placement="top-r" required></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row no-margin">
+                                <div class="col-lg-12 pull-right text-right">
+                                    <label for="voucherActive"> {{voucherActive|Aktif}}:</label>
+                                    <div>
+                                        <input name="voucherActive" id="voucherActive"
+                                               class="ace ace-switch ace-switch-3" type="checkbox">
+                                        <span class="lbl igreen"
+                                              data-lbl="YES&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NO"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="reset" class="btn btn-danger btn-sm"><i class="ace-icon fa fa-refresh"></i>
+                                Reset
+                            </button>
+                            <button type="submit" data-caption='Save|Update'
+                                    data-icon='<i class="ace-icon fa fa-save"></i>'
+                                    data-spinner='<i class="ace-icon fa fa-spinner fa-spin"></i>'
+                                    class="btn btn-primary btn-sm pull-right">Save
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-9">
+        <div class="icms-widget widget-box widget-color-blue2">
+            <div class="widget-header widget-header-small">
+                <h5 class="widget-title"><i class="fa fa-list"></i> {{appDatabaseVoucherTable|Daftar Voucer}}</h5>
+                <div class="widget-toolbar">
+                    <a data-action="reload">
+                        <i class="ace-icon fa fa-refresh"></i>
+                    </a>
+                    <a data-action="collapse">
+                        <i class="ace-icon fa fa-chevron-up"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="widget-body">
+                <div class="widget-main">
+                    <div class="table-responsive icms-scroll" style="margin-bottom: 0">
+                        <table style="width: 100%" class="nativeTable table table-striped table-hover table-bordered"
+                               id="icms-table-appDatabaseVoucher"
+                               data-current=1
+                               data-perpage=10
+                               data-remote="Services"
+                               data-label="Menampilkan {from} » {to} dari {total} data"
+                               data-param='{"method":"actionPage","slug":"appDatabaseVoucher","act":"load_appDatabaseVoucher"}'>
+                            <thead>
+                            <tr>
+                                <td colspan="8">
+                                    <div class="row no-margin pull-right">
+                                        <span class="input-icon input-icon-right">
+                                            <input type="text" class="form-control input-sm search"
+                                                   placeholder="Cari...">
+                                            <i class="ace-icon fa fa-search text-muted" style="top: -1px;"></i>
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="header">
+                                <th data-column="number" data-class="text-center" style="width: 30px"
+                                    class="text-center">No
+                                </th>
+                                <th data-column="voucherName">{{voucherName|Nama Voucer}}</th>
+                                <th data-column="voucherExpiredType" data-class="text-center text-ellipsis"
+                                    data-width="100" style="width: 100px" class="text-center">
+                                    {{voucherExpiredType|Kadaluarsa}}
+                                </th>
+                                <th data-column="voucherValue" data-class="text-center text-ellipsis" data-price-format='{"locales":"id","currency":"IDR","decimal":false}'
+                                    data-width="100" style="width: 100px" class="text-center">
+                                    {{voucherValue|Nilai Voucer}}
+                                </th>
+                                <th data-column="voucherUsed" data-class="text-center text-ellipsis"
+                                    data-width="100" style="width: 100px" class="text-center">
+                                    {{voucherUsed|Dipakai}}
+                                </th>
+                                <th data-column="voucherStatus" data-class="text-center text-ellipsis"
+                                    data-width="100" style="width: 100px" class="text-center">
+                                    {{voucherStatus|Status}}
+                                </th>
+                                <th data-column="voucherActive" data-class="text-center" style="width: 40px"
+                                    class="text-center">{{voucherActive|Active}}
+                                </th>
+                                <th data-column="action" data-action="custom|update|delete" data-custom-extra="voucher" data-custom-icon="blue fa fa-tags" data-class="text-center"
+                                    style="width: 90px" class="text-center"><i class="fa fa-cogs"></i></th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                            <tfoot></tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

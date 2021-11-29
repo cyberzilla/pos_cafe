@@ -1,0 +1,130 @@
+<div class="initModule"
+     data-param='{"slug":"appDatabaseProfile","functionList":["submitForm","disableContextMenu"],"preloadLib":["icmsaddon"]}'></div>
+<div class="row no-margin">
+    <div class="col-lg-3 update-col" style="display: none;">
+        <div class="icms-widget widget-box widget-color-blue2">
+            <div class="widget-header widget-header-small">
+                <h5 class="widget-title"><i class="fa fa-edit"></i>  {{boxTitleInput|Update Profile}}</h5>
+                <div class="widget-toolbar">
+                    <a href="#" data-action="collapse">
+                        <i class="ace-icon fa fa-chevron-up"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="widget-body">
+                <div class="widget-main">
+                    <form class="icms-form"
+                          name="iform-appDatabaseProfile"
+                          id="iform-appDatabaseProfile"
+                          enctype="multipart/form-data"
+                          data-param='{"method":"actionPage","slug":"appDatabaseProfile","act":"create_appDatabaseProfile","app":"app","appslug":"pos_cafe"}'>
+                        <input type="hidden" name="mainId" value="">
+                        <input class="dont-touch" type="hidden" name="usersAuthor" value="{{s_usersFullName}}">
+                        <div class="form-group has-info">
+                            <div class="row no-margin">
+                                <label for="usersFullName"> {{usersFullName|Full Name}}:</label>
+                                <input id="usersFullName" name="usersFullName" type="text" class="form-control input-sm" data-msg="Please input users full name" data-placement="top-r" required>
+                            </div>
+                        </div>
+                        <div class="form-group has-info">
+                            <div class="row no-margin">
+                                <label for="usersUserName"> {{usersUserName|Username}}:</label>
+                                <input id="usersUserName" name="usersUserName" type="text" class="form-control input-sm" data-msg="Please input username" data-placement="top-r" pattern="[A-Za-z0-9\w]{3,20}" data-rule-remote="Services" data-extra-param='{"method":"actionPage","slug":"users","act":"checkUserName","app":"{{p_app}}"}' data-msg-remote="Username are exist" data-msg-pattern="Only Alphanumeric Min:3 Max:20" disable-onupdate required>
+                            </div>
+                        </div>
+                        <div class="form-group has-info">
+                            <div class="row no-margin">
+                                <label for="usersPassword"> {{usersPassword|Password}}:</label>
+                                <div class="input-group">
+                                    <input id="usersPassword" name="usersPassword" type="password" class="form-control input-sm" data-msg="Please input password" data-placement="top-r" require-onreset required>
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-flat btn-sm btn-inverse btn-white password"><i class="fa fa-eye"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group has-info">
+                            <div class="row no-margin">
+                                <label for="usersPhone"> {{usersPhone|Phone}}:</label>
+                                <input id="usersPhone" name="usersPhone" type="text" class="form-control input-sm" data-msg="Please input phone number" data-placement="top-r" required>
+                            </div>
+                        </div>
+                        <div class="form-group has-info">
+                            <div class="row no-margin">
+                                <label for="usersEmail"> {{usersEmail|Email}}:</label>
+                                <input id="usersEmail" name="usersEmail" type="email" class="form-control input-sm" data-msg="Please input valid email" data-placement="top-r" required>
+                            </div>
+                        </div>
+                        <div class="form-group has-info">
+                            <div class="row no-margin">
+                                <label for="usersAvatar"> {{usersAvatar|Avatar}}:</label>
+                                <input type="file" id="usersAvatar" name="usersAvatar" class="ace-file-input" accept=".jpeg,.jpg,.png,.bmp,.gif,.webp">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-danger btn-sm close_update_profile"><i class="ace-icon fa fa-close"></i> {{btnReset|Close}}</button>
+                            <button type="submit" data-caption='{{btnUpdate|Update}}|{{btnUpdate|Update}}' data-icon='<i class="ace-icon fa fa-save"></i>' data-spinner='<i class="ace-icon fa fa-spinner fa-spin"></i>' class="btn btn-primary btn-sm pull-right">{{btnSave|Save}}</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 main-col">
+        <div class="row no-margin">
+            <div class="col-xs-12 col-sm-3 center">
+                <span class="profile-picture" style="margin-top: 10px;">
+                    <img class="editable img-responsive" alt="{{s_usersFullName}}" src="{{s_usersAvatar}}"/>
+                </span>
+                <button data-id="{{s_usersId}}" class="btn btn-sm btn-block btn-success update_profile" style="border-radius: 3px;" data-param='{"method":"actionPage","slug":"appDatabaseProfile","act":"select_appDatabaseProfile","app":"app","appslug":"pos_cafe"}'>
+                    <i class="ace-icon fa fa-edit bigger-120"></i>
+                    Update Profile
+                </button>
+            </div>
+            <div class="col-xs-12 col-sm-9">
+                <h4 class="blue" style="margin-left: 20px;">
+                    <span class="middle">{{s_usersFullName}}</span>
+                    <span class="label label-success arrowed-in-right">
+                        <i class="ace-icon fa fa-circle smaller-80 align-middle"></i>
+                        online
+                    </span>
+                </h4>
+
+                <div class="profile-user-info">
+                    <div class="profile-info-row">
+                        <div class="profile-info-name"> Username</div>
+                        <div class="profile-info-value">
+                            <span>{{s_usersUserName}}</span>
+                        </div>
+                    </div>
+                    <div class="profile-info-row">
+                        <div class="profile-info-name"> Email</div>
+                        <div class="profile-info-value">
+                            <span>{{s_usersEmail}}</span>
+                        </div>
+                    </div>
+                    <div class="profile-info-row">
+                        <div class="profile-info-name"> Phone</div>
+                        <div class="profile-info-value">
+                            <span>{{s_usersPhone}}</span>
+                        </div>
+                    </div>
+                    <div class="profile-info-row">
+                        <div class="profile-info-name"> Joined</div>
+                        <div class="profile-info-value">
+                            <span class="joined" datetime="{{s_usersJoined}}">Joined</span>
+                        </div>
+                    </div>
+
+                    <div class="profile-info-row">
+                        <div class="profile-info-name"> Last Online</div>
+                        <div class="profile-info-value">
+                            <span class="lastOnline" datetime="{{s_usersLastOnline}}">Last Online</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hr hr-8 dotted"></div>
+            </div><!-- /.col -->
+        </div>
+    </div>
+</div>

@@ -1,0 +1,130 @@
+<div class="initModule"
+     data-param='{"slug":"appDatabaseTable","functionList":["submitForm","resetForm","disableContextMenu","nativeSelect","nativeTable","autoSlug","textAreaAutoSize"],"preloadLib":[]}'></div>
+<div class="row no-margin">
+    <div class="col-lg-3">
+        <div class="icms-widget widget-box widget-color-blue2">
+            <div class="widget-header widget-header-small">
+                <h5 class="widget-title"><i class="fa fa-plus-circle"></i> Meja</h5>
+                <div class="widget-toolbar">
+                    <a href="#" data-action="collapse">
+                        <i class="ace-icon fa fa-chevron-up"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="widget-body">
+                <div class="widget-main">
+                    <form class="icms-form"
+                          name="iform-appDatabaseTable"
+                          id="iform-appDatabaseTable"
+                          data-param='{"method":"actionPage","slug":"appDatabaseTable","act":"create_appDatabaseTable","app":"app","appslug":"pos_cafe"}'>
+                        <input type="hidden" name="mainId" value="">
+                        <div class="form-group has-info">
+                            <div class="row no-margin">
+                                <label for="tableName"> {{tableName|Nama Meja}}:</label>
+                                <input id="tableName" name="tableName" type="text"
+                                       class="form-control input-sm autoSlug" data-msg="Masukkan nama meja" data-slug-target="#tableSlug"
+                                       data-placement="top-r" required>
+                            </div>
+                        </div>
+                        <div class="form-group has-info">
+                            <div class="row no-margin">
+                                <label for="tableSlug"> {{tableSlug|Slug}}:</label>
+                                <input id="tableSlug" name="tableSlug" type="text"
+                                       class="form-control input-sm" data-msg="Masukkan slug meja"
+                                       data-placement="top-r" required>
+                            </div>
+                        </div>
+                        <div class="form-group has-info">
+                            <div class="row no-margin">
+                                <label for="tableDescription"> {{tableDescription|Deskripsi}}:</label>
+                                <textarea id="tableDescription" name="tableDescription" class="autosize-transition form-control input-sm" data-msg="Masukkan deskripsi meja" data-placement="top-r" required></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row no-margin">
+                                <div class="col-lg-12 pull-right text-right">
+                                    <label for="tableActive"> {{tableActive|Aktif}}:</label>
+                                    <div>
+                                        <input name="tableActive" id="tableActive"
+                                               class="ace ace-switch ace-switch-3" type="checkbox">
+                                        <span class="lbl igreen"
+                                              data-lbl="YES&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NO"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="reset" class="btn btn-danger btn-sm"><i class="ace-icon fa fa-refresh"></i>
+                                Reset
+                            </button>
+                            <button type="submit" data-caption='Save|Update'
+                                    data-icon='<i class="ace-icon fa fa-save"></i>'
+                                    data-spinner='<i class="ace-icon fa fa-spinner fa-spin"></i>'
+                                    class="btn btn-primary btn-sm pull-right">Save
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-9">
+        <div class="icms-widget widget-box widget-color-blue2">
+            <div class="widget-header widget-header-small">
+                <h5 class="widget-title"><i class="fa fa-list"></i> {{appDatabaseTableTable|Daftar Meja}}</h5>
+                <div class="widget-toolbar">
+                    <a data-action="reload">
+                        <i class="ace-icon fa fa-refresh"></i>
+                    </a>
+                    <a data-action="collapse">
+                        <i class="ace-icon fa fa-chevron-up"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="widget-body">
+                <div class="widget-main">
+                    <div class="table-responsive icms-scroll" style="margin-bottom: 0">
+                        <table style="width: 100%" class="nativeTable table table-striped table-hover table-bordered"
+                               id="icms-table-appDatabaseTable"
+                               data-current=1
+                               data-perpage=10
+                               data-remote="Services"
+                               data-label="Showing {from} to {to} from {total} entries"
+                               data-param='{"method":"actionPage","slug":"appDatabaseTable","act":"load_appDatabaseTable"}'>
+                            <thead>
+                            <tr>
+                                <td colspan="6">
+                                    <div class="row no-margin pull-right">
+                                        <span class="input-icon input-icon-right">
+                                            <input type="text" class="form-control input-sm search"
+                                                   placeholder="Search...">
+                                            <i class="ace-icon fa fa-search text-muted" style="top: -1px;"></i>
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="header">
+                                <th data-column="number" data-class="text-center" style="width: 30px"
+                                    class="text-center">No
+                                </th>
+                                <th data-column="tableName">{{tableName|Nama Meja}}</th>
+                                <th data-column="tableSlug" data-class="text-center text-ellipsis"
+                                    data-width="100" style="width: 100px" class="text-center">
+                                    {{tableSlug|Slug}}
+                                </th>
+                                <th data-column="tableActive" data-class="text-center" style="width: 40px"
+                                    class="text-center">{{tableActive|Aktif}}
+                                </th>
+                                <th data-column="action" data-action="update|delete" data-class="text-center"
+                                    style="width: 60px" class="text-center"><i class="fa fa-cogs"></i></th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                            <tfoot></tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,125 @@
+<div class="initModule"
+     data-param='{"slug":"appHome","functionList":["disableContextMenu","nativeTable"],"preloadLib":["chart"]}'></div>
+<div class="row no-margin">
+    <div class="col-lg-5">
+        <div class="row no-margin">
+            <div class="icms-widget widget-box widget-color-blue2">
+                <div class="widget-header widget-header-small">
+                    <h5 class="widget-title"><i class="fa fa-info-circle"></i>  {{boxTitleInput|Informasi Cepat}}</h5>
+                    <div class="widget-toolbar">
+                        <a href="#" data-action="collapse">
+                            <i class="ace-icon fa fa-chevron-up"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="widget-body text-center">
+                    <div class="widget-main animate__animated animate__headShake">
+                        <div class="infobox infobox-brown">
+                            <div class="infobox-icon">
+                                <i class="ace-icon fa fa-shopping-cart"></i>
+                            </div>
+                            <div class="infobox-data">
+                                <span class="infobox-data-number orderNow">0</span>
+                                <div class="infobox-content">Penjualan Bulan ini</div>
+                            </div>
+                        </div>
+                        <div class="infobox infobox-red">
+                            <div class="infobox-icon">
+                                <i class="ace-icon fa fa-handshake-o"></i>
+                            </div>
+                            <div class="infobox-data">
+                                <span class="infobox-data-number purchaseNow">0</span>
+                                <div class="infobox-content">Pembelian Bulan ini</div>
+                            </div>
+                        </div>
+                        <div class="infobox infobox-green">
+                            <div class="infobox-icon">
+                                <i class="ace-icon fa fa-arrow-up"></i>
+                            </div>
+                            <div class="infobox-data">
+                                <span class="infobox-data">Pemasukan Bulan Ini</span>
+                                <div class="infobox-content incomeNow">Rp. 0</div>
+                            </div>
+                        </div>
+                        <div class="infobox infobox-blue">
+                            <div class="infobox-icon">
+                                <i class="ace-icon fa fa-arrow-down"></i>
+                            </div>
+                            <div class="infobox-data">
+                                <span class="infobox-data">Pengeluaran Bulan Ini</span>
+                                <div class="infobox-content spendNow">Rp. 0</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row no-margin">
+            <div class="icms-widget widget-box widget-color-blue2" id="product-populer">
+                <div class="widget-header widget-header-small">
+                    <h5 class="widget-title"><i class="fa fa-star"></i>  {{boxTitleInput|Menu Populer}}</h5>
+                    <div class="widget-toolbar">
+                        <a data-action="reload">
+                            <i class="ace-icon fa fa-refresh"></i>
+                        </a>
+                        <a href="#" data-action="collapse">
+                            <i class="ace-icon fa fa-chevron-up"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="widget-body">
+                    <div class="widget-main no-padding">
+                        <div class="table-responsive icms-scroll" style="margin-bottom: 0">
+                            <table style="width: 100%" class="nativeTable table table-striped table-hover table-bordered"
+                                   id="icms-table-appHome"
+                                   data-current=1
+                                   data-perpage=10
+                                   data-remote="Services"
+                                   data-label="Menampilkan {from} » {to} dari {total} data"
+                                   data-param='{"method":"actionPage","slug":"appHome","act":"loadPopularProduct","app":"app","appslug":"pos_cafe"}'>
+                                <thead>
+                                <tr class="header">
+                                    <th data-column="number" data-class="text-center" style="width: 30px"
+                                        class="text-center">No
+                                    </th>
+                                    <th data-column="productName">{{productName|Nama Menu}}</th>
+                                    <th data-column="categoryName" data-class="text-center text-ellipsis"
+                                        data-width="150" style="width: 150px" class="text-center">
+                                        {{productCategory|Kategori}}
+                                    </th>
+                                    <th data-column="productMostSales" data-class="text-center" style="width: 100px"
+                                        class="text-center">{{productMostSales|Terjual}}
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody></tbody>
+                                <tfoot></tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-7">
+        <div class="icms-widget widget-box widget-color-blue2" id="widget-chart">
+            <div class="widget-header widget-header-small">
+                <h5 class="widget-title"><i class="fa fa-line-chart"></i>  {{boxTitleInput|Grafik Pemasukan, Pengeluaran & Laba}}</h5>
+                <div class="widget-toolbar">
+                    <a data-action="reload">
+                        <i class="ace-icon fa fa-refresh"></i>
+                    </a>
+                    <div class="inline">
+                        <button id="btnChart" class="btn btn-minier btn-transparent dropdown-toggle" data-toggle="dropdown" data-value=""></button>
+                        <ul class="dropdown-menu dropdown-125 dropdown-lighter dropdown-menu-right dropdown-caret dropdown-close animate__animated animate__bounceIn chartYearList" style="margin:2px 16px 0 0;"></ul>
+                    </div>
+                </div>
+            </div>
+            <div class="widget-body">
+                <div class="widget-main">
+                    <div id="chart"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

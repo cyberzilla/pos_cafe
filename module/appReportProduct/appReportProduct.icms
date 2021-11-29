@@ -1,0 +1,108 @@
+<div class="initModule"
+     data-param='{"slug":"appReportProduct","functionList":["submitForm","resetForm","disableContextMenu","nativeSelect","nativeTable"],"preloadLib":["datepicker","icmsaddon"]}'></div>
+<div class="row no-margin">
+    <div class="col-lg-3">
+        <div class="icms-widget widget-box widget-color-blue2">
+            <div class="widget-header widget-header-small">
+                <h5 class="widget-title"><i class="fa fa-eye"></i> Menu</h5>
+                <div class="widget-toolbar">
+                    <a href="#" data-action="collapse">
+                        <i class="ace-icon fa fa-chevron-up"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="widget-body">
+                <div class="widget-main">
+                    <form class="icms-form prevent-post"
+                          name="iform-appReportProduct"
+                          id="iform-appReportProduct"
+                          data-param='{"method":"actionPage","slug":"appReportProduct","act":"create_appReportProduct","app":"app","appslug":"pos_cafe"}'>
+                        <input type="hidden" class="dont-touch" name="page" value=1>
+                        <input type="hidden" class="dont-touch" name="perpage" value=10>
+                        <div class="form-group has-info">
+                            <div class="row no-margin">
+                                <label for="orderDetailDateTimeStart"> {{orderDetailDateTimeStart|Rentang Tanggal}}:</label>
+                                <div class="input-daterange input-group">
+                                    <input type="text" class="input-sm form-control" id="orderdetailDateTimeStart" name="orderdetailDateTimeStart" data-msg="Tanggal Mulai" placeholder="Tanggal Mulai" data-placement="top-l" required>
+                                    <span class="input-group-addon"><i class="fa fa-exchange"></i></span>
+                                    <input type="text" class="input-sm form-control" id="orderdetailDateTimeEnd" name="orderdetailDateTimeEnd" data-msg="Tanggal Selesai" placeholder="Tanggal Selesai" data-placement="top-r" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="reset" class="btn btn-danger btn-sm"><i class="ace-icon fa fa-refresh"></i>
+                                Reset
+                            </button>
+                            <button type="submit" data-caption='Show|Show'
+                                    data-icon='<i class="ace-icon fa fa-eye"></i>'
+                                    data-spinner='<i class="ace-icon fa fa-spinner fa-spin"></i>'
+                                    class="btn btn-primary btn-sm pull-right">Show
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-9">
+        <div class="icms-widget widget-box widget-color-blue2">
+            <div class="widget-header widget-header-small">
+                <h5 class="widget-title"><i class="fa fa-list"></i> {{appReportProductTable|Daftar Penjualan Menu}}</h5>
+                <div class="widget-toolbar">
+                    <a data-action="reload">
+                        <i class="ace-icon fa fa-refresh"></i>
+                    </a>
+                    <a data-action="collapse">
+                        <i class="ace-icon fa fa-chevron-up"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="widget-body">
+                <div class="widget-main">
+                    <div class="table-responsive icms-scroll" style="margin-bottom: 0">
+                        <table style="width: 100%" class="nativeTable table table-striped table-hover table-bordered"
+                               id="icms-table-appReportProduct"
+                               data-current=1
+                               data-perpage=10
+                               data-remote="Services"
+                               data-label="Showing {from} to {to} from {total} entries"
+                               data-param='{"method":"actionPage","slug":"appReportProduct","act":"load_appReportProduct"}'>
+                            <thead>
+                            <tr>
+                                <td colspan="6">
+                                    <div class="row no-margin">
+                                        <span class="pull-left">
+                                            <button class="report-download btn btn-xs btn-success btn-rounded" style="display: none;"><i class="ace-icon fa fa-file-excel-o bigger-115"></i> Download</button>
+                                        </span>
+                                        <span class="input-icon input-icon-right pull-right">
+                                            <input type="text" class="form-control input-sm search"
+                                                   placeholder="Cari Menu...">
+                                            <i class="ace-icon fa fa-search text-muted" style="top: -1px;"></i>
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="header">
+                                <th data-column="number" data-class="text-center" style="width: 30px"
+                                    class="text-center">No
+                                </th>
+                                <th data-column="productName">{{productName|Nama Menu}}</th>
+                                <th data-column="categoryName" data-class="text-center text-ellipsis"
+                                    data-width="200" style="width: 200px" class="text-center">
+                                    {{categoryName|Kategori}}
+                                </th>
+                                <th data-column="orderQuantity" data-class="text-center text-ellipsis"
+                                    data-width="100" style="width: 100px" class="text-center">
+                                    {{orderQuantity|Penjualan}}
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                            <tfoot></tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
