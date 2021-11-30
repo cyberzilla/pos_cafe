@@ -57,6 +57,7 @@ switch ($p_act) {
                     "price"=>floatval($detail['orderdetailPrice']),
                     "total"=>floatval($detail['orderdetailSubPrice']),
                 );
+                $cat[] = $detail['categoryRootName'];
             }
             $receipt = array(
                 "content"=>array(
@@ -70,7 +71,9 @@ switch ($p_act) {
                     "storeTax"=>is_null($data['data']['orderTaxValue'])?0:floatval($data['data']['orderTaxValue']),
                     "storeProduct"=>$details,
                     "storeQueue"=>intval(substr($data['data']['orderInvoice'],-3)),
-                    "storeTable"=>$data['data']['orderTable']
+                    "storeTable"=>$data['data']['orderTable'],
+                    "storeAdditionalInfo"=>wrapWords($data['data']['orderAdditionalInfo'], 34),
+                    "storeRootName"=>join(",",array_unique($cat))
                 )
             );
         }else{

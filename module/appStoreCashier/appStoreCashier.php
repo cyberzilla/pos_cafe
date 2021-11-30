@@ -155,6 +155,7 @@ switch ($p_act) {
                 "price"=>floatval($detail['priceSellingPrice']),
                 "total"=>floatval($detail['subTotalRaw']),
             );
+            $cat[] = $detail['categoryRootName'];
             $modal += intval($detail['cartQuantity'])*floatval($detail['priceCapitalPrice']);
             $customerName = $detail['cartOptionalValue'];
         }
@@ -177,7 +178,9 @@ switch ($p_act) {
                 "storeTax"=>is_null($data['data']['data'][0]['orderTaxValue'])?0:floatval($data['data']['data'][0]['orderTaxValue']),
                 "storeProduct"=>$details,
                 "storeQueue"=>intval(substr($invoice,-3)),
-                "storeTable"=>$data['data']['data'][0]['orderTable']
+                "storeTable"=>$data['data']['data'][0]['orderTable'],
+                "storeAdditionalInfo"=>wrapWords($data['data']['data'][0]['orderAdditionalInfo'], 34),
+                "storeRootName"=>join(",",array_unique($cat))
             )
         );
 
