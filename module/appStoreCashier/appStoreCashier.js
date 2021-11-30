@@ -241,6 +241,7 @@ $(function () {
 
     root.find("#iform-appStoreCashier").on("submitted",function (e,res) {
         var check = getData({key:"icms-cashier"}),
+            merge = getData({key:"icms-invoice-merge"}),
             invoice = getData({key:"icms-invoice-number"}),mergeObj,content;
 
         var readyPrint = {
@@ -248,7 +249,7 @@ $(function () {
             "storeAddress": check.receiptStoreAddress,
             "storePhone":check.receiptStorePhone,
             "storeCashier":"KASIR: "+check.cashierName,
-            "storeInvoice":"INVOICE: "+invoice[0],
+            "storeInvoice":"INVOICE: "+(merge===null?invoice[0]:merge.invoice),
             "storeFooter":[check.receiptStoreFoot1,check.receiptStoreFoot2]
         }
 
@@ -291,6 +292,10 @@ $(function () {
                 location.href='jprint:'+btoa(content);
                 triggerReload();
             }
+        }
+
+        if(merge!==null){
+            deleteKey({key:"icms-invoice-merge"});
         }
     });
 
@@ -345,29 +350,39 @@ $(function () {
 
     root.find("#icms-table-" + slug).parents(".icms-widget").on({
         'setting.ace.widget':function (e) {
-            var param = "method=actionPage&slug=appStoreCashier&app=app&appslug=pos_cafe&act=clearCart";
-            jConfirm("Apakah anda akan menghapus produk yang telah diinput?","Bersihkan Produk",function (r) {
-               if(r){
-                    $.post("Services",param,function (res) {
-                        if(res.status==="success"){
-                            $.gritter.add({
-                                title: 'Bersihkan Produk',
-                                text: res.messageSuccess,
-                                class_name: 'gritter-success'
-                            });
-                        }else{
-                            $.gritter.add({
-                                title: "Gagal",
-                                text: res.messageSuccess,
-                                class_name: 'gritter-error'
-                            });
-                        }
-                        pushData({key:"icms-invoice-number",data:[res.invoice],replace:true});
-                        root.find("#icms-table-" + slug).parents(".icms-widget").trigger("reload.ace.widget");
-                        root.find("#directPrint").prop("checked",true);
-                    },'json');
-               }
-            });
+            var param = "method=actionPage&slug=appStoreCashier&app=app&appslug=pos_cafe&act=clearCart",
+                merge = getData({key:"icms-invoice-merge"});
+            if(merge===null){
+                jConfirm("Apakah anda akan menghapus produk yang telah diinput?","Bersihkan Produk",function (r) {
+                    if(r){
+                        $.post("Services",param,function (res) {
+                            if(res.status==="success"){
+                                $.gritter.add({
+                                    title: 'Bersihkan Produk',
+                                    text: res.messageSuccess,
+                                    class_name: 'gritter-success'
+                                });
+                            }else{
+                                $.gritter.add({
+                                    title: "Gagal",
+                                    text: res.messageSuccess,
+                                    class_name: 'gritter-error'
+                                });
+                            }
+                            pushData({key:"icms-invoice-number",data:[res.invoice],replace:true});
+                            root.find("#icms-table-" + slug).parents(".icms-widget").trigger("reload.ace.widget");
+                            root.find("#directPrint").prop("checked",true);
+                        },'json');
+                    }
+                });
+            }else{
+                jConfirm("Apakah anda akan membatalkan gabung order untuk invoice "+merge.invoice+"?","Gabung Order",function(r){
+                    if(r){
+                        deleteKey({key:"icms-invoice-merge"});
+                        jAlert("Sukses menghapus cache gabung order","Gabung Order");
+                    }
+                });
+            }
         },
         'reload.ace.widget': function (e,download) {
             e.stopPropagation();
@@ -395,6 +410,7 @@ $(function () {
 
     function reloadTable(res){
         var check = getData({key:"icms-cashier"}),
+            merge = getData({key:"icms-invoice-merge"}),
             invoice = getData({key:"icms-invoice-number"}),
             voucher = getData({key:"icms-voucher"}),
             subSelling=0, subDiscount=0, cartQty=0, subTotalRaw=0,cartContent="",tax=0;
@@ -455,15 +471,21 @@ $(function () {
                 root.find(".cartContent").html(cartContent);
                 root.find(".tableQty").html("QTY: "+cartQty);
                 root.find(".tableDiscount").html(subDiscount.toLocaleString("id-ID"));
+                root.find(".tableSubTotal").html(subTotalRaw.toLocaleString("id-ID"));
                 root.find(".cashierName").html("KASIR: "+check.cashierName);
-                root.find(".receiptStoreInvoiceCode").html("INVOICE: "+invoice[0]);
+                root.find(".receiptStoreInvoiceCode").html("INVOICE: "+(merge===null?invoice[0]:merge.invoice));
                 root.find(".receiptStoreName").html(check.receiptStoreName);
                 root.find(".receiptStoreAddress").html(check.receiptStoreAddress);
                 root.find(".receiptStorePhone").html(check.receiptStorePhone);
                 root.find(".receiptStoreFoot1").html(check.receiptStoreFoot1);
                 root.find(".receiptStoreFoot2").html(check.receiptStoreFoot2);
                 //Complete Form
-                root.find("#orderInvoice").val(invoice[0]);
+                root.find("#orderInvoice").val(merge===null?invoice[0]:merge.invoice);
+                if(merge!==null){
+                    root.find("#orderType").val("preorder").trigger("change");
+                    root.find("#orderCustomerName").val(merge.customer);
+                    root.find("#orderTable").val(merge.table)
+                }
                 root.find("#orderCashierId").val(check.pettycashCashierId);
                 root.find("#orderPrice").val(subTotalRaw);
                 root.find("#orderTotalDiscountValue").val(subDiscount);
@@ -480,19 +502,6 @@ $(function () {
             root.find("#directPrint").prop("checked",true);
         }
     }
-
-    // root.find("#sellingType").change(function(){
-    //     var productName = root.find("#productName").data("param"),
-    //         selected = $(this).find('option:selected'),
-    //         result = root.find("#productName").parents(".typeahead__container").find(".typeahead__result"),
-    //         hint = root.find("#productName").parents(".typeahead__container").find(".typeahead__hint");
-    //     productName.remote.send['sellingType'] = selected.val();
-    //     root.find("#productName").data("param",productName);
-    //     // reset typeahead
-    //     if(result.length>0){result.remove();}
-    //     if(hint.length>0){hint.remove();}
-    //     typeahead(slug,false,"#productName");
-    // });
 
     root.find(".typeahead").on("clicked",function (e) {
         root.find(".typeahead").one("keyup",function (e){
@@ -538,7 +547,7 @@ $(function () {
     });
 
     root.find('.icms-receipt').ace_scroll('modify',{
-        size: 350,
+        size: 380,
         observeContent: true,
         touchDrag: true,
         touchSwipe: true,
@@ -623,7 +632,17 @@ $(function () {
     });
 
     root.find("#btnSearchProduct").click(function(e){
-        jAlert("Modul Masih Dalam Pengembangan!","Daftar Produk");
+        var $this = this,
+            param = {method:"actionPage",app:"app",appslug:"pos_cafe",act:"loadAllMenu",slug:slug};
+        $.post("Services",param,function(res){
+            $($this).icmsModal({
+                padding:"10px",
+                loadInFullscreen: true,
+                background:"#b9d3f3",
+                title:"Daftar Menu Roemah Lamdoek",
+                content: JSON.stringify(res)
+            });
+        },'json');
     });
 
     root.find(".clearVoucherCode").click(function(e){
@@ -740,40 +759,45 @@ $(function () {
         var param = {method:"actionPage",app:"app",appslug:"pos_cafe",act:"load_shortcutMenu",slug:slug},
             template="";
         $.post("Services",param,function(res){
-            $.each(res.data,function(i,item){
-                template += '<button class="btn btn-app btn-light btn-xs tooltip-success shortcutButton" data-rel="tooltip" data-placement="bottom" title data-original-title="'+item.productName+'" data-id="'+item.id+'"><strong>'+item.shortcutOrder+'</strong><br>'+item.productCode+'</button>';
-            });
-            root.find(".shortcutMenuContainer").html(template).show();
-            root.find('[data-rel=tooltip]').tooltip();
-            root.find(".shortcutButton").click(function(e){
-                var check = getData({key:"icms-cashier"}),
-                    param = {"method":"actionPage",app:"app","slug":"appStoreCashier","appslug":"pos_cafe","act":"create_appStoreCashier","cartCashierId":check.pettycashCashierId,"cartProductId":$(this).data("id"),"cartQuantity":"1"};
-                $.post("Services",param,function(res){
-                    if(res!==null){
-                        if(res.status==="success"){
-                            $.gritter.add({
-                                title: 'Berhasil',
-                                text: res.messageSuccess,
-                                class_name: 'gritter-success'
-                            });
+            if(res.data!==null){
+                $.each(res.data,function(i,item){
+                    template += '<button class="btn btn-app btn-light btn-xs tooltip-success shortcutButton" data-rel="tooltip" data-placement="bottom" title data-original-title="'+item.productName+'" data-id="'+item.id+'"><strong>'+item.shortcutOrder+'</strong><br>'+item.productCode+'</button>';
+                });
+                root.find(".shortcutMenuContainer").parent(".row").show();
+                root.find(".shortcutMenuContainer").html(template).show();
+                root.find('[data-rel=tooltip]').tooltip();
+                root.find(".shortcutButton").click(function(e){
+                    var check = getData({key:"icms-cashier"}),
+                        param = {"method":"actionPage",app:"app","slug":"appStoreCashier","appslug":"pos_cafe","act":"create_appStoreCashier","cartCashierId":check.pettycashCashierId,"cartProductId":$(this).data("id"),"cartQuantity":"1"};
+                    $.post("Services",param,function(res){
+                        if(res!==null){
+                            if(res.status==="success"){
+                                $.gritter.add({
+                                    title: 'Berhasil',
+                                    text: res.messageSuccess,
+                                    class_name: 'gritter-success'
+                                });
+                            }else{
+                                $.gritter.add({
+                                    title: "Gagal",
+                                    text: res.messageSuccess,
+                                    class_name: 'gritter-error'
+                                });
+                            }
+                            pushData({key:"icms-invoice-number",data: [res.invoice],replace:true});
+                            root.find("#icms-table-" + slug).parents(".icms-widget").trigger("reload.ace.widget");
                         }else{
                             $.gritter.add({
                                 title: "Gagal",
-                                text: res.messageSuccess,
+                                text: 'Stok kosong, silahkan cek stok produk anda!',
                                 class_name: 'gritter-error'
                             });
                         }
-                        pushData({key:"icms-invoice-number",data: [res.invoice],replace:true});
-                        root.find("#icms-table-" + slug).parents(".icms-widget").trigger("reload.ace.widget");
-                    }else{
-                        $.gritter.add({
-                            title: "Gagal",
-                            text: 'Stok kosong, silahkan cek stok produk anda!',
-                            class_name: 'gritter-error'
-                        });
-                    }
-                },"json");
-            });
+                    },"json");
+                });
+            }else{
+                root.find(".shortcutMenuContainer").parent(".row").hide();
+            }
         },'json');
     }
     loadShortcut();

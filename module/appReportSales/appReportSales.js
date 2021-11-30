@@ -50,7 +50,7 @@ $(function () {
                 }else{
                     prices = 0;
                 }
-                root.find("#reportTotalPrice").autoNumeric("set",prices);
+                root.find("#reportTotalPrice").autoNumeric("set",isNaN(prices)?0:prices);
             }else{
                 table.find(".report-download").hide();
                 root.find("#reportTotalPrice").autoNumeric("set",0);

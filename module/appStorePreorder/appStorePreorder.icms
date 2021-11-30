@@ -65,8 +65,8 @@
                                     data-width="120" style="width: 120px" class="text-center">
                                     {{orderTotalPrice|Total Harga}}
                                 </th>
-                                <th data-column="action" data-action="custom|update" data-class="text-center" data-custom-extra="info" data-custom-icon="blue fa fa-info-circle"
-                                    style="width: 80px" class="text-center"><i class="fa fa-cogs"></i></th>
+                                <th data-column="action" data-action="custom|custom|update" data-class="text-center" data-custom-extra="info|merge" data-custom-icon="blue fa fa-info-circle|purple fa fa-copy"
+                                    style="width: 100px" class="text-center"><i class="fa fa-cogs"></i></th>
                             </tr>
                             </thead>
                             <tbody></tbody>

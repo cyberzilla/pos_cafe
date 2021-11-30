@@ -27,7 +27,7 @@ switch ($p_act) {
 
     case "showOrderDetail":
         $order = getData($conn,"*",$tablename,"orderInvoice='$p_orderInvoice'");
-        $detail = getDataN($conn, "*", "orderdetail od LEFT JOIN viewproducts vp ON od.orderdetailProductId=vp.id","orderdetailInvoice='$p_orderInvoice'");
+        $detail = getDataN($conn, "vp.productName,vp.productCode,vp.productUnitName,SUM(od.orderdetailQuantity) orderdetailQuantity,SUM(od.orderdetailSubPrice) orderdetailSubPrice", "orderdetail od LEFT JOIN viewproducts vp ON od.orderdetailProductId=vp.id","od.orderdetailInvoice='$p_orderInvoice' GROUP BY vp.id");
         $result = array_merge($detail, array("order"=>$order['data']));
         echo json_encode($result);
         break;
@@ -62,7 +62,8 @@ switch ($p_act) {
                     "storeQueue"=>intval(substr($data['data']['data'][0]['orderInvoice'],-3)),
                     "storeTable"=>$data['data']['data'][0]['orderTable'],
                     "storeAdditionalInfo"=>wrapWords($data['data']['data'][0]['orderAdditionalInfo'], 34),
-                    "storeRootName"=>join(",",array_unique($cat))
+                    "storeRootName"=>join(",",array_unique($cat)),
+                    "storeCustomerName"=>is_null($data['data']['data'][0]['orderCustomerName'])?"":"PELANGGAN: ".$data['data']['data'][0]['orderCustomerName']
                 )
             );
         }else{

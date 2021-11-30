@@ -29,7 +29,10 @@ $(function () {
     });
 
     root.find("#icms-table-appStorePreorder").on("tb_act_custom",function (e,data) {
-        var invoice = data.selector.parents("tr").children()[2].firstChild.textContent,param;
+        var invoice = data.selector.parents("tr").children()[2].firstChild.textContent,
+            customer = data.selector.parents("tr").children()[3].firstChild.textContent,
+            table = data.selector.parents("tr").children()[4].firstChild.textContent,
+            param;
         switch(data.extra){
             case "info":
                     param = "method=actionPage&slug=appStorePreorder&app=app&appslug=pos_cafe&act=showOrderDetail&orderInvoice="+invoice;
@@ -47,6 +50,17 @@ $(function () {
                     $.alerts.showIcon=true;
                 },'json');
             break;
+
+            case "merge":
+                var mergeinv = {invoice:invoice, customer:customer, table:table}
+                jConfirm("Apakah anda akan menambahkan order baru pada invoice ini?","Gabung Order",function(r){
+                    if(r){
+                        pushData({key: "icms-invoice-merge", data: mergeinv, replace: true});
+                        var getInv = getData({key:"icms-invoice-merge"});
+                        $('.addMainTab[data-slug="appStoreCashier"]').click();
+                    }
+                });
+                break;
         }
     });
 

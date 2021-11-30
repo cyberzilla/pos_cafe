@@ -1,5 +1,5 @@
 <div class="initModule"
-     data-param='{"slug":"appStoreCashier","functionList":["submitForm","resetForm","disableContextMenu","nativeTable","typeahead","autoNumeric","nativeSelect","textAreaAutoSize"],"preloadLib":["fakereceipt","digital7","hotkeys","domtoimage"]}'></div>
+     data-param='{"slug":"appStoreCashier","functionList":["submitForm","resetForm","disableContextMenu","nativeTable","typeahead","autoNumeric","nativeSelect","textAreaAutoSize"],"preloadLib":["fakereceipt","digital7","hotkeys","domtoimage","icmsaddon"]}'></div>
 <div class="no-access text-center" style="display: none;">
     <h3 class="animate__animated animate__headShake"><i class="ace-icon fa fa-warning orange"></i> <strong class="orange">403</strong> Forbidden</h3><div class="grey">User belum memiliki akses ke dalam menu kasir, silahkan hubungi administrator</div>
 </div>
@@ -72,10 +72,11 @@
                 <h5 class="widget-title"><i class="fa fa-cubes"></i> {{appStoreCashierTable|Tambah Menu}}</h5>
                 <div class="widget-toolbar">
                     <a data-action="settings">
-                        <i class="ace-icon fa fa-trash bigger-13"></i> Bersihkan Pesanan
+                        <i class="fa fa-trash"></i> Bersihkan
                     </a>
+                    <span class="separator"></span>
                     <a data-action="reload">
-                        <i class="ace-icon fa fa-refresh"></i>
+                        <i class="fa fa-refresh"></i>
                     </a>
                 </div>
             </div>
@@ -172,7 +173,7 @@
                                    class="form-control input-lg autoNumeric text-right totalPrice" data-v-max="99999999" data-v-min="0" data-a-sign="" data-a-sep="."  data-a-dec=" " value="0" readonly>
                         </div>
                     </div>
-                    <div class="icms-receipt" style="display: none;margin-top: 10px;height: 350px;">
+                    <div class="icms-receipt" style="display: none;margin-top: 10px;height: 380px;">
                         <div class="receipt-container">
                             <div class="receipt-view" id="receipt-view">
                                 <div class="receipt-header">
@@ -199,7 +200,10 @@
                                         <tr class="border-dashed"><td colspan="4">&nbsp;</td></tr>
                                         <tr>
                                             <td colspan="2" class="text-left tableQty">QTY: </td>
-                                            <td class="text-right">DISKON: </td><td class="text-right tableDiscount">0</td>
+                                            <td class="text-right">SUBTOTAL: </td><td class="text-right tableSubTotal" data-price=0>0</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="3" class="text-right">DISKON: </td><td class="text-right tableDiscount" data-price=0>0</td>
                                         </tr>
                                         <tr>
                                             <td colspan="3" class="text-right">VOUCER: </td><td class="text-right tableVoucher" data-price=0>0</td>
@@ -265,7 +269,7 @@
                                 <div class="form-group has-info">
                                     <div class="row no-margin">
                                         <label for="orderAdditionalInfo"> {{orderAdditionalInfo|Keterangan}}:</label>
-                                        <textarea id="orderAdditionalInfo" name="orderAdditionalInfo" class="autosize-transition form-control input-sm" data-msg="Tambahkan keterangan" placeholder="Tambahkan Keterangan" data-placement="top-r" required>-</textarea>
+                                        <textarea id="orderAdditionalInfo" name="orderAdditionalInfo" class="autosize-transition form-control input-sm" data-msg="Tambahkan keterangan" placeholder="Tambahkan Keterangan" data-placement="top-r" rows="1" required>-</textarea>
                                     </div>
                                 </div>
                             </div>
