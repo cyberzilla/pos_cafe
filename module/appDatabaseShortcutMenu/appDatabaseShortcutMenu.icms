@@ -21,7 +21,7 @@
                         <div class="form-group has-info">
                             <div class="row no-margin">
                                 <label for="productName"> {{productName|Nama Menu}}:</label>
-                                <input disable-onupdate type="text" name="productName" id="productName" data-param='{"source":"remote","remote":{"target":"#shortcutProductId","targetdata":"id","display":"productName","url":"Services","send":{"method":"actionPage","slug":"appDatabaseShortcutMenu","act":"loadProduct","app":"app","appslug":"pos_cafe"}}}' class="typeahead form-control input-sm" data-msg="Cari Nama Menu" placeholder="" data-placement="top-r" autocomplete="off" required>
+                                <input disable-onupdate type="text" name="productName" id="productName" data-param='{"source":"remote","remote":{"target":"#shortcutProductId","targetdata":"id","display":"productName","empty":"Menu %query% tidak ditemukan","url":"Services","send":{"method":"actionPage","slug":"appDatabaseShortcutMenu","act":"loadProduct","app":"app","appslug":"pos_cafe"}}}' class="typeahead form-control input-sm" data-msg="Cari Nama Menu" placeholder="" data-placement="top-r" autocomplete="off" required>
                                 <input type="hidden" id="shortcutProductId" name="shortcutProductId">
                             </div>
                         </div>

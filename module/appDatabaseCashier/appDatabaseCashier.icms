@@ -21,7 +21,7 @@
                         <div class="form-group has-info">
                             <div class="row no-margin">
                                 <label for="usersFullName"> {{usersFullName|Nama User}}:</label>
-                                <input disable-onupdate type="text" name="usersFullName" id="usersFullName" data-param='{"source":"remote","remote":{"target":"#cashierUsersId","targetdata":"id","display":"usersFullName","url":"Services","send":{"method":"actionPage","slug":"appDatabaseCashier","act":"loadUsers","app":"app","appslug":"pos_cafe"}}}' class="typeahead form-control input-sm" data-msg="Cari Nama User" placeholder="" data-placement="top-r" autocomplete="off" required>
+                                <input disable-onupdate type="text" name="usersFullName" id="usersFullName" data-param='{"source":"remote","remote":{"target":"#cashierUsersId","targetdata":"id","display":"usersFullName","empty":"User %query% tidak ditemukan","url":"Services","send":{"method":"actionPage","slug":"appDatabaseCashier","act":"loadUsers","app":"app","appslug":"pos_cafe"}}}' class="typeahead form-control input-sm" data-msg="Cari Nama User" placeholder="" data-placement="top-r" autocomplete="off" required>
                                 <input type="hidden" id="cashierUsersId" name="cashierUsersId">
                             </div>
                         </div>
