@@ -538,7 +538,7 @@ $(function () {
     });
 
     root.find('.icms-receipt').ace_scroll('modify',{
-        size: 380,
+        size: 350,
         observeContent: true,
         touchDrag: true,
         touchSwipe: true,
@@ -547,6 +547,7 @@ $(function () {
 
     root.find("#orderType").change(function (e) {
        var bayar = root.find(".orderPricePaymentContainer"),
+           cstName = root.find(".orderCustomerNameContainer"),
            tbBayar = root.find(".tableBayar"),
            tbKembali = root.find(".tableKembali"),
            tbStatus = root.find(".tableStatus"),
@@ -568,6 +569,7 @@ $(function () {
                 root.find("#orderStatus").val("success");
                 root.find("#orderPricePayment").val("");
                 root.find("input[name=orderPricePayment]").val("");
+                cstName.hide();cstName.find("input").val("");
                 break;
 
             case "card":
@@ -583,6 +585,7 @@ $(function () {
                 root.find("#orderPricePayment").autoNumeric("set",totalPrice);
                 root.find("input[name=orderPricePayment]").val(totalPrice);
                 paymentKeypress(totalPrice,totalPrice);
+                cstName.hide();cstName.find("input").val("");
                 break;
 
             case "preorder":
@@ -598,6 +601,7 @@ $(function () {
                 root.find("#orderStatus").val("process");
                 root.find("#orderPricePayment").val("");
                 root.find("input[name=orderPricePayment]").val("");
+                cstName.show();
                 break;
 
             default:
@@ -613,8 +617,13 @@ $(function () {
                 root.find("#orderStatus").val("success");
                 root.find("#orderPricePayment").val("");
                 root.find("input[name=orderPricePayment]").val("");
+                cstName.hide();cstName.find("input").val("");
                 break;
         }
+    });
+
+    root.find("#btnSearchProduct").click(function(e){
+        jAlert("Modul Masih Dalam Pengembangan!","Daftar Produk");
     });
 
     root.find(".clearVoucherCode").click(function(e){

@@ -1,5 +1,5 @@
 <div class="initModule"
-     data-param='{"slug":"appDatabasePrice","functionList":["submitForm","resetForm","disableContextMenu","nativeSelect","nativeTable","typeahead","autoNumeric"]}'></div>
+     data-param='{"slug":"appDatabasePrice","functionList":["submitForm","resetForm","disableContextMenu","nativeSelect","nativeTable","autoNumeric"]}'></div>
 <div class="row no-margin">
     <div class="col-lg-3">
         <div class="icms-widget widget-box widget-color-blue2">
@@ -21,9 +21,9 @@
                         <div class="form-group has-info">
                             <div class="row no-margin">
                                 <label for="productName"> {{priceProductName|Nama Menu}}:</label>
-<!--                                <input name="priceProductId" id="priceProductId" data-param='{"source":["Makassar", "Gowa", "Soppeng"]}' class="typeahead form-control input-sm" data-msg="Cari Nama Menu" placeholder="" data-placement="top-r" autocomplete="off" required>-->
-                                <input disable-onupdate type="text" name="productName" id="productName" data-param='{"source":"remote","remote":{"target":"#priceProductId","targetdata":"id","display":"productName","empty":"Menu %query% tidak ditemukan","url":"Services","send":{"method":"actionPage","slug":"appDatabasePrice","act":"loadProduct","app":"app","appslug":"pos_cafe"}}}' class="typeahead form-control input-sm" data-msg="Cari Nama Menu" placeholder="" data-placement="top-r" autocomplete="off" required>
+                                <input type="text" name="productName" id="productName" class="form-control input-sm" data-msg="Nama Menu" placeholder="" data-placement="top-r" autocomplete="off" readonly>
                                 <input type="hidden" id="priceProductId" name="priceProductId">
+                                <input type="hidden" id="priceId" name="priceId">
                             </div>
                         </div>
                         <div class="form-group has-info">
@@ -105,7 +105,7 @@
                                     data-width="150" style="width: 150px" class="text-center">
                                     {{priceSellingPrice|Harga Jual}}
                                 </th>
-                                <th data-column="action" data-action="update|delete" data-class="text-center"
+                                <th data-column="action" data-action="custom|update" data-custom-extra="history" data-custom-icon="purple fa fa fa-history" data-class="text-center"
                                     style="width: 60px" class="text-center"><i class="fa fa-cogs"></i></th>
                             </tr>
                             </thead>

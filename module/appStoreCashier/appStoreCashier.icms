@@ -1,5 +1,5 @@
 <div class="initModule"
-     data-param='{"slug":"appStoreCashier","functionList":["submitForm","resetForm","disableContextMenu","nativeTable","typeahead","autoNumeric","nativeSelect"],"preloadLib":["fakereceipt","digital7","hotkeys","domtoimage"]}'></div>
+     data-param='{"slug":"appStoreCashier","functionList":["submitForm","resetForm","disableContextMenu","nativeTable","typeahead","autoNumeric","nativeSelect","textAreaAutoSize"],"preloadLib":["fakereceipt","digital7","hotkeys","domtoimage"]}'></div>
 <div class="no-access text-center" style="display: none;">
     <h3 class="animate__animated animate__headShake"><i class="ace-icon fa fa-warning orange"></i> <strong class="orange">403</strong> Forbidden</h3><div class="grey">User belum memiliki akses ke dalam menu kasir, silahkan hubungi administrator</div>
 </div>
@@ -101,18 +101,22 @@
                                         <div class="row no-margin">
                                             <div class="col-lg-2 col-md-2 col-sm-3 col-xs-3">
                                                     <span class="block input-icon">
-                                                        <input type="number" id="cartQuantity" name="cartQuantity" class="form-control input-sm width-100" value="1" min="1" placeholder="Qty [CTRL+Q]">
+                                                        <input type="number" id="cartQuantity" name="cartQuantity" class="form-control input-sm width-100 text-center" value="1" min="1" placeholder="Qty [CTRL+Q]">
                                                         <i class="ace-icon fa fa-cart-plus" style="top: -1px;"></i>
                                                     </span>
                                             </div>
                                             <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9">
+                                                <div class="input-group">
                                                     <span class="block input-icon input-icon-right">
                                                         <input class="typeahead form-control input-sm width-100" type="text" id="productName" data-param='{"source":"remote","remote":{"target":"#cartProductId,#cartRefCode,#customerName","targetdata":"id,cartRefCode,customerName","display":["productCodeName","stockQuantity"],"empty":"Menu %query% tidak ditemukan","url":"Services","send":{"method":"actionPage","slug":"appStoreCashier","act":"loadProduct","app":"app","appslug":"pos_cafe"}}}' placeholder="Cari Nama Menu/Barcode [CTRL+A]" data-placement="top-r" autocomplete="off">
-                                                         <i class="ace-icon fa fa-search" style="top: -1px;"></i>
                                                         <input type="hidden" id="cartProductId" name="cartProductId">
                                                         <input type="hidden" id="cartRefCode" name="cartRefCode">
                                                         <input type="hidden" id="customerName" name="customerName">
                                                     </span>
+                                                    <span class="input-group-btn">
+                                                        <button type="button" id="btnSearchProduct" class="btn btn-primary btn-xs"><i class="ace-icon fa fa-search"></i></button>
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
                                     </form>
@@ -168,7 +172,7 @@
                                    class="form-control input-lg autoNumeric text-right totalPrice" data-v-max="99999999" data-v-min="0" data-a-sign="" data-a-sep="."  data-a-dec=" " value="0" readonly>
                         </div>
                     </div>
-                    <div class="icms-receipt" style="display: none;margin-top: 10px;height: 380px;">
+                    <div class="icms-receipt" style="display: none;margin-top: 10px;height: 350px;">
                         <div class="receipt-container">
                             <div class="receipt-view" id="receipt-view">
                                 <div class="receipt-header">
@@ -246,6 +250,27 @@
                         <input type="hidden" name="orderVoucherValue" id="orderVoucherValue" value="">
                         <input type="hidden" name="orderStatus" id="orderStatus" value="success">
 
+<!--                        <div class="form-group has-info">-->
+<!--                            <div class="row no-margin">-->
+<!--                                <div class="form-group has-info">-->
+<!--                                    <div class="row no-margin">-->
+<!--                                        <label for="menusParentId">Menus Parent:</label>-->
+<!--                                        <input name="menusParentId" id="menusParentId" data-param='{"source":["Makassar", "Gowa", "Soppeng"]}' class="typeahead form-control input-sm" data-msg="Please input menu parent" placeholder="Cari Tipe" data-placement="top-r" autocomplete="off" required>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+                        <div class="form-group has-info">
+                            <div class="row no-margin">
+                                <div class="form-group has-info">
+                                    <div class="row no-margin">
+                                        <label for="orderAdditionalInfo"> {{orderAdditionalInfo|Keterangan}}:</label>
+                                        <textarea id="orderAdditionalInfo" name="orderAdditionalInfo" class="autosize-transition form-control input-sm" data-msg="Tambahkan keterangan" placeholder="Tambahkan Keterangan" data-placement="top-r" required>-</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="form-group has-info">
                             <div class="row no-margin">
                                 <div class="col-lg-6">
@@ -257,8 +282,8 @@
                                             required></select>
                                 </div>
                                 <div class="col-lg-6">
-                                    <label for="orderAdditionalInfo"> {{orderAdditionalInfo|Meja}}:</label>
-                                    <select name="orderAdditionalInfo" id="orderAdditionalInfo" data-default="meja-1"
+                                    <label for="orderTable"> {{orderTable|Meja}}:</label>
+                                    <select name="orderTable" id="orderTable" data-default="meja-1"
                                             data-remote='{"param":{"method":"actionPage","slug":"appStoreCashier","act":"load_meja"}}'
                                             data-placeholder="Pilih Meja..." class="nativeSelect form-control input-sm"
                                             data-msg="Silahkan pilih meja" data-placement="top-r" required></select>
@@ -282,6 +307,16 @@
                                     <input id="orderPricePayment" name="orderPricePaymentX" type="text"
                                            class="form-control input-sm autoNumeric" data-msg="Masukkan nilai pembayaran" data-v-max="99999999" data-v-min="0" data-a-sign="Rp. " data-a-sep="."  data-a-dec=" "
                                            data-placement="top-r" placeholder="Bayar [CTRL+Z]" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group has-info orderCustomerNameContainer" style="display: none">
+                            <div class="row no-margin">
+                                <div class="form-group has-info">
+                                    <div class="row no-margin">
+                                        <label for="orderCustomerName"> {{orderCustomerName|Nama Pelanggan}}:</label>
+                                        <input id="orderCustomerName" name="orderCustomerName" type="text" class="form-control input-sm" data-msg="Masukkan nama pelanggan" data-placement="top-r" required>
+                                    </div>
                                 </div>
                             </div>
                         </div>

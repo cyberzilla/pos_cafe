@@ -54,7 +54,13 @@
                                     data-width="100" style="width: 100px" class="text-center">
                                     {{orderDateTime|Tanggal}}
                                 </th>
-                                <th data-column="orderInvoice">{{orderInvoice|Invoice}}</th>
+                                <th data-column="orderInvoice" data-class="text-center" data-width="100" style="width: 100px" class="text-center">
+                                    {{orderInvoice|Invoice}}
+                                </th>
+                                <th data-column="orderCustomerName">{{orderCustomerName|Nama Pelanggan}}</th>
+                                <th data-column="orderTable" data-class="text-center text-ellipsis"  data-width="100" style="width: 100px" class="text-center">
+                                    {{orderTable|Meja}}
+                                </th>
                                 <th data-column="orderTotalPrice" data-class="text-center text-ellipsis" data-price-format='{"locales":"id","currency":"IDR","decimal":false}'
                                     data-width="120" style="width: 120px" class="text-center">
                                     {{orderTotalPrice|Total Harga}}

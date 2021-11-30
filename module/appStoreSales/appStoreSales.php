@@ -70,7 +70,7 @@ switch ($p_act) {
                     "storeTax"=>is_null($data['data']['orderTaxValue'])?0:floatval($data['data']['orderTaxValue']),
                     "storeProduct"=>$details,
                     "storeQueue"=>intval(substr($data['data']['orderInvoice'],-3)),
-                    "storeTable"=>$data['data']['orderAdditionalInfo']
+                    "storeTable"=>$data['data']['orderTable']
                 )
             );
         }else{

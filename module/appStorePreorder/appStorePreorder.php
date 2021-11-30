@@ -13,7 +13,7 @@ $msg_removed = "Successfully Remove Data";
 
 switch ($p_act) {
     case "load_" . $p_slug:
-        $field = "id,orderDateTime,orderTotalPrice,orderInvoice";
+        $field = "id,orderDateTime,orderTotalPrice,orderInvoice,orderTable,orderCustomerName";
 //        $result = getDataP($conn, $field, $tablename, "orderInvoice LIKE '%$p_search%' AND orderStatus='process' AND orderCashierId='$s_cashierId' ORDER by orderDateTime DESC", $p_page, $p_perpage, true);
         $result = getDataP($conn, $field, $tablename, "orderInvoice LIKE '%$p_search%' AND orderStatus='process' ORDER by orderDateTime DESC", $p_page, $p_perpage, true);
         echo json_encode($result);

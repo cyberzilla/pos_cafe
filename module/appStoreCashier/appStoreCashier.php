@@ -54,7 +54,7 @@ switch ($p_act) {
         break;
 
     case "loadProduct":
-        $result = getDataN($conn, "id,productCodeName, CONCAT('<small>(Stok ',stockQuantity,' ',productUnitName,')</small>') stockQuantity, CONCAT('') cartRefCode, CONCAT('') customerName", "viewproducts", "(productName LIKE '%$p_search%' OR productCode LIKE '%$p_search%' OR productCodeName LIKE '%$p_search%') AND stockQuantity>0 LIMIT 10");
+        $result = getDataN($conn, "id,productCodeName, CONCAT('') cartRefCode, CONCAT('') customerName", "viewproducts", "(productName LIKE '%$p_search%' OR productCode LIKE '%$p_search%' OR productCodeName LIKE '%$p_search%') AND stockQuantity>0 LIMIT 10");
         echo json_encode($result);
         break;
 
@@ -177,7 +177,7 @@ switch ($p_act) {
                 "storeTax"=>is_null($data['data']['data'][0]['orderTaxValue'])?0:floatval($data['data']['data'][0]['orderTaxValue']),
                 "storeProduct"=>$details,
                 "storeQueue"=>intval(substr($invoice,-3)),
-                "storeTable"=>$data['data']['data'][0]['orderAdditionalInfo']
+                "storeTable"=>$data['data']['data'][0]['orderTable']
             )
         );
 
