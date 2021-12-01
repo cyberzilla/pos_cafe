@@ -426,10 +426,10 @@ $(function () {
             pushData({key:"icms-invoice-number",data: [res.invoice],replace:true});
         }
 
-        if(res.data!==null){
+        if(res.alldata!==null){
             root.find(".icms-receipt").fadeIn(500);
             root.find("#iform-appStoreCashier").fadeIn(500);
-            $.each(res.data,function(i,item){
+            $.each(res.alldata,function(i,item){
                 subSelling += parseFloat(item.subSellingPrice);
                 subDiscount += parseFloat(item.subDiscount);
                 cartQty += parseInt(item.cartQty);
@@ -489,6 +489,7 @@ $(function () {
                 root.find("#orderCashierId").val(check.pettycashCashierId);
                 root.find("#orderPrice").val(subTotalRaw);
                 root.find("#orderTotalDiscountValue").val(subDiscount);
+                root.find('.icms-receipt').ace_scroll("end");
             }
         }else {
             paymentKeypress(0,0);
