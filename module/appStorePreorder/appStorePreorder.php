@@ -35,35 +35,43 @@ switch ($p_act) {
     case "update_" . $p_slug:
         $data = updateData($conn, $tablename, "orderStatus='success',orderPricePayment='$p_orderPricePayment',orderDateTime='$f_datetimenow',orderCashierId='$s_cashierId',orderType='$p_orderType'", "id='$p_mainId'",true,"*","id='$p_mainId'");
         if($data['data']['status']==="success"){
-            $orderDetails = getDataN($conn, "*", "orderdetail od LEFT JOIN viewproducts vp ON od.orderdetailProductId=vp.id","orderdetailInvoice='".$data['data']['data'][0]['orderInvoice']."'");
-            foreach ($orderDetails['data'] as $detail){
-                $details[] = array(
-                    "code"=>$detail['productCode'],
-                    "name"=>wrapWords($detail['productName'], 26),
-                    "qty"=>intval($detail['orderdetailQuantity']),
-                    "catroot"=>$detail['categoryRootName'],
-                    "cat"=>$detail['categoryName'],
-                    "price"=>floatval($detail['orderdetailPrice']),
-                    "total"=>floatval($detail['orderdetailSubPrice']),
-                );
-                $cat[] = $detail['categoryRootName'];
-            }
+//            $orderDetails = getDataN($conn, "*", "orderdetail od LEFT JOIN viewproducts vp ON od.orderdetailProductId=vp.id","orderdetailInvoice='".$data['data']['data'][0]['orderInvoice']."'");
+//            foreach ($orderDetails['data'] as $detail){
+//                $details[] = array(
+//                    "code"=>$detail['productCode'],
+//                    "name"=>wrapWords($detail['productName'], 26),
+//                    "qty"=>intval($detail['orderdetailQuantity']),
+//                    "catroot"=>$detail['categoryRootName'],
+//                    "cat"=>$detail['categoryName'],
+//                    "price"=>floatval($detail['orderdetailPrice']),
+//                    "total"=>floatval($detail['orderdetailSubPrice']),
+//                );
+//                $cat[] = $detail['categoryRootName'];
+//            }
+//            $receipt = array(
+//                "content"=>array(
+//                    "storeTotalDiscount"=>is_null($data['data']['data'][0]['orderTotalDiscountValue'])?0:floatval($data['data']['data'][0]['orderTotalDiscountValue']),
+//                    "storeVoucherValue"=>is_null($data['data']['data'][0]['orderVoucherValue'])?0:floatval($data['data']['data'][0]['orderVoucherValue']),
+//                    "storeTotalPrice"=>is_null($data['data']['data'][0]['orderTotalPrice'])?0:floatval($data['data']['data'][0]['orderTotalPrice']),
+//                    "storePricePayment"=>is_null($data['data']['data'][0]['orderPricePayment'])?0:floatval($data['data']['data'][0]['orderPricePayment']),
+//                    "storeDate"=>"TGL: ".date("d/m/Y",strtotime($data['data']['data'][0]['orderDateTime']))." JAM: ".date("H:i:s",strtotime($data['data']['data'][0]['orderDateTime'])),
+//                    "storeDownPayment"=>is_null($data['data']['data'][0]['orderDownPayment'])?0:floatval($data['data']['data'][0]['orderDownPayment']),
+//                    "storeStatus"=>$data['data']['data'][0]['orderStatus']==="success"?"LUNAS":"PRE-ORDER",
+//                    "storeTax"=>is_null($data['data']['data'][0]['orderTaxValue'])?0:floatval($data['data']['data'][0]['orderTaxValue']),
+//                    "storeProduct"=>$details,
+//                    "storeQueue"=>intval(substr($data['data']['data'][0]['orderInvoice'],-3)),
+//                    "storeTable"=>$data['data']['data'][0]['orderTable'],
+//                    "storeAdditionalInfo"=>wrapWords($data['data']['data'][0]['orderAdditionalInfo'], 34),
+//                    "storeRootName"=>join(",",array_unique($cat)),
+//                    "storeCustomerName"=>is_null($data['data']['data'][0]['orderCustomerName'])?"":"PELANGGAN: ".$data['data']['data'][0]['orderCustomerName']
+//                )
+//            );
+
             $receipt = array(
                 "content"=>array(
-                    "storeTotalDiscount"=>is_null($data['data']['data'][0]['orderTotalDiscountValue'])?0:floatval($data['data']['data'][0]['orderTotalDiscountValue']),
-                    "storeVoucherValue"=>is_null($data['data']['data'][0]['orderVoucherValue'])?0:floatval($data['data']['data'][0]['orderVoucherValue']),
-                    "storeTotalPrice"=>is_null($data['data']['data'][0]['orderTotalPrice'])?0:floatval($data['data']['data'][0]['orderTotalPrice']),
-                    "storePricePayment"=>is_null($data['data']['data'][0]['orderPricePayment'])?0:floatval($data['data']['data'][0]['orderPricePayment']),
-                    "storeDate"=>"TGL: ".date("d/m/Y",strtotime($data['data']['data'][0]['orderDateTime']))." JAM: ".date("H:i:s",strtotime($data['data']['data'][0]['orderDateTime'])),
-                    "storeDownPayment"=>is_null($data['data']['data'][0]['orderDownPayment'])?0:floatval($data['data']['data'][0]['orderDownPayment']),
                     "storeStatus"=>$data['data']['data'][0]['orderStatus']==="success"?"LUNAS":"PRE-ORDER",
-                    "storeTax"=>is_null($data['data']['data'][0]['orderTaxValue'])?0:floatval($data['data']['data'][0]['orderTaxValue']),
-                    "storeProduct"=>$details,
-                    "storeQueue"=>intval(substr($data['data']['data'][0]['orderInvoice'],-3)),
-                    "storeTable"=>$data['data']['data'][0]['orderTable'],
-                    "storeAdditionalInfo"=>wrapWords($data['data']['data'][0]['orderAdditionalInfo'], 34),
-                    "storeRootName"=>join(",",array_unique($cat)),
-                    "storeCustomerName"=>is_null($data['data']['data'][0]['orderCustomerName'])?"":"PELANGGAN: ".$data['data']['data'][0]['orderCustomerName']
+                    "apiUrl"=>siteUrl()."/GetInvoice/".$data['data']['data'][0]['orderInvoice'],
+                    "post"=>""
                 )
             );
         }else{

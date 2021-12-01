@@ -50,80 +50,87 @@ $(function () {
         var check = getData({key:"icms-cashier"}),
             content,pettycashLastCash=0,itemname,groupPrices="",
             param = {method:"actionPage",slug:slug,appslug:"pos_cafe",app:"app",act:"precloseCashier",cashierId: check.pettycashCashierId,pettycashDateTime:check.pettycashDateTime,pettycashStartCash:check.pettycashStartCash};
-        $.post("Services",param,function(res){
-            if(res.content.allItem!==null){
-                content = '<div class="closeCashierContainer"><div class="ccHeader"><table><tr><th>Kasir&nbsp;</th><td>:</td><td>&nbsp;'+check.cashierName+'</td></tr><tr><th>Buka Kasir&nbsp;</th><td>:</td><td>&nbsp;'+check.pettycashDateTime+'</td></tr></table></div><div class="ccBody" style="margin: 5px 0"><table class="table table-hover table-bordered table-striped no-margin"><tr><th>Nama Menu</th><th class="text-center">Terjual</th></tr>';
-                $.each(res.content.allItem,function(i,item){
-                    itemname = Array.isArray(item.name)?(item.name).join(" "):item.name;
-                    content += '<tr><td>'+itemname+'</td><td class="text-center">'+item.qty+' x</td></tr>';
-                });
+        $.post("Services",param,function(res) {
+            var tutupKasir = function(){
+                if (res.content.allItem !== null) {
+                    content = '<div class="closeCashierContainer"><div class="ccHeader"><table><tr><th>Kasir&nbsp;</th><td>:</td><td>&nbsp;' + check.cashierName + '</td></tr><tr><th>Buka Kasir&nbsp;</th><td>:</td><td>&nbsp;' + check.pettycashDateTime + '</td></tr></table></div><div class="ccBody" style="margin: 5px 0"><table class="table table-hover table-bordered table-striped no-margin"><tr><th>Nama Menu</th><th class="text-center">Terjual</th></tr>';
+                    $.each(res.content.allItem, function (i, item) {
+                        itemname = Array.isArray(item.name) ? (item.name).join(" ") : item.name;
+                        content += '<tr><td>' + itemname + '</td><td class="text-center">' + item.qty + ' x</td></tr>';
+                    });
 
-                $.each(res.content.groupPrices,function(i,item){
-                    groupPrices += '<tr><th class="text-right">'+(item.orderType==="card"?"Non-Tunai":(item.orderType==="cash"?"Tunai":"Lain-lain"))+'</th><td>:</td><th class="text-right">'+(parseFloat(item.totalPrice)).toLocaleString("id-ID")+'</th></tr>';
-                });
-                content += '</table></div><div class="ccFooter"><table style="width: 100%;"><tr><th class="text-right">Kas Awal</th><td>:</td><th class="text-right">'+(parseFloat(res.content.startCash)).toLocaleString("id-ID")+'</th></tr>'+groupPrices+'<tr><th class="text-right">Total Pemasukan</th><td>:</td><th class="text-right">'+(parseFloat(res.content.totalPrices)).toLocaleString("id-ID")+'</th></tr></table></div></div>';
-                pettycashLastCash = res.content.totalPrices;
-            }else{
-                content = "Tidak ada data penjualan";
-            }
-            $.alerts.showIcon=false;
-            jCustomConfirm(content,"Tutup Kasir","Tutup Kasir","Batal",function(r){
-                if(r){
-                    var param = "method=actionPage&slug=appStoreCashier&app=app&appslug=pos_cafe&act=closeCashier&cashierId="+check.pettycashCashierId+"&cashierUsersId="+check.cashierUsersId+"&datetime="+check.pettycashDateTime+"&pettycashStartCash="+check.pettycashStartCash+"&pettycashLastCash="+(parseFloat(pettycashLastCash)+parseFloat(check.pettycashStartCash));
-                    $.post("Services",param,function (res2) {
-                        if(res2.status==="success"){
-                            var readyPrint = {
-                                "storeName": check.receiptStoreName,
-                                "storeAddress": check.receiptStoreAddress,
-                                "storePhone":check.receiptStorePhone,
-                                "storeCashier":"KASIR: "+check.cashierName,
-                                "storeStartCash":check.pettycashStartCash,
-                                "storeTotalPrices":pettycashLastCash,
-                                "storeProduct":res.content.allItem,
-                                "groupPrices":res.content.groupPrices
-                            },mergeObj,contents;
-
-                            readyPrint['storePrintType'] = "Close";
-                            mergeObj = Object.assign(readyPrint, res2.content);
-                            contents = JSON.stringify({"content":mergeObj});
-                            location.href='jprint:'+btoa(contents);
-
-                            deleteKey({key:"icms-cashier"});
-                            deleteKey({key:"icms-invoice-number"});
-                            root.find(".preload-content").fadeIn(500);
-                            root.find(".original-content").hide();
-                            root.find(".no-access").hide();
-                            $.gritter.add({
-                                title: 'Tutup Kasir',
-                                text: res2.messageSuccess,
-                                class_name: 'gritter-success'
-                            });
-                            paymentKeypress(0,0);
-                            root.find(".icms-receipt").fadeOut(500);
-                            root.find("#iform-appStoreCashier").fadeOut(500);
-                            root.find("#totalPrice").autoNumeric("set",0);
-                            deleteKey({key:"icms-voucher"});
-                            root.find(".tableVoucher").html(0).data("price",0);
-                            root.find("#orderPricePayment").val("");
-                            root.find("#orderVoucherCode").val("");
-                        }else{
-                            $.gritter.add({
-                                title: "Tutup Kasir",
-                                text: res2.messageSuccess,
-                                class_name: 'gritter-error'
-                            });
-                        }
-                    },'json');
+                    $.each(res.content.groupPrices, function (i, item) {
+                        groupPrices += '<tr><th class="text-right">' + (item.orderType === "card" ? "Non-Tunai" : (item.orderType === "cash" ? "Tunai" : "Lain-lain")) + '</th><td>:</td><th class="text-right">' + (parseFloat(item.totalPrice)).toLocaleString("id-ID") + '</th></tr>';
+                    });
+                    content += '</table></div><div class="ccFooter"><table style="width: 100%;"><tr><th class="text-right">Kas Awal</th><td>:</td><th class="text-right">' + (parseFloat(res.content.startCash)).toLocaleString("id-ID") + '</th></tr>' + groupPrices + '<tr><th class="text-right">Total Pemasukan</th><td>:</td><th class="text-right">' + (parseFloat(res.content.totalPrices)).toLocaleString("id-ID") + '</th></tr></table></div></div>';
+                    pettycashLastCash = res.content.totalPrices;
+                } else {
+                    content = "Tidak ada data penjualan";
                 }
-            });
-            $.alerts.showIcon=true;
-            $("#popup_container").find('.ccBody').ace_scroll('modify',{
-                size: 200,
-                observeContent: true,
-                touchDrag: true,
-                touchSwipe: true,
-                styleClass: 'scroll-margin scroll-dark'
-            });
+                $.alerts.showIcon = false;
+                jCustomConfirm(content, "Tutup Kasir", "Tutup Kasir", "Batal", function (r) {
+                    if (r) {
+                        var param = "method=actionPage&slug=appStoreCashier&app=app&appslug=pos_cafe&act=closeCashier&cashierId=" + check.pettycashCashierId + "&cashierUsersId=" + check.cashierUsersId + "&datetime=" + check.pettycashDateTime + "&pettycashStartCash=" + check.pettycashStartCash + "&pettycashLastCash=" + (parseFloat(pettycashLastCash) + parseFloat(check.pettycashStartCash));
+                        $.post("Services", param, function (res2) {
+                            if (res2.status === "success") {
+                                var readyPrint = {
+                                    "storeName": check.receiptStoreName,
+                                    "storeAddress": check.receiptStoreAddress,
+                                    "storePhone": check.receiptStorePhone,
+                                    "storeCashier": "KASIR: " + check.cashierName
+                                }, mergeObj, contents;
+
+                                readyPrint['storePrintType'] = "Close";
+                                mergeObj = Object.assign(readyPrint, res2.content);
+                                contents = JSON.stringify({"content": mergeObj});
+                                location.href = 'jprint:' + btoa(contents);
+
+                                deleteKey({key: "icms-cashier"});
+                                deleteKey({key: "icms-invoice-number"});
+                                root.find(".preload-content").fadeIn(500);
+                                root.find(".original-content").hide();
+                                root.find(".no-access").hide();
+                                $.gritter.add({
+                                    title: 'Tutup Kasir',
+                                    text: res2.messageSuccess,
+                                    class_name: 'gritter-success'
+                                });
+                                paymentKeypress(0, 0);
+                                root.find(".icms-receipt").fadeOut(500);
+                                root.find("#iform-appStoreCashier").fadeOut(500);
+                                root.find("#totalPrice").autoNumeric("set", 0);
+                                deleteKey({key: "icms-voucher"});
+                                root.find(".tableVoucher").html(0).data("price", 0);
+                                root.find("#orderPricePayment").val("");
+                                root.find("#orderVoucherCode").val("");
+                            } else {
+                                $.gritter.add({
+                                    title: "Tutup Kasir",
+                                    text: res2.messageSuccess,
+                                    class_name: 'gritter-error'
+                                });
+                            }
+                        }, 'json');
+                    }
+                });
+                $.alerts.showIcon = true;
+                $("#popup_container").find('.ccBody').ace_scroll('modify', {
+                    size: 200,
+                    observeContent: true,
+                    touchDrag: true,
+                    touchSwipe: true,
+                    styleClass: 'scroll-margin scroll-dark'
+                });
+            }
+            if (res.preorder > 0 ) {
+                jCustomConfirm("Terdapat "+res.preorder+" transaksi preorder yang belum selesai, Apakah anda akan tetap menutup kasir?","Tutup Kasir","Lanjutkan","Batalkan",function(r){
+                   if(r){
+                       tutupKasir();
+                   }
+                });
+            } else {
+                tutupKasir();
+            }
         },'json');
     });
 
@@ -297,6 +304,12 @@ $(function () {
         if(merge!==null){
             deleteKey({key:"icms-invoice-merge"});
         }
+
+        //reset form
+        root.find("#orderType").val("").trigger("change");
+        root.find("#orderCustomerName").val("");
+        root.find("#orderTable").val("").trigger("change");
+        root.find("#orderAdditionalInfo").val("");
     });
 
     root.find("#iform-pettycash").on("submitted",function(e,data){

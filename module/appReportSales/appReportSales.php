@@ -14,10 +14,11 @@ $msg_removed = "Successfully Remove Data";
 switch ($p_act) {
     case "load_" . $p_slug:
         $field = "*";
+        $cashier = $p_orderCashierId==="all"?"":$p_orderCashierId;
         $type = $p_orderType==="all"?"":$p_orderType;
         $status = $p_orderStatus==="all"?"":$p_orderStatus;
-        $result = getDataP($conn, $field, $tablename, "orderStatus LIKE '%$status%' AND orderType LIKE '%$type%' AND orderInvoice LIKE '%$p_search%' AND (orderDateTime BETWEEN '$p_orderDateTimeStart 00:00:00' AND '$p_orderDateTimeEnd 23:59:59') ORDER by orderDateTime DESC", $p_page, $p_perpage, true);
-        $customData = getDataN($conn, "od.orderInvoice,od.orderStatus,od.orderTotalPrice", "`vieworder` od", "od.orderStatus LIKE '%$status%' AND od.orderType LIKE '%$type%' AND od.orderInvoice LIKE '%$p_search%' AND (od.orderDateTime BETWEEN '$p_orderDateTimeStart 00:00:00' AND '$p_orderDateTimeEnd 23:59:59') GROUP BY od.id ORDER BY od.orderDateTime DESC",true);
+        $result = getDataP($conn, $field, $tablename, "orderCashierId LIKE '%$cashier%' AND orderStatus LIKE '%$status%' AND orderType LIKE '%$type%' AND orderInvoice LIKE '%$p_search%' AND (orderDateTime BETWEEN '$p_orderDateTimeStart 00:00:00' AND '$p_orderDateTimeEnd 23:59:59') ORDER by orderDateTime DESC", $p_page, $p_perpage, true);
+        $customData = getDataN($conn, "od.orderInvoice,od.orderStatus,od.orderTotalPrice", "`vieworder` od", "od.orderCashierId LIKE '%$cashier%' AND od.orderStatus LIKE '%$status%' AND od.orderType LIKE '%$type%' AND od.orderInvoice LIKE '%$p_search%' AND (od.orderDateTime BETWEEN '$p_orderDateTimeStart 00:00:00' AND '$p_orderDateTimeEnd 23:59:59') GROUP BY od.id ORDER BY od.orderDateTime DESC",true);
         $result['custom'] = $customData['data'];
         echo json_encode($result);
         break;
@@ -74,6 +75,17 @@ switch ($p_act) {
         $order = getData($conn,"*",$tablename,"orderInvoice='$p_orderInvoice'");
         $detail = getDataN($conn, "vp.productName,vp.productCode,vp.productUnitName,SUM(od.orderdetailQuantity) orderdetailQuantity,SUM(od.orderdetailSubPrice) orderdetailSubPrice", "orderdetail od LEFT JOIN viewproducts vp ON od.orderdetailProductId=vp.id","od.orderdetailInvoice='$p_orderInvoice' GROUP BY vp.id");
         $result = array_merge($detail, array("order"=>$order['data']));
+        echo json_encode($result);
+        break;
+
+    case "load_cashier":
+        $field = "id,cashierName";
+        $data = getDataN($conn, $field, "viewcashier","",false);
+        $parent[] = array("id"=>"all","text"=>"Semua");
+        foreach ($data['data'] as $val){
+            $parent[] = array("id"=>$val['id'],"text"=>$val['cashierName']);
+        }
+        $result = array("data"=>$parent);
         echo json_encode($result);
         break;
 

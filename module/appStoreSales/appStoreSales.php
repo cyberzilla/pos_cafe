@@ -46,35 +46,11 @@ switch ($p_act) {
     case "rePrint":
         $data = getData($conn, "*",$tablename, "id='$p_id'");
         if($data['data']!==null){
-            $orderDetails = getDataN($conn, "*", "orderdetail od LEFT JOIN viewproducts vp ON od.orderdetailProductId=vp.id","orderdetailInvoice='".$data['data']['orderInvoice']."'");
-            foreach ($orderDetails['data'] as $detail){
-                $details[] = array(
-                    "code"=>$detail['productCode'],
-                    "name"=>wrapWords($detail['productName'], 26),
-                    "qty"=>intval($detail['orderdetailQuantity']),
-                    "catroot"=>$detail['categoryRootName'],
-                    "cat"=>$detail['categoryName'],
-                    "price"=>floatval($detail['orderdetailPrice']),
-                    "total"=>floatval($detail['orderdetailSubPrice']),
-                );
-                $cat[] = $detail['categoryRootName'];
-            }
             $receipt = array(
                 "content"=>array(
-                    "storeTotalDiscount"=>is_null($data['data']['orderTotalDiscountValue'])?0:floatval($data['data']['orderTotalDiscountValue']),
-                    "storeVoucherValue"=>is_null($data['data']['orderVoucherValue'])?0:floatval($data['data']['orderVoucherValue']),
-                    "storeTotalPrice"=>is_null($data['data']['orderTotalPrice'])?0:floatval($data['data']['orderTotalPrice']),
-                    "storePricePayment"=>is_null($data['data']['orderPricePayment'])?0:floatval($data['data']['orderPricePayment']),
-                    "storeDate"=>"TGL: ".date("d/m/Y",strtotime($data['data']['orderDateTime']))." JAM: ".date("H:i:s",strtotime($data['data']['orderDateTime'])),
-                    "storeDownPayment"=>is_null($data['data']['orderDownPayment'])?0:floatval($data['data']['orderDownPayment']),
                     "storeStatus"=>$data['data']['orderStatus']==="success"?"LUNAS":($data['data']['orderStatus']==="process"?"PRE-ORDER":($data['data']['orderStatus']==="cancel"?"BATAL":"RETUR")),
-                    "storeTax"=>is_null($data['data']['orderTaxValue'])?0:floatval($data['data']['orderTaxValue']),
-                    "storeProduct"=>$details,
-                    "storeQueue"=>intval(substr($data['data']['orderInvoice'],-3)),
-                    "storeTable"=>$data['data']['orderTable'],
-                    "storeAdditionalInfo"=>wrapWords($data['data']['orderAdditionalInfo'], 34),
-                    "storeRootName"=>join(",",array_unique($cat)),
-                    "storeCustomerName"=>is_null($data['data']['orderCustomerName'])?"":"PELANGGAN: ".$data['data']['orderCustomerName']
+                    "apiUrl"=>siteUrl()."/GetInvoice/".$data['data']['orderInvoice'],
+                    "post"=>""
                 )
             );
         }else{
@@ -85,34 +61,6 @@ switch ($p_act) {
         echo json_encode($result);
         break;
 
-    case "eyeInfoPrint":
-        $result = getData($conn, "*", "eyeinfo ey LEFT JOIN customer cs ON ey.eyeinfoCustomerId=cs.id", "ey.eyeinfoRefCode='$p_refCode'");
-        $data = getData($conn, "*",$tablename, "id='$p_id'");
-        $left = json_decode($result['data']['eyeinfoLeft'],true);
-        $right = json_decode($result['data']['eyeinfoRight'],true);
-        if($result['data']!==null){
-            $receipt = array(
-                "content"=>array(
-                    "eyeinfoFrame"=>$result['data']['eyeinfoFrame'],
-                    "eyeinfoLens"=>$result['data']['eyeinfoLens'],
-                    "customerName"=> $result['data']['customerName'],
-                    "customerPhone"=>$result['data']['customerPhone'],
-                    "orderInvoice"=> $data['data']['orderInvoice'],
-                    "refCode"=>$p_refCode,
-                    "storeTotalPrice"=>is_null($data['data']['orderTotalPrice'])?0:floatval($data['data']['orderTotalPrice']),
-                    "storeStatus"=>$data['data']['orderStatus']==="success"?"LUNAS":($data['data']['orderStatus']==="process"?"PRE-ORDER":($data['data']['orderStatus']==="cancel"?"BATAL":"RETUR")),
-                    "eyeinfoDateTime"=>"TGL: ".date("d/m/Y",strtotime($result['data']['eyeinfoDateTime']))." JAM: ".date("H:i:s",strtotime($result['data']['eyeinfoDateTime'])),
-                    "eyeinfoLeft"=>$left,
-                    "eyeinfoRight"=>$right
-                )
-            );
-        }else{
-            $receipt = array(
-                "content"=>null
-            );
-        }
-        echo json_encode($receipt);
-        break;
     default:
         break;
 }
