@@ -240,7 +240,7 @@
                             </div>
                         </div>
                     </div>
-                    <form class="icms-form"
+                    <form autocomplete="off" class="icms-form"
                           name="iform-appStoreCashier"
                           id="iform-appStoreCashier"
                           data-reload-widget="false"

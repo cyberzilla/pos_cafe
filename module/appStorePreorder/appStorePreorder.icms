@@ -89,7 +89,7 @@
             </div>
             <div class="widget-body">
                 <div class="widget-main">
-                    <form class="icms-form"
+                    <form autocomplete="off" class="icms-form"
                           name="iform-appStorePreorder"
                           id="iform-appStorePreorder"
                           data-param='{"method":"actionPage","slug":"appStorePreorder","act":"create_appStorePreorder","app":"app","appslug":"pos_cafe"}'>
