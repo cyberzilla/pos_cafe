@@ -30,8 +30,8 @@
                             <div class="form-group has-info">
                                 <div class="row no-margin">
                                     <label for="stockQuantity"> {{stockQuantity|Quantitas}}:</label>
-                                    <input id="stockQuantity" name="stockQuantity" type="number" min="1"
-                                           class="form-control input-sm" data-msg="Masukkan quantitas Menu" data-msg-min="Minimal 1"
+                                    <input id="stockQuantity" name="stockQuantity" type="number" min="0"
+                                           class="form-control input-sm" data-msg="Masukkan quantitas Menu" data-msg-min="Minimal 0"
                                            data-placement="top-r" required>
                                 </div>
                             </div>
