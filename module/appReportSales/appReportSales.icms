@@ -59,6 +59,7 @@
                             <div class="row no-margin">
                                 <label for="orderCashierId"> {{orderCashier|Kasir}}:</label>
                                 <select name="orderCashierId" id="orderCashierId" data-remote='{"param":{"method":"actionPage","slug":"appReportSales","act":"load_cashier","app":"app","appslug":"pos_cafe"}}' data-placeholder="Pilih kasir..." class="nativeSelect form-control input-sm" data-msg="Silahkan pilih kasir" data-placement="top-r" required></select>
+                                <input type="hidden" name="orderCashierName" id="orderCashierName">
                             </div>
                         </div>
                         <div class="form-group has-info">

@@ -30,6 +30,14 @@ $(function () {
         language: "id"
     });
 
+    root.find("#orderCashierId").change(function (e){
+        if(e.target.value!==""){
+            root.find("#orderCashierName").val($("#"+e.target.id+" option:selected").text());
+        }else{
+            root.find("#orderCashierName").val("");
+        }
+    });
+
     root.find("#iform-appReportSales").on("prevent-post",function(e,data){
         var table = root.find("#icms-table-appReportSales");
         table.data("extra-param",data);

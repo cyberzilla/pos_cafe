@@ -25,26 +25,29 @@ switch ($p_act) {
 
     case "downloadReport":
         require_once (sysclass."simplexlsxgen.class.php");
+        $cashier = $p_orderCashierId==="all"?"":$p_orderCashierId;
         $type = $p_orderType==="all"?"":$p_orderType;
         $status = $p_orderStatus==="all"?"":$p_orderStatus;
-        $sales = getDataN($conn, "*", $tablename,"orderStatus LIKE '%$status%' AND orderType LIKE '%$type%' AND orderInvoice LIKE '%$p_search%' AND (orderDateTime BETWEEN '$p_orderDateTimeStart 00:00:00' AND '$p_orderDateTimeEnd 23:59:59') ORDER by orderDateTime DESC");
+        $sales = getDataN($conn, "*", $tablename,"orderCashierId LIKE '%$cashier%' AND orderStatus LIKE '%$status%' AND orderType LIKE '%$type%' AND orderInvoice LIKE '%$p_search%' AND (orderDateTime BETWEEN '$p_orderDateTimeStart 00:00:00' AND '$p_orderDateTimeEnd 23:59:59') ORDER by orderDateTime DESC");
         $colfinish = count($sales['data']);
         if($type==="preorder"){
             $xlsx_data = [
                 ["TGL:",$p_orderDateTimeStart." ~ ".$p_orderDateTimeEnd],
-                ["NO",'TANGGAL',"INVOICE","PANJAR",'DISKON','VOUCHER',"PAJAK","HARGA BELI","HARGA JUAL",'TOTAL HARGA',"LABA",'TIPE','STATUS']
+                ["KASIR:",$p_orderCashierName],
+                ["NO",'TANGGAL',"INVOICE",'DISKON','VOUCHER',"PAJAK","HARGA BELI","HARGA JUAL",'TOTAL HARGA',"LABA",'TIPE','STATUS']
             ];
-            $i=2;
+            $i=3;
             foreach ($sales['data'] as $pb){
-                $xlsx_data[] = [($i-1),$pb['orderDateTime'],$pb['orderInvoice'],$pb['orderDownPayment'],$pb['orderTotalDiscountValue'],$pb['orderVoucherValue'],$pb['orderTaxValue'],$pb['orderTotalCapitalPrice'],$pb['orderPrice'],$pb['orderTotalPrice'],(floatval($pb['orderTotalPrice'])-floatval($pb['orderTotalCapitalPrice'])),$pb['orderType'],$pb['orderStatus']];
+                $xlsx_data[] = [($i-1),$pb['orderDateTime'],$pb['orderInvoice'],$pb['orderTotalDiscountValue'],$pb['orderVoucherValue'],$pb['orderTaxValue'],$pb['orderTotalCapitalPrice'],$pb['orderPrice'],$pb['orderTotalPrice'],(floatval($pb['orderTotalPrice'])-floatval($pb['orderTotalCapitalPrice'])),$pb['orderType'],$pb['orderStatus']];
                 $i++;
             }
         }else{
             $xlsx_data = [
                 ["TGL:",$p_orderDateTimeStart." ~ ".$p_orderDateTimeEnd],
+                ["KASIR:",$p_orderCashierName],
                 ["NO",'TANGGAL',"INVOICE", 'DISKON','VOUCHER',"PAJAK","HARGA BELI","HARGA JUAL",'TOTAL HARGA',"LABA",'TIPE','STATUS']
             ];
-            $i=2;
+            $i=3;
             foreach ($sales['data'] as $pb){
                 $xlsx_data[] = [($i-1),$pb['orderDateTime'],$pb['orderInvoice'],$pb['orderTotalDiscountValue'],$pb['orderVoucherValue'],$pb['orderTaxValue'],$pb['orderTotalCapitalPrice'],$pb['orderPrice'],$pb['orderTotalPrice'],(floatval($pb['orderTotalPrice'])-floatval($pb['orderTotalCapitalPrice'])),$pb['orderType'],$pb['orderStatus']];
                 $i++;
