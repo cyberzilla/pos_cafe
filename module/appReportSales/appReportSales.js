@@ -101,9 +101,16 @@ $(function () {
                             });
                             return tr;
                         },
-                        tbDetail = '<table class=""><tr><th>Invoice</th><td>&nbsp;: '+res.order.orderInvoice+'</td></tr><tr><th>Tipe</th><td>&nbsp;: '+res.order.orderType+'</td></tr><tr><th>Total Harga</th><td>&nbsp;: '+(parseFloat(res.order.orderTotalPrice)).toLocaleString("id-ID")+'</td></tr><tr><th>Status</th><td>&nbsp;: '+res.order.orderStatus+'</td></tr></table><table class="table table-hover table-bordered table-striped"><tr><th class="text-center">No.</th><th>Kode</th><th>Nama Produk</th><th class="text-center">Qty</th><th class="text-right">Sub Total</th></tr>'+tbRow(res.data)+'</table>';
+                        tbDetail = '<table class=""><tr><th>Invoice</th><td>&nbsp;: '+res.order.orderInvoice+'</td></tr><tr><th>Tipe</th><td>&nbsp;: '+res.order.orderType+'</td></tr><tr><th>Total Harga</th><td>&nbsp;: '+(parseFloat(res.order.orderTotalPrice)).toLocaleString("id-ID")+'</td></tr><tr><th>Status</th><td>&nbsp;: '+res.order.orderStatus+'</td></tr></table><div class="tableDetailContainer"><table class="table table-hover table-bordered table-striped" style="margin-bottom: 5px;"><tr><th class="text-center">No.</th><th>Kode</th><th>Nama Produk</th><th class="text-center">Qty</th><th class="text-right">Sub Total</th></tr>'+tbRow(res.data)+'</table></div><table><tr><th>Ket</th><td>:</td><td>&nbsp;<i>'+res.order.orderTable+'</i></td></tr></table>';
                     $.alerts.showIcon=false;
                     jAlert(tbDetail,"Detail Order Invoice "+invoice);
+                    $("#popup_container").find('.tableDetailContainer').ace_scroll('modify', {
+                        size: 200,
+                        observeContent: true,
+                        touchDrag: true,
+                        touchSwipe: true,
+                        styleClass: 'scroll-margin scroll-dark'
+                    });
                     $.alerts.showIcon=true;
                 },'json');
                 break;
