@@ -67,7 +67,7 @@ $(function () {
         var c3chart = c3.generate({
             bindto: selector,
             data: {x: 'kolom', columns: column, type: 'area-spline', labels: false, colors: colors, selection: {enabled: true}},
-            axis: {x: {type: 'categorized',}, y : {label: header,tick:{format: function (d) {var array = ['','Ribu','Juta','M','T'];var i=0;while (d > 999) {i++;d = d/1000;}d = d+' '+array[i];return d;}}}},
+            axis: {x: {type: 'categorized',}, y : {label: header,tick:{format: function (d) {var array = ['','Ribu','Juta','M','T'];var i=0;while (d > 999) {i++;d = d/1000;}d = (d).toFixed(2).replace(/(\.0+|0+)$/, '')+' '+array[i];return d;}}}},
             bar: {width: {ratio: 0.3,}},
             grid: {x: {show: true}, y: {show: true}}
         });
