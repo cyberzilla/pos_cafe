@@ -8,6 +8,8 @@
         width: 23px;
         height: 23px;
         line-height: 20px;
+        border:none;
+        font-size: 17px;
     }
 </style>
 <div class="row no-margin">
