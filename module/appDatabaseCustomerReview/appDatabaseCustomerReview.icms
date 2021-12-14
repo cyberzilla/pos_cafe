@@ -1,0 +1,134 @@
+<div class="initModule"
+     data-param='{"slug":"appDatabaseCustomerReview","functionList":["submitForm","resetForm","disableContextMenu","nativeSelect","nativeTable"],"preloadLib":["stars","md5"]}'></div>
+<div class="row no-margin">
+    <div class="col-lg-3">
+        <div class="icms-widget widget-box widget-color-blue2">
+            <div class="widget-header widget-header-small">
+                <h5 class="widget-title"><i class="fa fa-plus-circle"></i> Pengaturan Ulasan</h5>
+                <div class="widget-toolbar">
+                    <a href="#" data-action="collapse">
+                        <i class="ace-icon fa fa-chevron-up"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="widget-body">
+                <div class="widget-main">
+                    <form class="icms-form"
+                          name="iform-appDatabaseCustomerReview"
+                          id="iform-appDatabaseCustomerReview"
+                          data-param='{"method":"actionPage","slug":"appDatabaseCustomerReview","act":"create_appDatabaseCustomerReview","app":"app","appslug":"pos_cafe"}'>
+                        <input type="hidden" name="mainId" value="">
+                        <div class="form-group has-info">
+                            <div class="row no-margin">
+                                <label for="reviewName"> {{reviewName|Nama}}:</label>
+                                <input id="reviewName" name="reviewName" type="text"
+                                       class="form-control input-sm"
+                                       data-placement="top-r" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group has-info">
+                            <div class="row no-margin">
+                                <label for="reviewEmail"> {{reviewEmail|Email}}:</label>
+                                <input id="reviewEmail" name="reviewEmail" type="text"
+                                       class="form-control input-sm"
+                                       data-placement="top-r" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row no-margin">
+                                <div class="col-lg-12 pull-right text-right">
+                                    <label for="reviewShow"> {{reviewShow|Tampilkan}}:</label>
+                                    <div>
+                                        <input name="reviewShow" id="reviewShow"
+                                               class="ace ace-switch ace-switch-3" type="checkbox">
+                                        <span class="lbl igreen"
+                                              data-lbl="YES&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;NO"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row no-margin">
+                                <div class="rate"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="reset" class="btn btn-danger btn-sm"><i class="ace-icon fa fa-refresh"></i>
+                                Reset
+                            </button>
+                            <button type="submit" data-caption='Save|Update' enable-onupdate
+                                    data-icon='<i class="ace-icon fa fa-save"></i>'
+                                    data-spinner='<i class="ace-icon fa fa-spinner fa-spin"></i>'
+                                    class="btn btn-primary btn-sm pull-right" disabled>Save
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-9">
+        <div class="icms-widget widget-box widget-color-blue2">
+            <div class="widget-header widget-header-small">
+                <h5 class="widget-title"><i class="fa fa-list"></i> {{appDatabaseCustomerReviewTable|Daftar Ulasan}}</h5>
+                <div class="widget-toolbar">
+                    <a data-action="reload">
+                        <i class="ace-icon fa fa-refresh"></i>
+                    </a>
+                    <a data-action="collapse">
+                        <i class="ace-icon fa fa-chevron-up"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="widget-body">
+                <div class="widget-main">
+                    <div class="table-responsive icms-scroll" style="margin-bottom: 0">
+                        <table style="width: 100%" class="nativeTable table table-striped table-hover table-bordered"
+                               id="icms-table-appDatabaseCustomerReview"
+                               data-current=1
+                               data-perpage=10
+                               data-remote="Services"
+                               data-label="Showing {from} to {to} from {total} entries"
+                               data-param='{"method":"actionPage","slug":"appDatabaseCustomerReview","act":"load_appDatabaseCustomerReview"}'>
+                            <thead>
+                            <tr>
+                                <td colspan="6">
+                                    <div class="row no-margin pull-right">
+                                        <span class="input-icon input-icon-right">
+                                            <input type="text" class="form-control input-sm search"
+                                                   placeholder="Search...">
+                                            <i class="ace-icon fa fa-search text-muted" style="top: -1px;"></i>
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="header">
+                                <th data-column="number" data-class="text-center" style="width: 30px"
+                                    class="text-center">No
+                                </th>
+                                <th data-column="reviewDateTime" data-class="text-center text-ellipsis"
+                                    data-date-format='{"locales":"id","year":"numeric","month":"short","day":"numeric"}'
+                                    data-width="100" style="width: 100px" class="text-center">
+                                    {{reviewDateTime|Tanggal}}
+                                </th>
+                                <th data-column="reviewName">{{reviewName|Nama}}</th>
+                                <th data-column="reviewHits" data-class="text-center" style="width: 90px"
+                                    class="text-center">{{reviewHits|Penilaian}}
+                                </th>
+                                <th data-column="reviewShow" data-class="text-center" style="width: 40px"
+                                    class="text-center">{{reviewShow|Show}}
+                                </th>
+                                <th data-column="action" data-action="custom|update|delete" data-class="text-center"
+                                    data-custom-extra="show" data-custom-icon="blue fa fa-commenting-o"
+                                    style="width: 100px" class="text-center"><i class="fa fa-cogs"></i></th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                            <tfoot></tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
