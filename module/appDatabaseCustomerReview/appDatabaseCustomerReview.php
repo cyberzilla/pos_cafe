@@ -13,7 +13,7 @@ $msg_removed = "Successfully Remove Data";
 
 switch ($p_act) {
     case "load_" . $p_slug:
-        $field = "id,reviewName,reviewDateTime,iF(reviewShow='on','<i class=\"fa fa-eye green\"></i>','<i class=\"fa fa-eye-slash red\"></i>') reviewShow,CONCAT('<div class=\"rate\" data-hits=\"',reviewHits,'\"></div>') reviewHits";
+        $field = "id,IF(reviewReaded='',CONCAT('<div class=\"readed red animate__animated animate__headShake animate__infinite\">',reviewName,'</div>'),reviewName) reviewName,reviewDateTime,IF(reviewShow='on','<i class=\"fa fa-eye green\"></i>','<i class=\"fa fa-eye-slash red\"></i>') reviewShow,CONCAT('<div class=\"rate\" data-hits=\"',reviewHits,'\"></div>') reviewHits";
         $result = getDataP($conn, $field, $tablename, "reviewName LIKE '%$p_search%' ORDER by reviewDateTime DESC", $p_page, $p_perpage, true);
         echo json_encode($result);
         break;
@@ -54,6 +54,7 @@ switch ($p_act) {
 
     case "showReview":
         $review = getData($conn,"*",$tablename,"id='$p_id'");
+        updateData($conn, $tablename, "reviewReaded='on'","id='$p_id'");
         echo json_encode($review);
         break;
 
