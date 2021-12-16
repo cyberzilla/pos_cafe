@@ -35,6 +35,14 @@
                             </div>
                         </div>
                         <div class="form-group has-info">
+                            <label for="tableType"> {{requestType|Tipe Meja}}:</label>
+                            <select name="tableType" id="tableType"
+                                    data-opts='[{"text":"Makan di tempat","id":"dinein"},{"text":"Bungkus","id":"takeaway"}]'
+                                    data-placeholder="Pilih tipe..." class="nativeSelect form-control input-sm"
+                                    data-msg="Silahkan pilih tipe meja" data-placement="top-r"
+                                    required></select>
+                        </div>
+                        <div class="form-group has-info">
                             <div class="row no-margin">
                                 <label for="tableDescription"> {{tableDescription|Deskripsi}}:</label>
                                 <textarea id="tableDescription" name="tableDescription" class="autosize-transition form-control input-sm" data-msg="Masukkan deskripsi meja" data-placement="top-r" required></textarea>

@@ -71,7 +71,7 @@
             <div class="widget-header widget-header-small">
                 <h5 class="widget-title"><i class="fa fa-cubes"></i> {{appStoreCashierTable|Tambah Menu}}</h5>
                 <div class="widget-toolbar">
-                    <a data-action="settings">
+                    <a data-action="settings" id="cancelOrClear">
                         <i class="fa fa-trash"></i> Bersihkan
                     </a>
                     <span class="separator"></span>
@@ -173,7 +173,7 @@
                                    class="form-control input-lg autoNumeric text-right totalPrice" data-v-max="99999999" data-v-min="0" data-a-sign="" data-a-sep="."  data-a-dec=" " value="0" readonly>
                         </div>
                     </div>
-                    <div class="icms-receipt" style="display: none;margin-top: 10px;height: 380px;">
+                    <div class="icms-receipt" style="display: none;margin-top: 10px;height: 345px;">
                         <div class="receipt-container">
                             <div class="receipt-view" id="receipt-view">
                                 <div class="receipt-header">
@@ -286,14 +286,32 @@
                                             required></select>
                                 </div>
                                 <div class="col-lg-6">
-                                    <label for="orderTable"> {{orderTable|Meja}}:</label>
-                                    <select name="orderTable" id="orderTable" data-default="meja-1"
-                                            data-remote='{"param":{"method":"actionPage","slug":"appStoreCashier","act":"load_meja"}}'
-                                            data-placeholder="Pilih Meja..." class="nativeSelect form-control input-sm"
-                                            data-msg="Silahkan pilih meja" data-placement="top-r" required></select>
+                                    <label for="orderRequestType"> {{requestType|Tipe Pesanan}}:</label>
+                                    <select name="orderRequestType" id="orderRequestType"
+                                            data-opts='[{"text":"Makan di tempat","id":"dinein"},{"text":"Bungkus","id":"takeaway"}]'
+                                            data-placeholder="Pilih tipe..." class="nativeSelect form-control input-sm"
+                                            data-msg="Silahkan pilih tipe pesanan" data-placement="top-r"
+                                            required></select>
                                 </div>
                             </div>
                         </div>
+
+                        <div class="form-group has-info">
+                            <div class="row no-margin">
+                                <div class="col-lg-6">
+                                    <label for="orderTable"> {{orderTable|Meja}}:</label>
+                                    <select name="orderTable" id="orderTable"
+                                            data-remote='{"param":{"method":"actionPage","slug":"appStoreCashier","act":"load_meja"}}'
+                                            data-placeholder="Pilih meja..." class="nativeSelect form-control input-sm"
+                                            data-msg="Silahkan pilih meja" data-placement="top-r" required></select>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label for="orderCustomerName"> {{orderCustomerName|Nama Pelanggan}}:</label>
+                                    <input id="orderCustomerName" name="orderCustomerName" type="text" class="form-control input-sm" data-msg="Masukkan nama pelanggan" data-placement="top-r" required>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="form-group has-info po-disabled">
                             <div class="row no-margin">
                                 <div class="col-lg-6">
@@ -311,16 +329,6 @@
                                     <input id="orderPricePayment" name="orderPricePaymentX" type="text"
                                            class="form-control input-sm autoNumeric" data-msg="Masukkan nilai pembayaran" data-v-max="99999999" data-v-min="0" data-a-sign="Rp. " data-a-sep="."  data-a-dec=" "
                                            data-placement="top-r" placeholder="Bayar [CTRL+Z]" required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group has-info orderCustomerNameContainer" style="display: none">
-                            <div class="row no-margin">
-                                <div class="form-group has-info">
-                                    <div class="row no-margin">
-                                        <label for="orderCustomerName"> {{orderCustomerName|Nama Pelanggan}}:</label>
-                                        <input id="orderCustomerName" name="orderCustomerName" type="text" class="form-control input-sm" data-msg="Masukkan nama pelanggan" data-placement="top-r" required>
-                                    </div>
                                 </div>
                             </div>
                         </div>

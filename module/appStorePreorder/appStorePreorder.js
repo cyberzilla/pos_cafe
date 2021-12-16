@@ -65,9 +65,21 @@ $(function () {
                         pushData({key: "icms-invoice-merge", data: mergeinv, replace: true});
                         var getInv = getData({key:"icms-invoice-merge"});
                         $('.addMainTab[data-slug="appStoreCashier"]').click();
+                        $(".icms-container").find("#appStoreCashier.tab-pane").find("#cancelOrClear").html('<i class="fa fa-times"></i> Batal Gabung');
                     }
                 });
                 break;
+        }
+    });
+
+    root.find("#icms-table-appStorePreorder").on("tb_act_update",function (e,data) {
+        var orderTable = root.find(".orderTableContainer");
+        if(data.data.orderType==="preorder"){
+            orderTable.hide();
+            orderTable.find("input").hide();
+        }else if(data.data.orderType==="orderweb"){
+            orderTable.show();
+            orderTable.find("input").show();
         }
     });
 
@@ -78,7 +90,11 @@ $(function () {
         if(back<0){
             root.find("#btnPricePayment").prop("disabled",true);
         }else{
-            root.find("#btnPricePayment").prop("disabled",false);
+            if(root.find("#orderPricePayment").is(':disabled') && price!==0){
+                root.find("#btnPricePayment").prop("disabled",true);
+            }else{
+                root.find("#btnPricePayment").prop("disabled",false);
+            }
         }
     }
 

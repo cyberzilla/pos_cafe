@@ -155,6 +155,7 @@ $(function () {
     root.one("page_loaded",function (e,res) {
         var check = getData({key:"icms-cashier"}),
             uActive = getData({key:"icms-users-active"}),
+            merge = getData({key:"icms-invoice-merge"}),
             pettyParam = {method:"actionPage",slug:slug,app:"app",appslug:"pos_cafe",act:"checkCashierId",cashierUsersId:uActive};
         if(check!==null){
             if(parseInt(check.cashierUsersId)===parseInt(uActive)){
@@ -235,6 +236,10 @@ $(function () {
 
         root.find(".cashierDate").html("TGL: "+getDateNow(true));
         runClock("JAM: ",root.find(".cashierTime"));
+
+        if(merge!==null){
+            root.find("#cancelOrClear").html('<i class="fa fa-times"></i> Batal Gabung');
+        }
     });
 
     root.one("nativeTable_first_loaded",function (e,res) {
@@ -309,7 +314,7 @@ $(function () {
         root.find("#orderType").val("").trigger("change");
         root.find("#orderCustomerName").val("");
         root.find("#orderTable").val("").trigger("change");
-        root.find("#orderAdditionalInfo").val("");
+        root.find("#orderAdditionalInfo").val("-");
     });
 
     root.find("#iform-pettycash").on("submitted",function(e,data){
@@ -385,6 +390,10 @@ $(function () {
                             pushData({key:"icms-invoice-number",data:[res.invoice],replace:true});
                             root.find("#icms-table-" + slug).parents(".icms-widget").trigger("reload.ace.widget");
                             root.find("#directPrint").prop("checked",true);
+                            root.find("#orderType").val("").trigger("change");
+                            root.find("#orderCustomerName").val("");
+                            root.find("#orderTable").val("").trigger("change");
+                            root.find("#orderAdditionalInfo").val("-");
                         },'json');
                     }
                 });
@@ -392,6 +401,11 @@ $(function () {
                 jConfirm("Apakah anda akan membatalkan gabung order untuk invoice "+merge.invoice+"?","Gabung Order",function(r){
                     if(r){
                         deleteKey({key:"icms-invoice-merge"});
+                        root.find("#cancelOrClear").html('<i class="fa fa-trash"></i> Bersihkan');
+                        root.find("#orderType").val("").trigger("change");
+                        root.find("#orderCustomerName").val("");
+                        root.find("#orderTable").val("").trigger("change");
+                        root.find("#orderAdditionalInfo").val("-");
                         jAlert("Sukses menghapus cache gabung order","Gabung Order");
                     }
                 });
@@ -514,6 +528,10 @@ $(function () {
             root.find("#orderPricePayment").val("");
             root.find("#orderVoucherCode").val("");
             root.find("#directPrint").prop("checked",true);
+            root.find("#orderType").val("").trigger("change");
+            root.find("#orderCustomerName").val("");
+            root.find("#orderTable").val("").trigger("change");
+            root.find("#orderAdditionalInfo").val("-");
         }
     }
 
@@ -561,16 +579,38 @@ $(function () {
     });
 
     root.find('.icms-receipt').ace_scroll('modify',{
-        size: 380,
+        size: 345,
         observeContent: true,
         touchDrag: true,
         touchSwipe: true,
         styleClass: 'scroll-margin scroll-dark'
     });
 
+    function controlOrder(type){
+        var target = root.find("select[name=orderTable]"),optId;
+        $.each(target.find("option"),function (i,opt) {
+            optId = ($(opt).data("cdata"))!==undefined?($(opt).data("cdata")).tableroot:""
+            if(optId!=="" && optId!==type){
+                $(opt).hide();
+            }else{
+                $(opt).show();
+            }
+        });
+
+        if(optId===""){
+            target.val("");
+        }
+
+        console.log()
+    }
+
+    root.find("#orderRequestType").change(function(e){
+        var selected = $(this).find('option:selected');
+        controlOrder(this.value);
+    });
+
     root.find("#orderType").change(function (e) {
        var bayar = root.find(".orderPricePaymentContainer"),
-           cstName = root.find(".orderCustomerNameContainer"),
            tbBayar = root.find(".tableBayar"),
            tbKembali = root.find(".tableKembali"),
            tbStatus = root.find(".tableStatus"),
@@ -592,7 +632,6 @@ $(function () {
                 root.find("#orderStatus").val("success");
                 root.find("#orderPricePayment").val("");
                 root.find("input[name=orderPricePayment]").val("");
-                cstName.hide();cstName.find("input").val("");
                 break;
 
             case "card":
@@ -608,7 +647,6 @@ $(function () {
                 root.find("#orderPricePayment").autoNumeric("set",totalPrice);
                 root.find("input[name=orderPricePayment]").val(totalPrice);
                 paymentKeypress(totalPrice,totalPrice);
-                cstName.hide();cstName.find("input").val("");
                 break;
 
             case "preorder":
@@ -624,7 +662,6 @@ $(function () {
                 root.find("#orderStatus").val("process");
                 root.find("#orderPricePayment").val("");
                 root.find("input[name=orderPricePayment]").val("");
-                cstName.show();
                 break;
 
             default:
@@ -640,7 +677,6 @@ $(function () {
                 root.find("#orderStatus").val("success");
                 root.find("#orderPricePayment").val("");
                 root.find("input[name=orderPricePayment]").val("");
-                cstName.hide();cstName.find("input").val("");
                 break;
         }
     });

@@ -13,15 +13,14 @@ $msg_removed = "Successfully Remove Data";
 
 switch ($p_act) {
     case "load_" . $p_slug:
-        $field = "id,orderDateTime,orderTotalPrice,orderInvoice,orderTable,orderCustomerName";
-//        $result = getDataP($conn, $field, $tablename, "orderInvoice LIKE '%$p_search%' AND orderStatus='process' AND orderCashierId='$s_cashierId' ORDER by orderDateTime DESC", $p_page, $p_perpage, true);
+        $field = "id,orderDateTime,orderTotalPrice,orderInvoice,IF(ISNULL(orderCashierId),'Order Web',orderTable) orderTable,IF(ISNULL(orderCashierId),CONCAT('<div class=\"readed text-info animate__animated animate__headShake animate__infinite\">',orderCustomerName,'</div>'),orderCustomerName) orderCustomerName";
         $result = getDataP($conn, $field, $tablename, "orderInvoice LIKE '%$p_search%' AND orderStatus='process' ORDER by orderDateTime DESC", $p_page, $p_perpage, true);
         echo json_encode($result);
         break;
 
     case "select_" . $p_slug:
         $contentPOST = postExtractor($_POST, array("p_method", "p_slug","p_appslug", "p_act", "p_mainId", "p_app"));
-        $result = getData($conn, "id,orderTotalPrice,orderInvoice", $tablename, $contentPOST." AND orderStatus='process'");
+        $result = getData($conn, "id,orderTotalPrice,orderInvoice,IF(ISNULL(orderCashierId),'orderweb','preorder') orderType", $tablename, $contentPOST." AND orderStatus='process'");
         echo json_encode($result);
         break;
 
@@ -79,6 +78,16 @@ switch ($p_act) {
         }
         $message = array("print"=>$p_receiptPrint,"messageSuccess" => '<i class="fa fa-info-circle"></i> ' . $msg_updated);
         $result = array_merge($data, $message,$receipt);
+        echo json_encode($result);
+        break;
+
+    case "load_meja":
+        $field = "tableName,tableSlug";
+        $data = getDataN($conn, $field, "`table`","tableActive='on'");
+        foreach ($data['data'] as $val){
+            $parent[] = array("id"=>$val['tableSlug'],"text"=>$val['tableName']);
+        }
+        $result = array("data"=>$parent);
         echo json_encode($result);
         break;
 

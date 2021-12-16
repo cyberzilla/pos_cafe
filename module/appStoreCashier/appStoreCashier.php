@@ -296,10 +296,10 @@ switch ($p_act) {
         break;
 
     case "load_meja":
-        $field = "tableName,tableSlug";
+        $field = "tableName,tableSlug,tableType";
         $data = getDataN($conn, $field, "`table`","tableActive='on'");
         foreach ($data['data'] as $val){
-            $parent[] = array("id"=>$val['tableSlug'],"text"=>$val['tableName']);
+            $parent[] = array("id"=>$val['tableSlug'],"text"=>$val['tableName'],"data"=>array("tableroot"=>$val['tableType']));
         }
         $result = array("data"=>$parent);
         echo json_encode($result);
