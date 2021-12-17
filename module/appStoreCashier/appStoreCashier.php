@@ -207,7 +207,7 @@ switch ($p_act) {
             }
 
             removeData($conn,"cart","cartCashierId='$s_cashierId'");
-            $data = updateData($conn, "`order`", "orderTaxValue=orderTaxValue+'$p_orderTaxValue',orderTotalPrice=orderTotalPrice+'$p_orderTotalPrice',orderPrice=orderPrice+'$p_orderPrice',orderTotalCapitalPrice=orderTotalCapitalPrice+'$modal'","orderInvoice='$p_orderInvoice'",true,"*","orderInvoice='$p_orderInvoice'");
+            $data = updateData($conn, "`order`", "orderTaxValue=orderTaxValue+'$p_orderTaxValue',orderTotalPrice=orderTotalPrice+'$p_orderTotalPrice',orderPrice=orderPrice+'$p_orderPrice',orderTotalCapitalPrice=orderTotalCapitalPrice+'$modal',orderAdditionalInfo='$p_orderAdditionalInfo'","orderInvoice='$p_orderInvoice'",true,"*","orderInvoice='$p_orderInvoice'");
 
 //            $receipt = array(
 //                "content"=>array(

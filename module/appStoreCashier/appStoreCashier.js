@@ -404,7 +404,7 @@ $(function () {
                         root.find("#cancelOrClear").html('<i class="fa fa-trash"></i> Bersihkan');
                         root.find("#orderType").val("").trigger("change");
                         root.find("#orderCustomerName").val("");
-                        root.find("#orderTable").val("").trigger("change");
+                        root.find("#orderRequestType").val("").trigger("change");
                         root.find("#orderAdditionalInfo").val("-");
                         jAlert("Sukses menghapus cache gabung order","Gabung Order");
                     }
@@ -511,7 +511,9 @@ $(function () {
                 if(merge!==null){
                     root.find("#orderType").val("preorder").trigger("change");
                     root.find("#orderCustomerName").val(merge.customer);
-                    root.find("#orderTable").val(merge.table)
+                    //root.find("#orderRequestType").val(merge.request).trigger("change");
+                    //controlOrder(root.find("#orderTable"),'dinein');
+                    //root.find("#orderTable").val(merge.table);
                 }
                 root.find("#orderCashierId").val(check.pettycashCashierId);
                 root.find("#orderPrice").val(subTotalRaw);
@@ -586,27 +588,31 @@ $(function () {
         styleClass: 'scroll-margin scroll-dark'
     });
 
-    function controlOrder(type){
-        var target = root.find("select[name=orderTable]"),optId;
-        $.each(target.find("option"),function (i,opt) {
-            optId = ($(opt).data("cdata"))!==undefined?($(opt).data("cdata")).tableroot:""
-            if(optId!=="" && optId!==type){
-                $(opt).hide();
-            }else{
-                $(opt).show();
+    function controlOrder(el,type){
+        var optId;
+        if(type!==undefined){
+            $.each(el.find("option"),function (i,opt) {
+                optId = ($(opt).data("cdata"))!==undefined?($(opt).data("cdata")).tableroot:""
+                if(optId!=="" && optId!==type){
+                    el.val("").find('option[value=""]').attr('selected',true);
+                    $(opt).hide();
+                }else{
+                    el.val("").find('option[value=""]').attr('selected',true);
+                    $(opt).show();
+                }
+            });
+
+            if(optId===""){
+                el.val("").find('option[value=""]').attr('selected',true);
             }
-        });
-
-        if(optId===""){
-            target.val("");
+        }else{
+            el.val("").find('option[value=""]').attr('selected',true);
+            el.val("").find('option').attr('style',"display:block");
         }
-
-        console.log()
     }
 
     root.find("#orderRequestType").change(function(e){
-        var selected = $(this).find('option:selected');
-        controlOrder(this.value);
+        controlOrder(root.find("select[name=orderTable]"),this.value);
     });
 
     root.find("#orderType").change(function (e) {
@@ -632,6 +638,7 @@ $(function () {
                 root.find("#orderStatus").val("success");
                 root.find("#orderPricePayment").val("");
                 root.find("input[name=orderPricePayment]").val("");
+                //controlOrder(root.find("select[name=orderRequestType]"));
                 break;
 
             case "card":
@@ -647,6 +654,7 @@ $(function () {
                 root.find("#orderPricePayment").autoNumeric("set",totalPrice);
                 root.find("input[name=orderPricePayment]").val(totalPrice);
                 paymentKeypress(totalPrice,totalPrice);
+                //controlOrder(root.find("select[name=orderRequestType]"));
                 break;
 
             case "preorder":
@@ -662,6 +670,7 @@ $(function () {
                 root.find("#orderStatus").val("process");
                 root.find("#orderPricePayment").val("");
                 root.find("input[name=orderPricePayment]").val("");
+                //controlOrder(root.find("select[name=orderRequestType]"),"dinein");
                 break;
 
             default:
@@ -677,6 +686,7 @@ $(function () {
                 root.find("#orderStatus").val("success");
                 root.find("#orderPricePayment").val("");
                 root.find("input[name=orderPricePayment]").val("");
+                //controlOrder(root.find("select[name=orderRequestType]"));
                 break;
         }
     });

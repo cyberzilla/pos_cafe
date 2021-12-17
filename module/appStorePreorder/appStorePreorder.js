@@ -28,6 +28,28 @@ $(function () {
         nativeSelect(slug);
     });
 
+    function controlOrder(type,opts){
+        var target = root.find("select[name=orderTable]"),optId;
+        $.each(target.find("option"),function (i,opt) {
+            optId = ($(opt).data("cdata"))!==undefined?($(opt).data("cdata")).tableroot:""
+            if(optId!=="" && optId!==type){
+                target.val("").find('option[value=""]').attr('selected',true);
+                $(opt).hide();
+            }else{
+                target.val("").find('option[value=""]').attr('selected',true);
+                $(opt).show();
+            }
+        });
+
+        if(optId===""){
+            target.val("").find('option[value=""]').attr('selected',true);
+        }
+    }
+
+    root.find("#orderRequestType").change(function(e){
+        controlOrder(this.value);
+    });
+
     root.find("#icms-table-appStorePreorder").on("tb_act_custom",function (e,data) {
         var invoice = data.selector.parents("tr").children()[2].firstChild.textContent,
             customer = data.selector.parents("tr").children()[3].firstChild.textContent,
@@ -59,13 +81,33 @@ $(function () {
             break;
 
             case "merge":
-                var mergeinv = {invoice:invoice, customer:customer, table:table}
+                var mergeinv = {invoice:invoice, customer:customer, table:table,request:"dinein"}
                 jConfirm("Apakah anda akan menambahkan order baru pada invoice ini?","Gabung Order",function(r){
                     if(r){
                         pushData({key: "icms-invoice-merge", data: mergeinv, replace: true});
                         var getInv = getData({key:"icms-invoice-merge"});
                         $('.addMainTab[data-slug="appStoreCashier"]').click();
                         $(".icms-container").find("#appStoreCashier.tab-pane").find("#cancelOrClear").html('<i class="fa fa-times"></i> Batal Gabung');
+                    }
+                });
+                break;
+
+            case "cancel":
+                var template='<form class="icms-form"><div class="form-group"><label for="orderAdditionalInfo">Masukkan alasan pembatalan order:</label><textarea name="orderAdditionalInfo" id="orderAdditionalInfo" class="form-control input-sm" rows="3" data-placement="top-r" data-msg="Masukkan Alasan Pembatalan" required></textarea></div></form>';
+                jCustomPopup(template,"Pembatalan Order "+invoice,"Simpan","Batal",function(r,frm){
+                    if(r){
+                        var reason = $.deparam(frm);
+                            param = {method:"actionPage",slug:slug,app:"app",appslug:"pos_cafe",act:"cancelOrder",mainId:data.id,orderAdditionalInfo:reason.orderAdditionalInfo,orderInvoice:invoice,orderStatus:"cancel"};
+                        $.post("Services",param,function(res){
+                            if(res.status==="success"){
+                                $.gritter.add({
+                                    title: 'Berhasil',
+                                    text: res.messageSuccess,
+                                    class_name: 'gritter-success'
+                                });
+                                nativeTable(slug, false, true);
+                            }
+                        },'json');
                     }
                 });
                 break;
@@ -76,10 +118,12 @@ $(function () {
         var orderTable = root.find(".orderTableContainer");
         if(data.data.orderType==="preorder"){
             orderTable.hide();
-            orderTable.find("input").hide();
+            orderTable.find("select[name=orderTable]").hide();
+            root.find("#requestType").val(data.data.orderType);
         }else if(data.data.orderType==="orderweb"){
             orderTable.show();
-            orderTable.find("input").show();
+            orderTable.find("select[name=orderTable]").show();
+            root.find("#requestType").val(data.data.orderType);
         }
     });
 
@@ -149,7 +193,12 @@ $(function () {
                     "storeInvoice":"INVOICE: "+res.data.data[0].orderInvoice,
                     "storeFooter":[check.receiptStoreFoot1,check.receiptStoreFoot2]
                 };
-            readyPrint['storePrintType'] = "Store";
+
+            if(res.request==="orderweb"){
+                readyPrint['storePrintType'] = "Both";
+            }else{
+                readyPrint['storePrintType'] = "Store";
+            }
             mergeObj = Object.assign(readyPrint, res.content);
             content = JSON.stringify({"content":mergeObj});
             if(res.print==="on"){

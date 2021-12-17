@@ -65,8 +65,8 @@
                                     data-width="120" style="width: 120px" class="text-center">
                                     {{orderTotalPrice|Total Harga}}
                                 </th>
-                                <th data-column="action" data-action="custom|custom|update" data-class="text-center" data-custom-extra="info|merge" data-custom-display="show|hide|hide"  data-custom-icon="blue fa fa-info-circle|purple fa fa-copy"
-                                    style="width: 100px" class="text-center"><i class="fa fa-cogs"></i></th>
+                                <th data-column="action" data-action="custom|custom|update|custom" data-class="text-center" data-custom-extra="info|merge|update|cancel"  data-custom-icon="blue fa fa-info-circle|purple fa fa-copy|green fa fa-pencil|red fa fa-ban"
+                                    style="width: 110px" class="text-center"><i class="fa fa-cogs"></i></th>
                             </tr>
                             </thead>
                             <tbody></tbody>
@@ -94,6 +94,7 @@
                           id="iform-appStorePreorder"
                           data-param='{"method":"actionPage","slug":"appStorePreorder","act":"create_appStorePreorder","app":"app","appslug":"pos_cafe"}'>
                         <input type="hidden" name="mainId" value="">
+                        <input type="hidden" name="requestType" id="requestType" value="">
 
                         <div class="form-group has-info no-margin">
                             <div class="row no-margin">
@@ -108,15 +109,27 @@
                                         class="form-control input-sm autoNumeric" data-v-max="99999999" data-v-min="0" data-a-sign="Rp. " data-a-sep="."  data-a-dec=" " value="0" readonly>
                             </div>
                         </div>
+
                         <div class="form-group has-info">
-                            <div class="row no-margin  orderTableContainer reset-hide" style="display: none">
-                                <label for="orderTable"> {{orderTable|Meja}}:</label>
-                                <select name="orderTable" id="orderTable" data-default="meja-1"
-                                        data-remote='{"param":{"method":"actionPage","slug":"appStorePreorder","act":"load_meja"}}'
-                                        data-placeholder="Pilih Meja..." class="nativeSelect form-control input-sm"
-                                        data-msg="Silahkan pilih meja" data-placement="top-r" required></select>
+                            <div class="row no-margin orderTableContainer reset-hide" style="display: none">
+                                <div class="col-lg-6">
+                                    <label for="orderRequestType"> {{orderRequestType|Tipe Pesanan}}:</label>
+                                    <select name="orderRequestType" id="orderRequestType"
+                                            data-opts='[{"text":"Makan di tempat","id":"dinein","data":{"tableroot":"dinein"}},{"text":"Bungkus","id":"takeaway","data":{"tableroot":"takeaway"}}]'
+                                            data-placeholder="Pilih tipe..." class="nativeSelect form-control input-sm"
+                                            data-msg="Silahkan pilih tipe pesanan" data-placement="top-r"
+                                            required></select>
+                                </div>
+                                <div class="col-lg-6">
+                                    <label for="orderTable"> {{orderTable|Meja}}:</label>
+                                    <select name="orderTable" id="orderTable" data-display="none"
+                                            data-remote='{"param":{"method":"actionPage","slug":"appStorePreorder","act":"load_meja"}}'
+                                            data-placeholder="Pilih meja..." class="nativeSelect form-control input-sm"
+                                            data-msg="Silahkan pilih meja" data-placement="top-r" required></select>
+                                </div>
                             </div>
                         </div>
+
                         <div class="form-group has-info">
                             <div class="row no-margin">
                                 <div class="col-lg-6">

@@ -288,7 +288,7 @@
                                 <div class="col-lg-6">
                                     <label for="orderRequestType"> {{requestType|Tipe Pesanan}}:</label>
                                     <select name="orderRequestType" id="orderRequestType"
-                                            data-opts='[{"text":"Makan di tempat","id":"dinein"},{"text":"Bungkus","id":"takeaway"}]'
+                                            data-opts='[{"text":"Makan di tempat","id":"dinein","data":{"tableroot":"dinein"}},{"text":"Bungkus","id":"takeaway","data":{"tableroot":"takeaway"}}]'
                                             data-placeholder="Pilih tipe..." class="nativeSelect form-control input-sm"
                                             data-msg="Silahkan pilih tipe pesanan" data-placement="top-r"
                                             required></select>
@@ -300,7 +300,7 @@
                             <div class="row no-margin">
                                 <div class="col-lg-6">
                                     <label for="orderTable"> {{orderTable|Meja}}:</label>
-                                    <select name="orderTable" id="orderTable"
+                                    <select name="orderTable" id="orderTable" data-display="none"
                                             data-remote='{"param":{"method":"actionPage","slug":"appStoreCashier","act":"load_meja"}}'
                                             data-placeholder="Pilih meja..." class="nativeSelect form-control input-sm"
                                             data-msg="Silahkan pilih meja" data-placement="top-r" required></select>

@@ -32,7 +32,12 @@ switch ($p_act) {
         break;
 
     case "update_" . $p_slug:
-        $data = updateData($conn, $tablename, "orderStatus='success',orderPricePayment='$p_orderPricePayment',orderDateTime='$f_datetimenow',orderCashierId='$s_cashierId',orderType='$p_orderType'", "id='$p_mainId'",true,"*","id='$p_mainId'");
+        if($p_requestType==="orderweb"){
+            $data = updateData($conn, $tablename, "orderStatus='success',orderPricePayment='$p_orderPricePayment',orderTable='$p_orderTable',orderCashierId='$s_cashierId',orderType='$p_orderType',orderRequestType='$p_orderRequestType'", "id='$p_mainId'",true,"*","id='$p_mainId'");
+        }else{
+            $data = updateData($conn, $tablename, "orderStatus='success',orderPricePayment='$p_orderPricePayment',orderDateTime='$f_datetimenow',orderCashierId='$s_cashierId',orderType='$p_orderType'", "id='$p_mainId'",true,"*","id='$p_mainId'");
+        }
+
         if($data['data']['status']==="success"){
 //            $orderDetails = getDataN($conn, "*", "orderdetail od LEFT JOIN viewproducts vp ON od.orderdetailProductId=vp.id","orderdetailInvoice='".$data['data']['data'][0]['orderInvoice']."'");
 //            foreach ($orderDetails['data'] as $detail){
@@ -76,18 +81,32 @@ switch ($p_act) {
         }else{
             $receipt="";
         }
-        $message = array("print"=>$p_receiptPrint,"messageSuccess" => '<i class="fa fa-info-circle"></i> ' . $msg_updated);
+        $message = array("request"=>$p_requestType,"print"=>$p_receiptPrint,"messageSuccess" => '<i class="fa fa-info-circle"></i> ' . $msg_updated);
         $result = array_merge($data, $message,$receipt);
         echo json_encode($result);
         break;
 
     case "load_meja":
-        $field = "tableName,tableSlug";
+        $field = "tableName,tableSlug,tableType";
         $data = getDataN($conn, $field, "`table`","tableActive='on'");
         foreach ($data['data'] as $val){
-            $parent[] = array("id"=>$val['tableSlug'],"text"=>$val['tableName']);
+            $parent[] = array("id"=>$val['tableSlug'],"text"=>$val['tableName'],"data"=>array("tableroot"=>$val['tableType']));
         }
         $result = array("data"=>$parent);
+        echo json_encode($result);
+        break;
+
+    case "cancelOrder":
+        $checkOrderDetail = getDataN($conn, "*", "orderdetail","orderdetailInvoice='$p_orderInvoice'");
+        $contentPOST = postExtractor($_POST, array("p_method", "p_slug","p_appslug", "p_act", "p_mainId", "p_app"));
+        $data = updateData($conn, $tablename, $contentPOST.",orderLock='on'", "id='$p_mainId'");
+        if(count($checkOrderDetail['data'])>0){
+            foreach ($checkOrderDetail['data'] as $stock){
+                updateData($conn, "stock", "stockQuantity=stockQuantity+'".$stock['orderdetailQuantity']."'","stockProductId='".$stock['orderdetailProductId']."'");
+            }
+        }
+        $message = array("messageSuccess" => '<i class="fa fa-info-circle"></i> Berhasil melakukan pembatalan order');
+        $result = array_merge($data, $message);
         echo json_encode($result);
         break;
 
