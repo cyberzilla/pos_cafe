@@ -97,7 +97,7 @@ $(function () {
                 jCustomPopup(template,"Pembatalan Order "+invoice,"Simpan","Batal",function(r,frm){
                     if(r){
                         var reason = $.deparam(frm);
-                            param = {method:"actionPage",slug:slug,app:"app",appslug:"pos_cafe",act:"cancelOrder",mainId:data.id,orderAdditionalInfo:reason.orderAdditionalInfo,orderInvoice:invoice,orderStatus:"cancel"};
+                            param = {method:"actionPage",slug:slug,app:"app",appslug:"pos_cafe",act:"cancelOrder",mainId:data.id,orderAdditionalInfo:reason.orderAdditionalInfo,orderInvoice:invoice,orderStatus:"cancel",orderTable:table};
                         $.post("Services",param,function(res){
                             if(res.status==="success"){
                                 $.gritter.add({

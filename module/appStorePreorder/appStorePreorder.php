@@ -13,7 +13,7 @@ $msg_removed = "Successfully Remove Data";
 
 switch ($p_act) {
     case "load_" . $p_slug:
-        $field = "id,orderDateTime,orderTotalPrice,orderInvoice,IF(ISNULL(orderCashierId),'Order Web',orderTable) orderTable,IF(ISNULL(orderCashierId),CONCAT('<div class=\"readed text-info animate__animated animate__headShake animate__infinite\">',orderCustomerName,'</div>'),orderCustomerName) orderCustomerName";
+        $field = "id,orderDateTime,orderTotalPrice,orderInvoice,IF(ISNULL(orderCashierId),'OrderWeb',orderTable) orderTable,IF(ISNULL(orderCashierId),CONCAT('<div class=\"readed text-info animate__animated animate__headShake animate__infinite\">',orderCustomerName,'</div>'),orderCustomerName) orderCustomerName";
         $result = getDataP($conn, $field, $tablename, "orderInvoice LIKE '%$p_search%' AND orderStatus='process' ORDER by orderDateTime DESC", $p_page, $p_perpage, true);
         echo json_encode($result);
         break;
@@ -98,11 +98,13 @@ switch ($p_act) {
 
     case "cancelOrder":
         $checkOrderDetail = getDataN($conn, "*", "orderdetail","orderdetailInvoice='$p_orderInvoice'");
-        $contentPOST = postExtractor($_POST, array("p_method", "p_slug","p_appslug", "p_act", "p_mainId", "p_app"));
+        $contentPOST = postExtractor($_POST, array("p_method", "p_slug","p_appslug", "p_act", "p_mainId", "p_app","p_orderTable"));
         $data = updateData($conn, $tablename, $contentPOST.",orderLock='on'", "id='$p_mainId'");
-        if(count($checkOrderDetail['data'])>0){
-            foreach ($checkOrderDetail['data'] as $stock){
-                updateData($conn, "stock", "stockQuantity=stockQuantity+'".$stock['orderdetailQuantity']."'","stockProductId='".$stock['orderdetailProductId']."'");
+        if($p_orderTable!=="OrderWeb"){
+            if(count($checkOrderDetail['data'])>0){
+                foreach ($checkOrderDetail['data'] as $stock){
+                    updateData($conn, "stock", "stockQuantity=stockQuantity+'".$stock['orderdetailQuantity']."'","stockProductId='".$stock['orderdetailProductId']."'");
+                }
             }
         }
         $message = array("messageSuccess" => '<i class="fa fa-info-circle"></i> Berhasil melakukan pembatalan order');
