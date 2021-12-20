@@ -80,7 +80,9 @@ $(function () {
                                     "storeCashier": "KASIR: " + check.cashierName
                                 }, mergeObj, contents;
 
-                                readyPrint['storePrintType'] = "Close";
+                                // readyPrint['storePrintType'] = "Close";
+                                readyPrint['storePrintType'] = "CC:1:PR1";
+
                                 mergeObj = Object.assign(readyPrint, res2.content);
                                 contents = JSON.stringify({"content": mergeObj});
                                 location.href = 'jprint:' + btoa(contents);
@@ -283,7 +285,8 @@ $(function () {
         }
 
         if(res.content.storeStatus==="PRE-ORDER"){
-            readyPrint['storePrintType'] = "Kitchen";
+            // readyPrint['storePrintType'] = "Kitchen";
+            readyPrint['storePrintType'] = "KR:1:PR1;"+"KR:1:PR2;"+"KRF:1:PR2;"+"KRD:1:PR2";
             mergeObj = Object.assign(readyPrint, res.content);
             content = JSON.stringify({"content":mergeObj});
             location.href='jprint:'+btoa(content);
@@ -291,14 +294,17 @@ $(function () {
         }else{
             if (res.extra.directPrint!=="on"){
                 //Only Cashier
-                readyPrint['storePrintType'] = "Store";
+                // readyPrint['storePrintType'] = "Store";
+                readyPrint['storePrintType'] = "SR:1:PR1;"+"KR:1:PR1";
                 mergeObj = Object.assign(readyPrint, res.content);
                 content = JSON.stringify({"content":mergeObj});
                 location.href='jprint:'+btoa(content);
                 triggerReload();
             }else{
                 //Direct Print both Store and Kitchen
-                readyPrint['storePrintType'] = "Both";
+                // readyPrint['storePrintType'] = "Both";
+                readyPrint['storePrintType'] = "SR:1:PR1;"+"KR:1:PR1;"+ "KR:1:PR2;"+ "KRF:1:PR2;"+ "KRD:1:PR2";
+
                 mergeObj = Object.assign(readyPrint, res.content);
                 content = JSON.stringify({"content":mergeObj});
                 location.href='jprint:'+btoa(content);
@@ -312,7 +318,7 @@ $(function () {
 
         //reset form
         root.find("#orderType").val("").trigger("change");
-        root.find("#orderCustomerName").val("");
+        root.find("#orderCustomerName").val("-");
         root.find("#orderTable").val("").trigger("change");
         root.find("#orderAdditionalInfo").val("-");
     });
@@ -391,7 +397,7 @@ $(function () {
                             root.find("#icms-table-" + slug).parents(".icms-widget").trigger("reload.ace.widget");
                             root.find("#directPrint").prop("checked",true);
                             root.find("#orderType").val("").trigger("change");
-                            root.find("#orderCustomerName").val("");
+                            root.find("#orderCustomerName").val("-");
                             root.find("#orderTable").val("").trigger("change");
                             root.find("#orderAdditionalInfo").val("-");
                         },'json');
@@ -403,7 +409,7 @@ $(function () {
                         deleteKey({key:"icms-invoice-merge"});
                         root.find("#cancelOrClear").html('<i class="fa fa-trash"></i> Bersihkan');
                         root.find("#orderType").val("").trigger("change");
-                        root.find("#orderCustomerName").val("");
+                        root.find("#orderCustomerName").val("-");
                         root.find("#orderRequestType").val("").trigger("change");
                         root.find("#orderAdditionalInfo").val("-");
                         jAlert("Sukses menghapus cache gabung order","Gabung Order");
@@ -531,7 +537,7 @@ $(function () {
             root.find("#orderVoucherCode").val("");
             root.find("#directPrint").prop("checked",true);
             root.find("#orderType").val("").trigger("change");
-            root.find("#orderCustomerName").val("");
+            root.find("#orderCustomerName").val("-");
             root.find("#orderTable").val("").trigger("change");
             root.find("#orderAdditionalInfo").val("-");
         }

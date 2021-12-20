@@ -238,6 +238,9 @@ switch ($p_act) {
         }
 
         $message = array("detail"=>$orderDetails,"messageSuccess" => '<i class="fa fa-info-circle"></i> Order Sukses');
+        //Set Antrian
+        pushData($conn, "queue", "queueOrderInvoice='$p_orderInvoice'");
+
         $result = array_merge($data, $message,$receipt);
         echo json_encode($result);
         break;

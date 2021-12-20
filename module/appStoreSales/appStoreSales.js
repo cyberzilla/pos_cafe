@@ -85,16 +85,22 @@ $(function () {
                             jCustomPopup(template,"Print Struk","Cetak","Batal",function(r,data){
                                 var param2 = $.deparam(data),noprint=false;
                                 if(param2.storePrint==="on" && param2.kitchenPrint==="on"){
-                                    readyPrint['storePrintType'] = "Both";
-                                    readyPrint['storePrintCount'] = param2.storePrintCount;
-                                    readyPrint['kitchenPrintCount'] = param2.kitchenPrintCount;
+                                    //Both is Store and Kitchen
+                                    //Default Store is PR1
+                                    //Default Kitchen is PR2
+                                    readyPrint['storePrintType'] = "SR:"+param2.storePrintCount+":PR1;"+"KR:"+param2.storePrintCount+":PR1;"+ "KR:"+param2.kitchenPrintCount+":PR2;"+ "KRF:"+param2.kitchenPrintCount+":PR2;"+ "KRD:"+param2.kitchenPrintCount+":PR2";
+                                    // readyPrint['storePrintType'] = "Both";
+                                    // readyPrint['storePrintCount'] = param2.storePrintCount;
+                                    // readyPrint['kitchenPrintCount'] = param2.kitchenPrintCount;
                                 }else{
                                     if(param2.storePrint==="on"){
-                                        readyPrint['storePrintType'] = "Store";
-                                        readyPrint['storePrintCount'] = param2.storePrintCount;
+                                        // readyPrint['storePrintType'] = "Store";
+                                        // readyPrint['storePrintCount'] = param2.storePrintCount;
+                                        readyPrint['storePrintType'] = "SR:"+param2.storePrintCount+":PR1;"+"KR:"+param2.storePrintCount+":PR1";
                                     }else if(param2.kitchenPrint==="on"){
-                                        readyPrint['storePrintType'] = "Kitchen";
-                                        readyPrint['kitchenPrintCount'] = param2.kitchenPrintCount;
+                                        // readyPrint['storePrintType'] = "Kitchen";
+                                        // readyPrint['kitchenPrintCount'] = param2.kitchenPrintCount;
+                                        readyPrint['storePrintType'] = "KR:"+param2.kitchenPrintCount+":PR2;"+ "KRF:"+param2.kitchenPrintCount+":PR2;"+ "KRD:"+param2.kitchenPrintCount+":PR2";
                                     }else{
                                         noprint = true;
                                     }

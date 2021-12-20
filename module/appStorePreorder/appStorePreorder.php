@@ -34,6 +34,8 @@ switch ($p_act) {
     case "update_" . $p_slug:
         if($p_requestType==="orderweb"){
             $data = updateData($conn, $tablename, "orderStatus='success',orderPricePayment='$p_orderPricePayment',orderTable='$p_orderTable',orderCashierId='$s_cashierId',orderType='$p_orderType',orderRequestType='$p_orderRequestType'", "id='$p_mainId'",true,"*","id='$p_mainId'");
+            //Set Antrian
+            pushData($conn, "queue", "queueOrderInvoice='".$data['data']['data'][0]['orderInvoice']."'");
         }else{
             $data = updateData($conn, $tablename, "orderStatus='success',orderPricePayment='$p_orderPricePayment',orderDateTime='$f_datetimenow',orderCashierId='$s_cashierId',orderType='$p_orderType'", "id='$p_mainId'",true,"*","id='$p_mainId'");
         }

@@ -307,7 +307,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <label for="orderCustomerName"> {{orderCustomerName|Nama Pelanggan}}:</label>
-                                    <input id="orderCustomerName" name="orderCustomerName" type="text" class="form-control input-sm" data-msg="Masukkan nama pelanggan" data-placement="top-r" required>
+                                    <input id="orderCustomerName" name="orderCustomerName" type="text" class="form-control input-sm" data-msg="Masukkan nama pelanggan" value="-" data-placement="top-r" required>
                                 </div>
                             </div>
                         </div>

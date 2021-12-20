@@ -195,9 +195,11 @@ $(function () {
                 };
 
             if(res.request==="orderweb"){
-                readyPrint['storePrintType'] = "Both";
+                // readyPrint['storePrintType'] = "Both";
+                readyPrint['storePrintType'] = "SR:1:PR1;"+"KR:1:PR1;"+ "KR:1:PR2;"+ "KRF:1:PR2;"+ "KRD:1:PR2";
             }else{
-                readyPrint['storePrintType'] = "Store";
+                // readyPrint['storePrintType'] = "Store";
+                readyPrint['storePrintType'] = "SR:1:PR1";
             }
             mergeObj = Object.assign(readyPrint, res.content);
             content = JSON.stringify({"content":mergeObj});

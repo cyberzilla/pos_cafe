@@ -53,6 +53,8 @@ switch ($p_act) {
                     "post"=>""
                 )
             );
+            //Set Antrian
+            pushData($conn, "queue", "queueOrderInvoice='".$data['data']['orderInvoice']."'");
         }else{
             $receipt="";
         }
