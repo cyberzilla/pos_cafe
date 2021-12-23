@@ -30,7 +30,7 @@ $(function () {
         }
     });
 
-    root.on("page_loaded",function(){
+    root.one("page_loaded",function(){
         nativeTable(slug, false, true, function (x) {
             if (x) {
                 setTimeout(function () {
