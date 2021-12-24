@@ -13,8 +13,8 @@ $msg_removed = "Successfully Remove Data";
 
 switch ($p_act) {
     case "load_" . $p_slug:
-        $field = "vp.id, vp.productName,CONCAT(SUM(od.orderdetailQuantity),' ',vp.productUnitName) `orderQuantity`, vp.categoryName";
-        $result = getDataP($conn, $field, "vieworder vd LEFT JOIN orderdetail od ON vd.orderInvoice = od.orderdetailInvoice LEFT JOIN viewproducts vp ON od.orderdetailProductId = vp.id", "vp.productName LIKE '%$p_search%' AND (orderdetailDateTime BETWEEN '$p_orderdetailDateTimeStart 00:00:00' AND '$p_orderdetailDateTimeEnd 23:59:59')  GROUP BY vp.id  ORDER BY orderdetailQuantity DESC", $p_page, $p_perpage, true);
+        $field = "odn.id, odn.productName,odn.categoryName, CONCAT(SUM(odn.orderdetailQuantity),' ',odn.productUnitName) orderQuantity";
+        $result = getDataP($conn, $field, "(SELECT odt.orderdetailInvoice,SUM(odt.orderdetailQuantity) orderdetailQuantity, odt.orderdetailDateTime, vp.productName, vp.categoryName,vp.productUnitName,vp.id FROM orderdetail odt LEFT JOIN viewproducts vp ON odt.orderdetailProductId = vp.id GROUP BY odt.orderdetailProductId,odt.orderdetailInvoice ORDER BY odt.orderdetailInvoice) odn LEFT JOIN `order` od on odn.orderdetailInvoice = od.orderInvoice", "od.orderStatus='success' AND odn.productName LIKE '%$p_search%' AND (odn.orderdetailDateTime BETWEEN '$p_orderdetailDateTimeStart 00:00:00' AND '$p_orderdetailDateTimeEnd 23:59:59')  GROUP BY odn.id  ORDER BY SUM(odn.orderdetailQuantity) DESC", $p_page, $p_perpage, true);
         echo json_encode($result);
         break;
 

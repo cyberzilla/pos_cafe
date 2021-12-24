@@ -15,9 +15,9 @@ switch ($p_act) {
     case "load_" . $p_slug:
         $checkInvoice = getDataN($conn,"orderInvoice","`order`","ORDER BY orderInvoice DESC, orderDateTime DESC LIMIT 1",false);
         $field = "vp.id,vp.productCode,vp.productName,SUM(cr.cartQuantity) cartQty,CONCAT(SUM(cr.cartQuantity),' ',vp.productUnitName) cartQuantity,IF(SUM(cr.cartQuantity)>=vp.discountMinimalOrder,vp.discountByPercent,0) discountByPercent,vp.discountMinimalOrder,vp.priceSellingPrice,(SUM(cr.cartQuantity)*vp.priceSellingPrice) subTotalRaw,((SUM(cr.cartQuantity)*vp.priceSellingPrice)-(IF(SUM(cr.cartQuantity)>=vp.discountMinimalOrder,vp.discountByPercent,0)/100*(SUM(cr.cartQuantity)*vp.priceSellingPrice))) subSellingPrice, (IF(SUM(cr.cartQuantity)>=vp.discountMinimalOrder,vp.discountByPercent,0)/100*(SUM(cr.cartQuantity)*vp.priceSellingPrice)) subDiscount";
-        $result = getDataP($conn, $field, "cart cr LEFT JOIN viewproducts vp ON cr.cartProductId=vp.id", "cr.cartCashierId='$s_cashierId' GROUP BY vp.id", $p_page, $p_perpage,true);
+        $result = getDataP($conn, $field, "cart cr LEFT JOIN viewproducts vp ON cr.cartProductId=vp.id", "cr.cartCashierId='$s_cashierId' GROUP BY vp.id ORDER BY cr.cartDateTime", $p_page, $p_perpage,true);
         $result['invoice'] = getInvoice($checkInvoice['data'][0]['orderInvoice']);
-        $alldata = getDataN($conn,$field,"cart cr LEFT JOIN viewproducts vp ON cr.cartProductId=vp.id","cr.cartCashierId='$s_cashierId' GROUP BY vp.id");
+        $alldata = getDataN($conn,$field,"cart cr LEFT JOIN viewproducts vp ON cr.cartProductId=vp.id","cr.cartCashierId='$s_cashierId' GROUP BY vp.id ORDER BY cr.cartDateTime");
         $result['alldata'] = $alldata['data'];
         echo json_encode($result);
         break;
