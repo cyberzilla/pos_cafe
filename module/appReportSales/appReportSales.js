@@ -48,9 +48,9 @@ $(function () {
                 if(res.custom!==null){
                     $.each(res.custom,function(i,item){
                         if(item.orderStatus==="process"){
-                            prices += parseFloat(item.orderDownPayment);
+                            prices += isNaN(parseFloat(item.orderDownPayment))?0:parseFloat(item.orderDownPayment);
                         }else if(item.orderStatus==="success"){
-                            prices += parseFloat(item.orderTotalPrice);
+                            prices += isNaN(parseFloat(item.orderTotalPrice))?0:parseFloat(item.orderTotalPrice);
                         }else{
                             prices += 0;
                         }
@@ -58,7 +58,7 @@ $(function () {
                 }else{
                     prices = 0;
                 }
-                root.find("#reportTotalPrice").autoNumeric("set",isNaN(prices)?0:prices);
+                root.find("#reportTotalPrice").autoNumeric("set",prices);
             }else{
                 table.find(".report-download").hide();
                 root.find("#reportTotalPrice").autoNumeric("set",0);

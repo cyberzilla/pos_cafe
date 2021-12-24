@@ -22,7 +22,7 @@
                     <div class="form-group has-info no-margin">
                         <div class="row no-margin">
                             <input id="reportTotalPrice" name="reportTotalPriceX" type="text"
-                                   class="form-control input-lg autoNumeric text-right reportTotalPrice" data-v-max="99999999" data-v-min="0" data-a-sign="" data-a-sep="."  data-a-dec=" " value="0" readonly>
+                                   class="form-control input-lg autoNumeric text-right reportTotalPrice" data-v-max="9999999999" data-v-min="0" data-a-sign="" data-a-sep="."  data-a-dec=" " value="0" readonly>
                         </div>
                     </div>
                 </div>
