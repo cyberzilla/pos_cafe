@@ -150,16 +150,6 @@ switch ($p_act) {
                 $fieldForPush = "orderdetailCashierId='".$detail['cartCashierId']."',orderdetailInvoice='".$invoice."',orderdetailProductId='".$detail['cartProductId']."',orderdetailQuantity='".$detail['cartQuantity']."',orderdetailSubDiscountValue='".$detail['subDiscount']."',orderdetailSubPrice='".$detail['subTotalRaw']."',orderdetailSubTotalPrice='".$detail['subSellingPrice']."',orderdetailPrice='".$detail['priceSellingPrice']."',orderdetailCapitalPrice='".$detail['priceCapitalPrice']."'";
                 //Add Order Detail
                 pushData($conn,"orderdetail",$fieldForPush);
-//                $details[] = array(
-//                    "code"=>$detail['productCode'],
-//                    "name"=>wrapWords($detail['productName'], 26),
-//                    "qty"=>intval($detail['cartQuantity']),
-//                    "catroot"=>$detail['categoryRootName'],
-//                    "cat"=>$detail['categoryName'],
-//                    "price"=>floatval($detail['priceSellingPrice']),
-//                    "total"=>floatval($detail['subTotalRaw']),
-//                );
-//                $cat[] = $detail['categoryRootName'];
                 $modal += intval($detail['cartQuantity'])*floatval($detail['priceCapitalPrice']);
             }
             //Update Voucher Used
@@ -168,25 +158,6 @@ switch ($p_act) {
             //Remove Cart
             removeData($conn,"cart","cartCashierId='".$orderDetails['data'][0]['cartCashierId']."'");
             $data = pushData($conn, "`order`", $contentPOST.",orderInvoice='$invoice'".",orderTotalCapitalPrice='$modal'",true,"*","orderInvoice='$invoice'");
-
-//            $receipt = array(
-//                "content"=>array(
-//                    "storeTotalDiscount"=>is_null($data['data']['data'][0]['orderTotalDiscountValue'])?0:floatval($data['data']['data'][0]['orderTotalDiscountValue']),
-//                    "storeVoucherValue"=>is_null($data['data']['data'][0]['orderVoucherValue'])?0:floatval($data['data']['data'][0]['orderVoucherValue']),
-//                    "storeTotalPrice"=>is_null($data['data']['data'][0]['orderTotalPrice'])?0:floatval($data['data']['data'][0]['orderTotalPrice']),
-//                    "storePricePayment"=>is_null($data['data']['data'][0]['orderPricePayment'])?0:floatval($data['data']['data'][0]['orderPricePayment']),
-//                    "storeDate"=>"TGL: ".date("d/m/Y",strtotime($data['data']['data'][0]['orderDateTime']))." JAM: ".date("H:i:s",strtotime($data['data']['data'][0]['orderDateTime'])),
-//                    "storeDownPayment"=>is_null($data['data']['data'][0]['orderDownPayment'])?0:floatval($data['data']['data'][0]['orderDownPayment']),
-//                    "storeStatus"=>$data['data']['data'][0]['orderStatus']==="success"?($data['data']['data'][0]['orderType']==="card"?"LUNAS (NON TUNAI)":"LUNAS"):"PRE-ORDER",
-//                    "storeTax"=>is_null($data['data']['data'][0]['orderTaxValue'])?0:floatval($data['data']['data'][0]['orderTaxValue']),
-//                    "storeProduct"=>$details,
-//                    "storeQueue"=>intval(substr($invoice,-3)),
-//                    "storeTable"=>$data['data']['data'][0]['orderTable'],
-//                    "storeAdditionalInfo"=>wrapWords($data['data']['data'][0]['orderAdditionalInfo'], 34),
-//                    "storeRootName"=>join(",",array_unique($cat)),
-//                    "storeCustomerName"=>is_null($data['data']['data'][0]['orderCustomerName'])?"":"PELANGGAN: ".$data['data']['data'][0]['orderCustomerName']
-//                )
-//            );
 
             $receipt = array(
                 "content"=>array(
@@ -208,25 +179,6 @@ switch ($p_act) {
 
             removeData($conn,"cart","cartCashierId='$s_cashierId'");
             $data = updateData($conn, "`order`", "orderTaxValue=orderTaxValue+'$p_orderTaxValue',orderTotalPrice=orderTotalPrice+'$p_orderTotalPrice',orderPrice=orderPrice+'$p_orderPrice',orderTotalCapitalPrice=orderTotalCapitalPrice+'$modal',orderAdditionalInfo='$p_orderAdditionalInfo'","orderInvoice='$p_orderInvoice'",true,"*","orderInvoice='$p_orderInvoice'");
-
-//            $receipt = array(
-//                "content"=>array(
-//                    "storeTotalDiscount"=>is_null($data['data']['data'][0]['orderTotalDiscountValue'])?0:floatval($data['data']['data'][0]['orderTotalDiscountValue']),
-//                    "storeVoucherValue"=>is_null($data['data']['data'][0]['orderVoucherValue'])?0:floatval($data['data']['data'][0]['orderVoucherValue']),
-//                    "storeTotalPrice"=>is_null($data['data']['data'][0]['orderTotalPrice'])?0:floatval($data['data']['data'][0]['orderTotalPrice']),
-//                    "storePricePayment"=>is_null($data['data']['data'][0]['orderPricePayment'])?0:floatval($data['data']['data'][0]['orderPricePayment']),
-//                    "storeDate"=>"TGL: ".date("d/m/Y",strtotime($data['data']['data'][0]['orderDateTime']))." JAM: ".date("H:i:s",strtotime($data['data']['data'][0]['orderDateTime'])),
-//                    "storeDownPayment"=>is_null($data['data']['data'][0]['orderDownPayment'])?0:floatval($data['data']['data'][0]['orderDownPayment']),
-//                    "storeStatus"=>$data['data']['data'][0]['orderStatus']==="success"?($data['data']['data'][0]['orderType']==="card"?"LUNAS (NON TUNAI)":"LUNAS"):"PRE-ORDER",
-//                    "storeTax"=>is_null($data['data']['data'][0]['orderTaxValue'])?0:floatval($data['data']['data'][0]['orderTaxValue']),
-//                    "storeProduct"=>$details,
-//                    "storeQueue"=>intval(substr($p_orderInvoice,-3)),
-//                    "storeTable"=>$data['data']['data'][0]['orderTable'],
-//                    "storeAdditionalInfo"=>wrapWords($data['data']['data'][0]['orderAdditionalInfo'], 34),
-//                    "storeRootName"=>join(",",array_unique($cat)),
-//                    "storeCustomerName"=>is_null($data['data']['data'][0]['orderCustomerName'])?"":"PELANGGAN: ".$data['data']['data'][0]['orderCustomerName']
-//                )
-//            );
 
             $receipt = array(
                 "content"=>array(
