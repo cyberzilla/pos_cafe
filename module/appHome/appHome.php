@@ -42,11 +42,6 @@ switch ($p_act) {
         echo json_encode($result);
         break;
 
-//    case "loadPopularProduct":
-//        $result = getDataP($conn,"*","viewmostsales","",$p_page, $p_perpage,false);
-//        echo json_encode($result);
-//        break;
-
     default:
         break;
 }
