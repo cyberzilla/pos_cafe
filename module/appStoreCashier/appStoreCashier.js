@@ -314,6 +314,11 @@ $(function () {
 
         if(merge!==null){
             deleteKey({key:"icms-invoice-merge"});
+            root.find("#cancelOrClear").html('<i class="fa fa-trash"></i> Bersihkan');
+            root.find("#orderType").val("").trigger("change");
+            root.find("#orderCustomerName").val("-");
+            root.find("#orderRequestType").val("").trigger("change");
+            root.find("#orderAdditionalInfo").val("-");
         }
 
         //reset form
@@ -462,11 +467,11 @@ $(function () {
         if(res.alldata!==null){
             root.find(".icms-receipt").fadeIn(500);
             root.find("#iform-appStoreCashier").fadeIn(500);
+            subTotalRaw = parseFloat(res.subtotalraw);
+            subSelling = parseFloat(res.subselling);
+            subDiscount = parseFloat(res.subdiscount);
             $.each(res.alldata,function(i,item){
-                subSelling += parseFloat(item.subSellingPrice);
-                subDiscount += parseFloat(item.subDiscount);
                 cartQty += parseInt(item.cartQty);
-                subTotalRaw += parseFloat(item.subTotalRaw);
                 cartContent += '<tr><td class="text-left valign-top">'+(i+1)+'.</td><td class="text-left" colspan="2">'+item.productName+'</td><td class="text-right valign-top">'+(parseFloat(item.subTotalRaw)).toLocaleString("id-ID")+'</td></tr><tr><td></td><td>'+item.productCode+"</td><td>"+item.cartQty+"X"+(parseFloat(item.priceSellingPrice)).toLocaleString("id-ID")+'</td><td></td></tr>';
             });
             tax = (10/100)*subSelling;
