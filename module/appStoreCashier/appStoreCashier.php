@@ -170,7 +170,7 @@ switch ($p_act) {
             $receipt = array(
                 "content"=>array(
                     "storeStatus"=>$data['data']['data'][0]['orderStatus']==="success"?($data['data']['data'][0]['orderType']==="card"?"LUNAS (NON TUNAI)":"LUNAS"):"PRE-ORDER",
-                    "apiUrl"=>siteUrl()."/GetInvoice/".$invoice,
+                    "apiUrl"=>siteUrl()."/GetInvoice/".$data['data']['data'][0]['orderInvoice'],
                     "post"=>""
                 )
             );
