@@ -143,16 +143,15 @@ switch ($p_act) {
         break;
 
     case "create_appStoreCashierOrder":
-        $checkMerge = getData($conn,"orderInvoice","`order`","orderInvoice='$p_orderInvoice'");
+        $checkInvoice = getDataN($conn,"orderInvoice","`order`","ORDER BY orderInvoice DESC, orderDateTime DESC LIMIT 1",false);
+        if($checkInvoice['data'][0]['orderInvoice']===$p_orderInvoice){
+            $invoice = getInvoice($checkInvoice['data'][0]['orderInvoice']);
+        }else{
+            $invoice = $p_orderInvoice;
+        }
+        $checkMerge = getData($conn,"orderInvoice","`order`","orderInvoice='$invoice'");
         if(is_null($checkMerge['data'])){
             $contentPOST = postExtractor($_POST, array("p_method", "p_slug","p_appslug", "p_act", "p_mainId", "p_app","p_orderPricePaymentX","p_orderDownPaymentX","p_directPrint","p_orderInvoice"),true);
-            $checkInvoice = getDataN($conn,"orderInvoice","`order`","ORDER BY orderInvoice DESC, orderDateTime DESC LIMIT 1",false);
-            if($checkInvoice['data'][0]['orderInvoice']===$p_orderInvoice){
-                $invoice = getInvoice($checkInvoice['data'][0]['orderInvoice']);
-            }else{
-                $invoice = $p_orderInvoice;
-            }
-
             $orderDetails = getDataN($conn,"*","viewcart","cartCashierId='$s_cashierId'");
             foreach ($orderDetails['data'] as $detail){
                 $fieldForPush = "orderdetailCashierId='".$detail['cartCashierId']."',orderdetailInvoice='".$invoice."',orderdetailProductId='".$detail['cartProductId']."',orderdetailQuantity='".$detail['cartQuantity']."',orderdetailSubDiscountValue='".$detail['subDiscount']."',orderdetailSubPrice='".$detail['subTotalRaw']."',orderdetailSubTotalPrice='".$detail['subSellingPrice']."',orderdetailPrice='".$detail['priceSellingPrice']."',orderdetailCapitalPrice='".$detail['priceCapitalPrice']."'";
