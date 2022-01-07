@@ -69,7 +69,7 @@ switch ($p_act) {
     case "cancelOrder":
         $checkOrderDetail = getDataN($conn, "*", "orderdetail","orderdetailInvoice='$p_orderInvoice'");
         $contentPOST = postExtractor($_POST, array("p_method", "p_slug","p_appslug", "p_act", "p_mainId", "p_app","p_orderTable"));
-        $data = updateData($conn, $tablename, $contentPOST.",orderLock='on'", "id='$p_mainId'");
+        $data = updateData($conn, $tablename, $contentPOST.",orderLock='on'", "orderInvoice='$p_orderInvoice'");
         if($p_orderTable!=="OrderWeb"){
             if(count($checkOrderDetail['data'])>0){
                 foreach ($checkOrderDetail['data'] as $stock){
