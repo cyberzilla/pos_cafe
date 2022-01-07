@@ -143,13 +143,21 @@ switch ($p_act) {
         break;
 
     case "create_appStoreCashierOrder":
-        $checkInvoice = getDataN($conn,"orderInvoice","`order`","ORDER BY orderInvoice DESC, orderDateTime DESC LIMIT 1",false);
-        if($checkInvoice['data'][0]['orderInvoice']===$p_orderInvoice){
-            $invoice = getInvoice($checkInvoice['data'][0]['orderInvoice']);
-        }else{
+        $checkInvoice = getData($conn,"*","`order`","orderInvoice='$p_orderInvoice'");
+        if(is_null($checkInvoice['data'])){
             $invoice = $p_orderInvoice;
+            $checkMerge['data'] = null;
+        }else{
+            if($checkInvoice['data']['orderType']==="preorder" && !is_null($checkInvoice['data']['orderCashierId']) && $checkInvoice['data']['orderLock']!=='on'){
+                $invoice = $p_orderInvoice;
+                $checkMerge = getData($conn,"orderInvoice","`order`","orderInvoice='$invoice'");
+            }else{
+                $lastInvoice = getDataN($conn,"orderInvoice","`order`","ORDER BY orderInvoice DESC, orderDateTime DESC LIMIT 1",false);
+                $invoice = getInvoice($lastInvoice['data'][0]['orderInvoice']);
+                $checkMerge['data'] = null;
+            }
         }
-        $checkMerge = getData($conn,"orderInvoice","`order`","orderInvoice='$invoice'");
+
         if(is_null($checkMerge['data'])){
             $contentPOST = postExtractor($_POST, array("p_method", "p_slug","p_appslug", "p_act", "p_mainId", "p_app","p_orderPricePaymentX","p_orderDownPaymentX","p_directPrint","p_orderInvoice"),true);
             $orderDetails = getDataN($conn,"*","viewcart","cartCashierId='$s_cashierId'");

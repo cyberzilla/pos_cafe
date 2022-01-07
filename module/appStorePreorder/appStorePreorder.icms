@@ -65,7 +65,7 @@
                                     data-width="120" style="width: 120px" class="text-center">
                                     {{orderTotalPrice|Total Harga}}
                                 </th>
-                                <th data-column="action" data-action="custom|custom|update|custom" data-class="text-center" data-custom-extra="info|merge|update|cancel"  data-custom-icon="blue fa fa-info-circle|purple fa fa-copy|green fa fa-pencil|red fa fa-ban"
+                                <th data-column="action" data-action="custom|custom|update|custom" data-class="text-center" data-custom-extra="info|merge|update|cancel" data-custom-display="show|hide|show|show" data-custom-icon="blue fa fa-info-circle|purple fa fa-copy|green fa fa-pencil|red fa fa-ban"
                                     style="width: 110px" class="text-center"><i class="fa fa-cogs"></i></th>
                             </tr>
                             </thead>

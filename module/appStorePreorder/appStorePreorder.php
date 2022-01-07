@@ -13,7 +13,7 @@ $msg_removed = "Successfully Remove Data";
 
 switch ($p_act) {
     case "load_" . $p_slug:
-        $field = "id,orderDateTime,orderTotalPrice,orderInvoice,IF(ISNULL(orderCashierId),'OrderWeb',orderTable) orderTable,IF(ISNULL(orderCashierId),CONCAT('<div class=\"readed text-info animate__animated animate__headShake animate__infinite\">',orderCustomerName,'</div>'),orderCustomerName) orderCustomerName";
+        $field = "IF(orderCashierId IS NULL,CONCAT(id,':hide'),id) id,orderDateTime,orderTotalPrice,orderInvoice,IF(ISNULL(orderCashierId),'OrderWeb',orderTable) orderTable,IF(ISNULL(orderCashierId),CONCAT('<div class=\"readed text-info animate__animated animate__headShake animate__infinite\">',orderCustomerName,'</div>'),orderCustomerName) orderCustomerName";
         $result = getDataP($conn, $field, $tablename, "orderInvoice LIKE '%$p_search%' AND orderStatus='process' ORDER by orderDateTime DESC", $p_page, $p_perpage, true);
         echo json_encode($result);
         break;
