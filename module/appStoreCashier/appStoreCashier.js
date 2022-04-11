@@ -474,7 +474,7 @@ $(function () {
                 cartQty += parseInt(item.cartQty);
                 cartContent += '<tr><td class="text-left valign-top">'+(i+1)+'.</td><td class="text-left" colspan="2">'+item.productName+'</td><td class="text-right valign-top">'+(parseFloat(item.subTotalRaw)).toLocaleString("id-ID")+'</td></tr><tr><td></td><td>'+item.productCode+"</td><td>"+item.cartQty+"X"+(parseFloat(item.priceSellingPrice)).toLocaleString("id-ID")+'</td><td></td></tr>';
             });
-            tax = (10/100)*subSelling;
+            tax = (11/100)*subSelling;
             subSelling = subSelling+tax;
             if(voucher!==null){
                 var param = {method:"actionPage",app:"app",appslug:"pos_cafe",act:"checkVoucherCode",slug:slug,code:voucher[0]};

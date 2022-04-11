@@ -209,7 +209,7 @@
                                             <td colspan="3" class="text-right">VOUCER: </td><td class="text-right tableVoucher" data-price=0>0</td>
                                         </tr>
                                         <tr>
-                                            <td colspan="3" class="text-right">PPN(10%): </td><td class="text-right tableTax" data-price=0>0</td>
+                                            <td colspan="3" class="text-right">PPN(11%): </td><td class="text-right tableTax" data-price=0>0</td>
                                         </tr>
                                         <tr>
                                             <td colspan="2" class="tableStatusPO"></td>
