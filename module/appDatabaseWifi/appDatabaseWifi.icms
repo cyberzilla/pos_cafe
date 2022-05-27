@@ -1,0 +1,120 @@
+<div class="initModule"
+     data-param='{"slug":"appDatabaseWifi","functionList":["submitForm","resetForm","disableContextMenu","nativeSelect","nativeTable"],"preloadLib":[]}'></div>
+<div class="row no-margin">
+    <div class="col-lg-3">
+        <div class="icms-widget widget-box widget-color-blue2">
+            <div class="widget-header widget-header-small">
+                <h5 class="widget-title"><i class="fa fa-wifi"></i> Tambah User Hotspot</h5>
+                <div class="widget-toolbar">
+                    <a href="#" data-action="collapse">
+                        <i class="ace-icon fa fa-chevron-up"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="widget-body">
+                <div class="widget-main">
+                    <form class="icms-form"
+                          name="iform-appDatabaseWifi"
+                          id="iform-appDatabaseWifi"
+                          data-param='{"method":"actionPage","slug":"appDatabaseWifi","act":"create_appDatabaseWifi","app":"app","appslug":"pos_cafe"}'>
+                        <input type="hidden" name="mainId" value="">
+                        <div class="form-group has-info">
+                            <div class="row no-margin">
+                                <label for="wifiUser"> {{wifiUser|User}}:</label>
+                                <div class="input-group">
+                                    <input name="wifiUser" id="wifiUser" class="form-control input-sm" type="text" placeholder="User" data-msg="Masukkan user" data-placement="top-r" pattern="[A-Za-z0-9\w]{3,30}" data-rule-remote="Services" data-extra-param='{"method":"actionPage","slug":"appDatabaseWifi","appslug":"pos_cafe","act":"checkWifiUser","app":"{{p_app}}"}' data-msg-remote="user are exist" data-msg-pattern="Only Alphanumeric Min:3 Max:30" disable-onupdate required>
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-flat btn-sm btn-inverse btn-white randomGenerator" data-target="#wifiUser"><i class="fa fa-cog fa-spin"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group has-info">
+                            <div class="row no-margin">
+                                <label for="wifiPassword"> {{wifiPassword|Password}}:</label>
+                                <input id="wifiPassword" name="wifiPassword" type="text"
+                                       class="form-control input-sm" data-msg="Masukkan Password"
+                                       data-placement="top-r" required>
+                            </div>
+                        </div>
+                        <div class="form-group has-info">
+                            <div class="row no-margin">
+                                <label for="wifiProfile"> {{wifiProfile|Profil}}:</label>
+                                <select name="wifiProfile" id="wifiProfile" data-remote='{"param":{"method":"actionPage","slug":"appDatabaseWifi","act":"loadProfileMikrotik"}}' data-placeholder="Pilih Profil..." class="nativeSelect form-control input-sm" data-msg="Pilih profil hotspot" data-placement="top-r" required></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="reset" class="btn btn-danger btn-sm"><i class="ace-icon fa fa-refresh"></i>
+                                Reset
+                            </button>
+                            <button type="submit" data-caption='Save|Update'
+                                    data-icon='<i class="ace-icon fa fa-save"></i>'
+                                    data-spinner='<i class="ace-icon fa fa-spinner fa-spin"></i>'
+                                    class="btn btn-primary btn-sm pull-right">Save
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-9">
+        <div class="icms-widget widget-box widget-color-blue2">
+            <div class="widget-header widget-header-small">
+                <h5 class="widget-title"><i class="fa fa-list"></i> {{appDatabaseWifiTable|Daftar User Hotspot}}</h5>
+                <div class="widget-toolbar">
+                    <a data-action="reload">
+                        <i class="ace-icon fa fa-refresh"></i>
+                    </a>
+                    <a data-action="collapse">
+                        <i class="ace-icon fa fa-chevron-up"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="widget-body">
+                <div class="widget-main">
+                    <div class="table-responsive icms-scroll" style="margin-bottom: 0">
+                        <table style="width: 100%" class="nativeTable table table-striped table-hover table-bordered"
+                               id="icms-table-appDatabaseWifi"
+                               data-current=1
+                               data-perpage=10
+                               data-remote="Services"
+                               data-label="Showing {from} to {to} from {total} entries"
+                               data-param='{"method":"actionPage","slug":"appDatabaseWifi","act":"load_appDatabaseWifi"}'>
+                            <thead>
+                            <tr>
+                                <td colspan="6">
+                                    <div class="row no-margin pull-right">
+                                        <span class="input-icon input-icon-right">
+                                            <input type="text" class="form-control input-sm search"
+                                                   placeholder="Search...">
+                                            <i class="ace-icon fa fa-search text-muted" style="top: -1px;"></i>
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="header">
+                                <th data-column="number" data-class="text-center" style="width: 30px"
+                                    class="text-center">No
+                                </th>
+                                <th data-column="wifiUser">{{wifiUser|User}}</th>
+                                <th data-column="wifiPassword" data-class="text-center text-ellipsis"
+                                    data-width="100" style="width: 100px" class="text-center">
+                                    {{wifiPassword|Password}}
+                                </th>
+                                <th data-column="wifiDateTime" data-class="text-center" data-width="150" style="width: 150px"
+                                    class="text-center">{{wifiDateTime|Dibuat}}
+                                </th>
+                                <th data-column="action" data-action="delete" data-class="text-center"
+                                    style="width: 60px" class="text-center"><i class="fa fa-cogs"></i></th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                            <tfoot></tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
