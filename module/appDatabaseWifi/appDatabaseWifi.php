@@ -17,6 +17,11 @@ $localIP = "192.168.1.1";
 $localUser = "admin";
 $localPass = "RL@3221";
 
+//$mikrotik->write("/ip/hotspot/user/print");
+//$mikrotik->write("/ip/hotspot/user/profile/print");
+//$mikrotik->write("/user/group/print");
+//$result = $mikrotik->read();
+
 switch ($p_act) {
     case "load_" . $p_slug:
         $field = "*";
@@ -28,10 +33,6 @@ switch ($p_act) {
         if (!$mikrotik->connect($localIP,$localUser,$localPass)){
             $result = array("messageSuccess" => '<i class="fa fa-info-circle"></i> ' . $msg_removed);
         }else{
-            //$mikrotik->write("/ip/hotspot/user/print");
-            //$mikrotik->write("/ip/hotspot/user/profile/print");
-            //$mikrotik->write("/user/group/print");
-            //$result = $mikrotik->read();
             $comment = date("Y-m-d H:i:s");
             $mikrotik->write("/ip/hotspot/user/add", false);
             $mikrotik->write("=name=" . $p_wifiUser, false);
