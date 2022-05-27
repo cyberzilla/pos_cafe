@@ -52,14 +52,14 @@ switch ($p_act) {
 
 
     case "remove_" . $p_slug:
-        $contentPOST = postExtractor($_POST, array("p_method", "p_slug","p_appslug", "p_act", "p_mainId", "p_app"));
-        $data = removeData($conn, $tablename, $contentPOST);
-        if ($data['status'] === 'success') {
-            $message = array("messageSuccess" => '<i class="fa fa-info-circle"></i> ' . $msg_removed);
-            $result = array_merge($data, $message);
-        } else {
-            $result = $data;
-        }
+//        $contentPOST = postExtractor($_POST, array("p_method", "p_slug","p_appslug", "p_act", "p_mainId", "p_app"));
+//        $data = removeData($conn, $tablename, $contentPOST);
+//        if ($data['status'] === 'success') {
+//            $message = array("messageSuccess" => '<i class="fa fa-info-circle"></i> ' . $msg_removed);
+//            $result = array_merge($data, $message);
+//        } else {
+//            $result = $data;
+//        }
 
         //Penghapusan di dalam mikrotik
 
@@ -67,7 +67,8 @@ switch ($p_act) {
             $result = array("messageSuccess" => '<i class="fa fa-info-circle"></i> ' . $msg_removed);
         }else{
             $mikrotik->write("/ip/hotspot/user/remove",false);
-            $mikrotik->write("=.id=*8",true);
+            $mikrotik->write("=.id=*A",true);
+//            $mikrotik->write("=name=wl5dpk0",true);
             $mikrotik->read();
         }
 
@@ -99,6 +100,7 @@ switch ($p_act) {
             $result = array("messageSuccess" => '<i class="fa fa-info-circle"></i> ' . $msg_removed);
         }else{
             $mikrotik->write("/ip/hotspot/user/print");
+            //$mikrotik->write("=name=wl5dpk0");
 //            $mikrotik->write("/ip/hotspot/user/getall");
             //$mikrotik->write("=.proplist=name=.proplist=password=.proplist=mac-address=.proplist=comment?.id=*5");
 //            $mikrotik->write("=.proplist=.id?name==wl5dpk0",true);

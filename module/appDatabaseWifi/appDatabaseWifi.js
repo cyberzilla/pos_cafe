@@ -41,7 +41,7 @@ $(function () {
         pass.val($(target).val());
     });
 
-    root.on("page_loaded",function(){
+    root.one("page_loaded",function(){
         var data = "method=actionPage&slug=appDatabaseWifi&app=app&appslug=pos_cafe&act=loadParam";
        $.post("Services",data,function(res){
            console.log(res);
