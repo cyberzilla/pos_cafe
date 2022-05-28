@@ -112,7 +112,6 @@ switch ($p_act) {
             $mikrotik->write("/ip/hotspot/user/print");
             $result = $mikrotik->read();
         }
-
         echo json_encode($result);
         break;
 
