@@ -33,6 +33,8 @@ switch ($p_act) {
         if (!$mikrotik->connect($localIP,$localUser,$localPass)){
             $result = array("messageSuccess" => '<i class="fa fa-info-circle"></i> ' . $msg_removed);
         }else{
+
+            //input Data baru
             $comment = date("Y-m-d H:i:s");
             $mikrotik->write("/ip/hotspot/user/add", false);
             $mikrotik->write("=name=" . $p_wifiUser, false);
@@ -41,8 +43,16 @@ switch ($p_act) {
             $mikrotik->write("=comment=" . $comment);
             $mikrotik->read();
 
-            $contentPOST = postExtractor($_POST, array("p_method", "p_slug","p_appslug", "p_act", "p_mainId", "p_app"));
-            $data = pushData($conn, $tablename, $contentPOST.",wifiComment='$comment'");
+            //looping and insert
+            $mikrotik->write("/ip/hotspot/user/print");
+            $datas = $mikrotik->read();
+
+            foreach ($datas as $val){
+                $check = getData($conn,"*","wifi","wifiId='".$val['.id']."' AND wifiUser='".$val['name']."'");
+                if(count($check['data'])===0){
+                    $data = pushData($conn, $tablename, "wifiId='".$val['.id']."',wifiUser='".$val['name']."',wifiPassword='".$val['password']."',wifiProfile='".$val['profile']."',wifiComment='".$val['comment']."'");
+                }
+            }
             $message = array("messageSuccess" => '<i class="fa fa-info-circle"></i> ' . $msg_created);
             $result = array_merge($data, $message);
         }
@@ -52,27 +62,29 @@ switch ($p_act) {
 
 
     case "remove_" . $p_slug:
-//        $contentPOST = postExtractor($_POST, array("p_method", "p_slug","p_appslug", "p_act", "p_mainId", "p_app"));
-//        $data = removeData($conn, $tablename, $contentPOST);
-//        if ($data['status'] === 'success') {
-//            $message = array("messageSuccess" => '<i class="fa fa-info-circle"></i> ' . $msg_removed);
-//            $result = array_merge($data, $message);
-//        } else {
-//            $result = $data;
-//        }
-
+        $check = getData($conn,"*","wifi","id='$p_id'");
         //Penghapusan di dalam mikrotik
 
         if (!$mikrotik->connect($localIP,$localUser,$localPass)){
             $result = array("messageSuccess" => '<i class="fa fa-info-circle"></i> ' . $msg_removed);
         }else{
+            //Penghapusan Record di Mikrotik
             $mikrotik->write("/ip/hotspot/user/remove",false);
-            $mikrotik->write("=.id=*A",true);
-//            $mikrotik->write("=name=wl5dpk0",true);
+            $mikrotik->write("=.id=".$check['data']['wifiId'],true);
             $mikrotik->read();
+
+            //penghapusan Record di DB
+            $data = removeData($conn, $tablename, "id='$p_id'");
+            if ($data['status'] === 'success') {
+                $message = array("messageSuccess" => '<i class="fa fa-info-circle"></i> ' . $msg_removed);
+                $result = array_merge($data, $message);
+            } else {
+                $result = $data;
+            }
         }
 
         echo json_encode($result);
+
         break;
 
 
@@ -95,20 +107,20 @@ switch ($p_act) {
         echo count($data['data'])<1?"true":"false";
         break;
 
-    case "loadParam":
-        if (!$mikrotik->connect($localIP,$localUser,$localPass)){
-            $result = array("messageSuccess" => '<i class="fa fa-info-circle"></i> ' . $msg_removed);
-        }else{
-            $mikrotik->write("/ip/hotspot/user/print");
-            //$mikrotik->write("=name=wl5dpk0");
-//            $mikrotik->write("/ip/hotspot/user/getall");
-            //$mikrotik->write("=.proplist=name=.proplist=password=.proplist=mac-address=.proplist=comment?.id=*5");
-//            $mikrotik->write("=.proplist=.id?name==wl5dpk0",true);
-            $result = $mikrotik->read();
-        }
-
-        echo json_encode($result);
-        break;
+//    case "loadParam":
+//        if (!$mikrotik->connect($localIP,$localUser,$localPass)){
+//            $result = array("messageSuccess" => '<i class="fa fa-info-circle"></i> ' . $msg_removed);
+//        }else{
+//            $mikrotik->write("/ip/hotspot/user/print");
+//            //$mikrotik->write("=name=wl5dpk0");
+////            $mikrotik->write("/ip/hotspot/user/getall");
+//            //$mikrotik->write("=.proplist=name=.proplist=password=.proplist=mac-address=.proplist=comment?.id=*5");
+////            $mikrotik->write("=.proplist=.id?name==wl5dpk0",true);
+//            $result = $mikrotik->read();
+//        }
+//
+//        echo json_encode($result);
+//        break;
 
     default:
         break;
