@@ -105,20 +105,16 @@ switch ($p_act) {
         echo count($data['data'])<1?"true":"false";
         break;
 
-//    case "loadParam":
-//        if (!$mikrotik->connect($localIP,$localUser,$localPass)){
-//            $result = array("messageSuccess" => '<i class="fa fa-info-circle"></i> ' . $msg_removed);
-//        }else{
-//            $mikrotik->write("/ip/hotspot/user/print");
-//            //$mikrotik->write("=name=wl5dpk0");
-////            $mikrotik->write("/ip/hotspot/user/getall");
-//            //$mikrotik->write("=.proplist=name=.proplist=password=.proplist=mac-address=.proplist=comment?.id=*5");
-////            $mikrotik->write("=.proplist=.id?name==wl5dpk0",true);
-//            $result = $mikrotik->read();
-//        }
-//
-//        echo json_encode($result);
-//        break;
+    case "loadParam":
+        if (!$mikrotik->connect($localIP,$localUser,$localPass)){
+            $result = array("messageSuccess" => '<i class="fa fa-info-circle"></i> ' . $msg_removed);
+        }else{
+            $mikrotik->write("/ip/hotspot/user/print");
+            $result = $mikrotik->read();
+        }
+
+        echo json_encode($result);
+        break;
 
     default:
         break;
