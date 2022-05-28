@@ -63,7 +63,6 @@ switch ($p_act) {
 
     case "remove_" . $p_slug:
         $check = getData($conn,"*","wifi","id='$p_id'");
-        //Penghapusan di dalam mikrotik
 
         if (!$mikrotik->connect($localIP,$localUser,$localPass)){
             $result = array("messageSuccess" => '<i class="fa fa-info-circle"></i> ' . $msg_removed);
@@ -84,7 +83,6 @@ switch ($p_act) {
         }
 
         echo json_encode($result);
-
         break;
 
 
