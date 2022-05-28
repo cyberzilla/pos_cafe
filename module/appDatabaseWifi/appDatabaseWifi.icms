@@ -32,7 +32,7 @@
                         <div class="form-group has-info">
                             <div class="row no-margin">
                                 <label for="wifiPassword"> {{wifiPassword|Password}}:</label>
-                                <input id="wifiPassword" name="wifiPassword" type="text"
+                                <input id="wifiPassword" name="wifiPassword" type="text" placeholder="Password"
                                        class="form-control input-sm" data-msg="Masukkan Password"
                                        data-placement="top-r" required>
                             </div>
